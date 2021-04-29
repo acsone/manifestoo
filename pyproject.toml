@@ -1,0 +1,18 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "manifestoo"
+author = "Stéphane Bidoul"
+author-email = "stephane.bidoul@acsone.eu"
+home-page = "https://odoo-community.org/"
+classifiers = [ "License :: OSI Approved :: MIT License",]
+description-file = "README.md"
+requires = [
+    "typer"
+]
+
+[tool.flit.scripts]
+manifestoo = "manifestoo.__main__:main"
+moo = "manifestoo.__main__:main"
