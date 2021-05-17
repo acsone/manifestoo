@@ -16,3 +16,7 @@ requires = [
 [tool.flit.scripts]
 manifestoo = "manifestoo.__main__:main"
 moo = "manifestoo.__main__:main"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3

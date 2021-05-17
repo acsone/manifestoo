@@ -4,23 +4,26 @@ import subprocess
 import tempfile
 from configparser import ConfigParser
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import List, Optional
+
+from .utils import comma_split
 
 
-def _from_addons_paths(addons_paths: Iterable[str]) -> Sequence[Path]:
-    return [Path(item.strip()) for item in addons_paths]
+class AddonsPath(List[Path]):
+    def __str__(self) -> str:
+        return ", ".join(str(item) for item in self)
 
 
-def from_addons_path(addons_path: str) -> Sequence[Path]:
-    return _from_addons_paths(addons_path.split(","))
+def from_addons_path(addons_path: str) -> AddonsPath:
+    return AddonsPath(Path(item) for item in comma_split(addons_path))
 
 
-def from_odoo_rc(odoo_rc_path: Path) -> Sequence[Path]:
+def from_odoo_cfg(odoo_cfg_path: Path) -> AddonsPath:
     config = ConfigParser()
-    config.read(odoo_rc_path)
+    config.read(odoo_cfg_path)
     addons_path = config.get("options", "addons_path", fallback=None)
     if not addons_path:
-        return []
+        return AddonsPath()
     return from_addons_path(addons_path)
 
 
@@ -36,7 +39,7 @@ with open(sys.argv[1], "wb") as f:
 """
 
 
-def from_import_odoo(python: str) -> Sequence[Path]:
+def from_import_odoo(python: str) -> AddonsPath:
     script = tempfile.NamedTemporaryFile(delete=False)
     try:
         script.write(ADDONS_PATH_SCRIPT)
@@ -50,10 +53,26 @@ def from_import_odoo(python: str) -> Sequence[Path]:
                 stdout=subprocess.DEVNULL,
             )
             if r != 0:
-                return []
+                return AddonsPath()
             addons_paths = ast.literal_eval(Path(output.name).read_text())
-            return _from_addons_paths(addons_paths)
+            return AddonsPath(Path(item) for item in addons_paths)
         finally:
             os.unlink(output.name)
     finally:
         os.unlink(script.name)
+
+
+def from_cli_options(
+    addons_path: Optional[str],
+    addons_path_from_import_odoo: bool,
+    addons_path_python: str,
+    addons_path_from_odoo_cfg: Optional[Path],
+) -> AddonsPath:
+    res = AddonsPath()
+    if addons_path:
+        res.extend(from_addons_path(addons_path))
+    if addons_path_from_import_odoo:
+        res.extend(from_import_odoo(addons_path_python))
+    if addons_path_from_odoo_cfg:
+        res.extend(from_odoo_cfg(addons_path_from_odoo_cfg))
+    return res

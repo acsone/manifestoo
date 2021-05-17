@@ -5,6 +5,7 @@ from typing import List, Optional
 import typer
 
 from . import echo
+from .addons_path import from_cli_options as addons_path_from_cli_options
 
 __version__ = "0.1"
 
@@ -49,19 +50,13 @@ def callback(
         ),
         show_default=False,
     ),
-    select: Optional[str] = typer.Option(
+    select_include: Optional[str] = typer.Option(
         None,
         metavar="addon1,addon2,...",
         help=(
             "Comma separated list of addons to select. "
             "These addons will be searched in the addons path."
         ),
-    ),
-    select_core_ce_addons: Optional[OdooSeries] = typer.Option(
-        None,
-    ),
-    select_core_ee_addons: Optional[OdooSeries] = typer.Option(
-        None,
     ),
     select_exclude: Optional[str] = typer.Option(
         None,
@@ -71,9 +66,33 @@ def callback(
             "This option is useful in combination with --select-addons-dir."
         ),
     ),
+    select_core_ce_addons: Optional[OdooSeries] = typer.Option(
+        None,
+    ),
+    select_core_ee_addons: Optional[OdooSeries] = typer.Option(
+        None,
+    ),
     addons_path: Optional[str] = typer.Option(
         None,
         help="Expand addons path with this comma separated list of directories.",
+    ),
+    addons_path_from_import_odoo: bool = typer.Option(
+        True,
+        help=(
+            "Expand addons path by trying to `import odoo` and "
+            "looking at `odoo.addons.__path__`. This option is useful when "
+            "addons have been installed with pip."
+        ),
+    ),
+    addons_path_python: str = typer.Option(
+        "python",
+        "--addons-path-python",
+        show_default=False,
+        metavar="PYTHON",
+        help=(
+            "The python executable to use. when importing `odoo.addons.__path__`. "
+            "Defaults to the 'python' executable found in PATH."
+        ),
     ),
     addons_path_from_odoo_cfg: Optional[Path] = typer.Option(
         None,
@@ -84,25 +103,6 @@ def callback(
         envvar="ODOO_RC",
         help=(
             "Expand addons path by looking into the provided Odoo configuration file. "
-        ),
-    ),
-    addons_path_from_import_odoo: bool = typer.Option(
-        True,
-        help=(
-            "Expand addons path by trying to `import odoo` and "
-            "looking at `odoo.addons.__path__`. This option is useful when "
-            "addons have been installed with pip."
-        ),
-    ),
-    python: str = typer.Option(
-        "python",
-        "--python",
-        "-p",
-        show_default=False,
-        metavar="PYTHON",
-        help=(
-            "The python executable to use. when importing `odoo.addons.__path__`. "
-            "Defaults to the 'python' executable found in PATH."
         ),
     ),
     separator: str = typer.Option(
@@ -140,6 +140,13 @@ def callback(
     """
     echo.verbosity += verbose
     echo.verbosity -= quiet
+    resolved_addons_path = addons_path_from_cli_options(
+        addons_path,
+        addons_path_from_import_odoo,
+        addons_path_python,
+        addons_path_from_odoo_cfg,
+    )
+    echo.info(f"using addons path: {resolved_addons_path}")
 
 
 @app.command()
