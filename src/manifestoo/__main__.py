@@ -5,7 +5,7 @@ from typing import List, Optional
 import typer
 
 from . import echo
-from .addons_path import from_cli_options as addons_path_from_cli_options
+from .addons_path import AddonsPath
 
 __version__ = "0.1"
 
@@ -140,7 +140,7 @@ def callback(
     """
     echo.verbosity += verbose
     echo.verbosity -= quiet
-    resolved_addons_path = addons_path_from_cli_options(
+    resolved_addons_path = AddonsPath.from_cli_options(
         addons_path,
         addons_path_from_import_odoo,
         addons_path_python,
