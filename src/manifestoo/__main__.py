@@ -11,7 +11,7 @@ app = typer.Typer()
 
 
 class MainOptions:
-    include: str
+    select: str
     exclude: str
 
 
@@ -28,33 +28,33 @@ class OdooSeries(str, Enum):
 @app.callback()
 def callback(
     ctx: typer.Context,
-    include_addons_dirs: Optional[List[Path]] = typer.Option(
+    select_addons_dirs: Optional[List[Path]] = typer.Option(
         None,
-        "--include-addons-dir",
+        "--select-addons-dir",
         "-d",
         exists=True,
         file_okay=False,
         dir_okay=True,
         help=(
-            "Include all addons found in this directory. "
+            "Select all addons found in this directory. "
             "This option may be repeated. "
             "The directories selected with this options are "
             "automatically added to the addons search path."
         ),
         show_default=False,
     ),
-    include: Optional[str] = typer.Option(
+    select: Optional[str] = typer.Option(
         None,
         metavar="addon1,addon2,...",
         help=(
-            "Comma separated list of addons to include. "
+            "Comma separated list of addons to select. "
             "These addons will be searched in the addons path."
         ),
     ),
-    include_core_ce_addons: Optional[OdooSeries] = typer.Option(
+    select_core_ce_addons: Optional[OdooSeries] = typer.Option(
         None,
     ),
-    include_core_ee_addons: Optional[OdooSeries] = typer.Option(
+    select_core_ee_addons: Optional[OdooSeries] = typer.Option(
         None,
     ),
     exclude: Optional[str] = typer.Option(
@@ -62,7 +62,7 @@ def callback(
         metavar="addon1,addon2,...",
         help=(
             "Comma separated list of addons to exclude. "
-            "This option is useful in combination with --include-addons-dirs."
+            "This option is useful in combination with --select-addons-dirs."
         ),
     ),
     addons_path: Optional[str] = typer.Option(
@@ -111,7 +111,7 @@ def callback(
     """Do things with Odoo addons lists.
 
     The main options of this command select addons on which the subcommands
-    will act. Options starting with --include and --exclude are used to select
+    will act. Options starting with --select and --exclude are used to select
     top level addons on which subcommands will act. The --addons-path options
     provide locations to search for addons.
 
@@ -146,7 +146,7 @@ def list_external_dependencies(
         help=(
             "Whether to print external dependencies of dependant addons. "
             "By default, print only external dependencies of addons selected "
-            "with include/exclude."
+            "with select/exclude."
         ),
     ),
 ) -> None:
