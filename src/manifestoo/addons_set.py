@@ -1,5 +1,5 @@
-from typing import Dict, Iterable
 from pathlib import Path
+from typing import Dict, Iterable
 
 from .addon import Addon, AddonNotFound
 

@@ -1,6 +1,6 @@
 import ast
-from typing import Dict, Any
 from pathlib import Path
+from typing import Any, Dict
 
 Manifest = Dict[str, Any]
 

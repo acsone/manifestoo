@@ -1,10 +1,10 @@
-import os
 import ast
+import os
 import subprocess
-from pathlib import Path
-from configparser import ConfigParser
-from typing import Sequence, Iterable
 import tempfile
+from configparser import ConfigParser
+from pathlib import Path
+from typing import Iterable, Sequence
 
 
 def _from_addons_paths(addons_paths: Iterable[str]) -> Sequence[Path]:
