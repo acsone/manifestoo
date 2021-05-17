@@ -1,11 +1,8 @@
-import sys
 from enum import Enum
 from pathlib import Path
 from typing import List, Optional
 
 import typer
-
-from manifestoo.addon import NotADirectory
 
 app = typer.Typer()
 
@@ -57,11 +54,11 @@ def callback(
     select_core_ee_addons: Optional[OdooSeries] = typer.Option(
         None,
     ),
-    exclude: Optional[str] = typer.Option(
+    select_exclude: Optional[str] = typer.Option(
         None,
         metavar="addon1,addon2,...",
         help=(
-            "Comma separated list of addons to exclude. "
+            "Comma separated list of addons to exclude from selection. "
             "This option is useful in combination with --select-addons-dirs."
         ),
     ),
@@ -111,11 +108,9 @@ def callback(
     """Do things with Odoo addons lists.
 
     The main options of this command select addons on which the subcommands
-    will act. Options starting with --select and --exclude are used to select
-    top level addons on which subcommands will act. The --addons-path options
-    provide locations to search for addons.
+    will act. The --addons-path options provide locations to search for addons.
 
-    Run 'moo <subcommand> --help' for more options.
+    Run 'manifestoo <subcommand> --help' for more options.
     """
     pass
 
@@ -129,6 +124,10 @@ def list() -> None:
 @app.command()
 def list_depends(
     recursive: bool = False,
+    include_selected: bool = typer.Option(
+        False,
+        help="Whether to print the selected addons along with their dependencies.",
+    ),
     as_pip_requirements: bool = False,
 ) -> None:
     """Print the dependencies of selected addons."""
@@ -156,23 +155,24 @@ def list_external_dependencies(
 
 @app.command()
 def check_licences(
-    recursive: bool = False,
+    recursive: bool = True,
 ) -> None:
     """Check licenses.
 
-    Check that selected addons only depend on addons with compatible licences.
+    Check that selected addons only depend on addons with compatible
+    licences.
     """
     raise NotImplementedError()
 
 
 @app.command()
 def check_dev_status(
-    recursive: bool = False,
+    recursive: bool = True,
 ) -> None:
     """Check development status.
 
-    Check that selected addons only depend on addons that have an equal or
-    higher development status.
+    Check that selected addons only depend on addons that have an equal
+    or higher development status.
     """
     raise NotImplementedError()
 

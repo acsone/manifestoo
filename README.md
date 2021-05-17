@@ -3,11 +3,9 @@
 Do things with Odoo addons lists.
 
 The main options of this command select addons on which the subcommands
-will act. Options starting with --select and --exclude are used to select
-top level addons on which subcommands will act. The --addons-path options
-provide locations to search for addons.
+will act. The --addons-path options provide locations to search for addons.
 
-Run 'moo <subcommand> --help' for more options.
+Run 'manifestoo <subcommand> --help' for more options.
 
 **Usage**:
 
@@ -21,7 +19,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `--select addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
 * `--select-core-ce-addons [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`
 * `--select-core-ee-addons [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`
-* `--exclude addon1,addon2,...`: Comma separated list of addons to exclude. This option is useful in combination with --select-addons-dirs.
+* `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with --select-addons-dirs.
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
 * `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
 * `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to 'import odoo' and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
@@ -45,8 +43,8 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 Check development status.
 
-Check that selected addons only depend on addons that have an equal or
-higher development status.
+Check that selected addons only depend on addons that have an equal
+or higher development status.
 
 **Usage**:
 
@@ -56,14 +54,15 @@ $ manifestoo check-dev-status [OPTIONS]
 
 **Options**:
 
-* `--recursive / --no-recursive`: [default: False]
+* `--recursive / --no-recursive`: [default: True]
 * `--help`: Show this message and exit.
 
 ## `manifestoo check-licences`
 
 Check licenses.
 
-Check that selected addons only depend on addons with compatible licences.
+Check that selected addons only depend on addons with compatible
+licences.
 
 **Usage**:
 
@@ -73,7 +72,7 @@ $ manifestoo check-licences [OPTIONS]
 
 **Options**:
 
-* `--recursive / --no-recursive`: [default: False]
+* `--recursive / --no-recursive`: [default: True]
 * `--help`: Show this message and exit.
 
 ## `manifestoo list`
@@ -103,6 +102,7 @@ $ manifestoo list-depends [OPTIONS]
 **Options**:
 
 * `--recursive / --no-recursive`: [default: False]
+* `--include-selected / --no-include-selected`: Whether to print the selected addons along with their dependencies.  [default: False]
 * `--as-pip-requirements / --no-as-pip-requirements`: [default: False]
 * `--help`: Show this message and exit.
 
@@ -138,4 +138,3 @@ $ manifestoo tree [OPTIONS]
 **Options**:
 
 * `--help`: Show this message and exit.
-

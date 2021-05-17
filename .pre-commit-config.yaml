@@ -17,7 +17,7 @@ repos:
     hooks:
       - id: mypy
         args: ["--strict"]
-        exclude: '^(docs|tasks|tests)|setup\.py'
+        exclude: '^(docs|tests)'
         additional_dependencies: ["typer"]
   - repo: https://github.com/PyCQA/flake8
     rev: "3.9.1"
