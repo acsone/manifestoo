@@ -84,7 +84,7 @@ def callback(
         True,
         help=(
             "Expand addons path by trying to 'import odoo' and "
-            "looking at 'odoo.addons.__path__'. This option is useful when "
+            "looking at `odoo.addons.__path__`. This option is useful when "
             "addons have been installed with pip."
         ),
     ),
@@ -95,7 +95,7 @@ def callback(
         show_default=False,
         metavar="PYTHON",
         help=(
-            "The python executable to use. when importing 'odoo.addons.__path__'. "
+            "The python executable to use. when importing `odoo.addons.__path__`. "
             "Defaults to the 'python' executable found in PATH."
         ),
     ),

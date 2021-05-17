@@ -24,8 +24,8 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `--exclude addon1,addon2,...`: Comma separated list of addons to exclude. This option is useful in combination with --select-addons-dirs.
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
 * `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
-* `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to 'import odoo' and looking at 'odoo.addons.__path__'. This option is useful when addons have been installed with pip.  [default: True]
-* `-p, --python PYTHON`: The python executable to use. when importing 'odoo.addons.__path__'. Defaults to the 'python' executable found in PATH.
+* `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to 'import odoo' and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
+* `-p, --python PYTHON`: The python executable to use. when importing `odoo.addons.__path__`. Defaults to the 'python' executable found in PATH.
 * `--separator TEXT`: Separator charater to use (by default, print one item per line).
 * `--verbose / --no-verbose`: [default: False]
 * `--install-completion`: Install completion for the current shell.
