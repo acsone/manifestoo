@@ -50,6 +50,7 @@ class AddonsPath(List[Path]):
                     [python, script.name, output.name],
                     stderr=subprocess.DEVNULL,
                     stdout=subprocess.DEVNULL,
+                    env=os.environ,
                 )
                 if r != 0:
                     return AddonsPath()
