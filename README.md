@@ -5,7 +5,7 @@ Do things with Odoo addons lists.
 The main options of this command select addons on which the subcommands
 will act. The --addons-path options provide locations to search for addons.
 
-Run 'manifestoo <subcommand> --help' for more options.
+Run `manifestoo <subcommand> --help` for more options.
 
 **Usage**:
 
@@ -26,6 +26,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `-p, --python PYTHON`: The python executable to use. when importing `odoo.addons.__path__`. Defaults to the 'python' executable found in PATH.
 * `--separator TEXT`: Separator charater to use (by default, print one item per line).
 * `-v, --verbose`
+* `-q, --quiet`
 * `--version`
 * `--install-completion`: Install completion for the current shell.
 * `--show-completion`: Show completion for the current shell, to copy it or customize the installation.

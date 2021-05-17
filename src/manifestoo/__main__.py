@@ -12,8 +12,7 @@ app = typer.Typer()
 
 
 class MainOptions:
-    select: str
-    exclude: str
+    pass
 
 
 class OdooSeries(str, Enum):
@@ -120,7 +119,7 @@ def callback(
     ),
     quiet: int = typer.Option(
         0,
-        "--quier",
+        "--quiet",
         "-q",
         count=True,
         show_default=False,
