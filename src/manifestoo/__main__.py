@@ -4,6 +4,8 @@ from typing import List, Optional
 
 import typer
 
+from . import echo
+
 __version__ = "0.1"
 
 app = typer.Typer()
@@ -26,7 +28,7 @@ class OdooSeries(str, Enum):
 
 def version_callback(value: bool) -> None:
     if value:
-        typer.echo(f"Manifestoo version {__version__}")
+        typer.echo(f"manifestoo version {__version__}")
         raise typer.Exit()
 
 
@@ -116,6 +118,13 @@ def callback(
         count=True,
         show_default=False,
     ),
+    quiet: int = typer.Option(
+        0,
+        "--quier",
+        "-q",
+        count=True,
+        show_default=False,
+    ),
     version: Optional[bool] = typer.Option(
         None,
         "--version",
@@ -128,9 +137,10 @@ def callback(
     The main options of this command select addons on which the subcommands
     will act. The --addons-path options provide locations to search for addons.
 
-    Run 'manifestoo <subcommand> --help' for more options.
+    Run `manifestoo <subcommand> --help` for more options.
     """
-    pass
+    echo.verbosity += verbose
+    echo.verbosity -= quiet
 
 
 @app.command()
