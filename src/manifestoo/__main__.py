@@ -28,9 +28,10 @@ class OdooSeries(str, Enum):
 @app.callback()
 def callback(
     ctx: typer.Context,
-    include_addons_dirs: List[Path] = typer.Option(
-        [],
+    include_addons_dirs: Optional[List[Path]] = typer.Option(
+        None,
         "--include-addons-dir",
+        "-d",
         exists=True,
         file_okay=False,
         dir_okay=True,
@@ -68,38 +69,35 @@ def callback(
         None,
         help="Expand addons path with this comma separated list of directories.",
     ),
-    addons_path_from_odoo_rc: bool = typer.Option(
-        True,
-        help=(
-            "Expand addons path by looking into the Odoo configuration file "
-            "found at $ODOO_RC, if present."
-        ),
-    ),
     addons_path_from_odoo_cfg: Optional[Path] = typer.Option(
         None,
         exists=True,
         file_okay=True,
         dir_okay=False,
         readable=True,
+        envvar="ODOO_RC",
         help=(
-            "Expand addons path by looking into the provided Odoo configuration file."
+            "Expand addons path by looking into the provided Odoo configuration file. "
         ),
     ),
     addons_path_from_import_odoo: bool = typer.Option(
-        False,
+        True,
         help=(
             "Expand addons path by trying to 'import odoo' and "
             "looking at 'odoo.addons.__path__'. This option is useful when "
             "addons have been installed with pip."
         ),
     ),
-    python: Path = typer.Option(
-        Path(sys.executable),
-        exists=True,
-        file_okay=True,
-        dir_okay=False,
-        readable=True,
-        help=("Python executable to use when importing 'odoo.addons.__path__'."),
+    python: str = typer.Option(
+        "python",
+        "--python",
+        "-p",
+        show_default=False,
+        metavar="PYTHON",
+        help=(
+            "The python executable to use. when importing 'odoo.addons.__path__'. "
+            "Defaults to the 'python' executable found in PATH."
+        ),
     ),
     separator: str = typer.Option(
         default="\n",
@@ -110,12 +108,12 @@ def callback(
         False,
     ),
 ) -> None:
-    """Do things with addons lists.
+    """Do things with Odoo addons lists.
 
     The main options of this command select addons on which the subcommands
     will act. Options starting with --include and --exclude are used to select
-    top level addons to work on. The --addons-path options provide locations to
-    search for addons.
+    top level addons on which subcommands will act. The --addons-path options
+    provide locations to search for addons.
 
     Run 'moo <subcommand> --help' for more options.
     """
@@ -129,8 +127,11 @@ def list() -> None:
 
 
 @app.command()
-def list_depends() -> None:
-    """Print the direct dependencies of selected addons."""
+def list_depends(
+    recursive: bool = False,
+    as_pip_requirements: bool = False,
+) -> None:
+    """Print the dependencies of selected addons."""
     raise NotImplementedError()
 
 
@@ -154,21 +155,31 @@ def list_external_dependencies(
 
 
 @app.command()
-def check_licences() -> None:
-    """Check that selected addons only depend on addons with compatible licences."""
+def check_licences(
+    recursive: bool = False,
+) -> None:
+    """Check licenses.
+
+    Check that selected addons only depend on addons with compatible licences.
+    """
     raise NotImplementedError()
 
 
 @app.command()
-def check_dev_status() -> None:
-    """Check that selected addons only depend on addons that have an equal or higher
-    development status."""
+def check_dev_status(
+    recursive: bool = False,
+) -> None:
+    """Check development status.
+
+    Check that selected addons only depend on addons that have an equal or
+    higher development status.
+    """
     raise NotImplementedError()
 
 
 @app.command()
 def tree() -> None:
-    """Print the dependency tree of addons selected with include/exclude options."""
+    """Print the dependency tree of selected addons."""
     raise NotImplementedError()
 
 
