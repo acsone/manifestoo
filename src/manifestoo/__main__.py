@@ -4,6 +4,8 @@ from typing import List, Optional
 
 import typer
 
+__version__ = "0.1"
+
 app = typer.Typer()
 
 
@@ -20,6 +22,12 @@ class OdooSeries(str, Enum):
     v12 = "12.0"
     v13 = "13.0"
     v14 = "14.0"
+
+
+def version_callback(value: bool) -> None:
+    if value:
+        typer.echo(f"Manifestoo version {__version__}")
+        raise typer.Exit()
 
 
 @app.callback()
@@ -59,7 +67,7 @@ def callback(
         metavar="addon1,addon2,...",
         help=(
             "Comma separated list of addons to exclude from selection. "
-            "This option is useful in combination with --select-addons-dirs."
+            "This option is useful in combination with --select-addons-dir."
         ),
     ),
     addons_path: Optional[str] = typer.Option(
@@ -80,7 +88,7 @@ def callback(
     addons_path_from_import_odoo: bool = typer.Option(
         True,
         help=(
-            "Expand addons path by trying to 'import odoo' and "
+            "Expand addons path by trying to `import odoo` and "
             "looking at `odoo.addons.__path__`. This option is useful when "
             "addons have been installed with pip."
         ),
@@ -101,8 +109,18 @@ def callback(
         show_default=False,
         help="Separator charater to use (by default, print one item per line).",
     ),
-    verbose: bool = typer.Option(
-        False,
+    verbose: int = typer.Option(
+        0,
+        "--verbose",
+        "-v",
+        count=True,
+        show_default=False,
+    ),
+    version: Optional[bool] = typer.Option(
+        None,
+        "--version",
+        callback=version_callback,
+        is_eager=True,
     ),
 ) -> None:
     """Do things with Odoo addons lists.
