@@ -31,5 +31,5 @@ def warning(msg: str) -> None:
         typer.secho(msg, fg=typer.colors.YELLOW, err=True)
 
 
-def error(msg: str) -> None:
-    typer.secho(msg, fg=typer.colors.RED, err=True)
+def error(msg: str, err: bool = True) -> None:
+    typer.secho(msg, fg=typer.colors.RED, err=err)

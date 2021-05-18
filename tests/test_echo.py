@@ -53,3 +53,8 @@ def test_echo_error_low_verbosity(capsys):
     with _verbosity(-10):
         echo.error("msg")
         assert capsys.readouterr().err == "msg\n"
+
+
+def test_echo_to_stdout(capsys):
+    echo.error("msg", err=False)
+    assert capsys.readouterr().out == "msg\n"

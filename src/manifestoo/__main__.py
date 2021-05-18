@@ -5,6 +5,7 @@ from typing import List, Optional
 import typer
 
 from . import echo
+from .commands.check_dev_status import check_dev_status_command
 from .commands.list import list_command
 from .commands.list_depends import list_depends_command
 from .options import MainOptions
@@ -89,7 +90,7 @@ def callback(
         show_default=False,
         metavar="PYTHON",
         help=(
-            "The python executable to use. when importing `odoo.addons.__path__`. "
+            "The python executable to use when importing `odoo.addons.__path__`. "
             "Defaults to the 'python' executable found in PATH."
         ),
     ),
@@ -236,11 +237,9 @@ def list_external_dependencies(
     ),
     recursive: bool = typer.Option(
         False,
-        help=(
-            "Whether to print external dependencies of dependant addons. "
-            "By default, print only external dependencies of addons selected "
-            "with select/exclude."
-        ),
+        "--recursive",
+        help="Recursively print external dependencies of dependent addons.",
+        show_default=False,
     ),
 ) -> None:
     """Print the external dependencies of selected addons."""
@@ -249,7 +248,12 @@ def list_external_dependencies(
 
 @app.command()
 def check_licenses(
-    recursive: bool = True,
+    recursive: bool = typer.Option(
+        False,
+        "--recursive",
+        help="Recursively check dependent addons.",
+        show_default=False,
+    ),
 ) -> None:
     """Check licenses.
 
@@ -261,14 +265,30 @@ def check_licenses(
 
 @app.command()
 def check_dev_status(
-    recursive: bool = True,
+    ctx: typer.Context,
+    recursive: bool = typer.Option(
+        False,
+        "--recursive",
+        help="Recursively check dependent addons.",
+        show_default=False,
+    ),
+    default_dev_status: Optional[str] = None,
 ) -> None:
     """Check development status.
 
     Check that selected addons only depend on addons that have an equal
     or higher development status.
     """
-    not_implemented("check-dev-status command")
+    main_options: MainOptions = ctx.obj
+    errors = check_dev_status_command(
+        main_options.addons_selection,
+        main_options.addons_set,
+        default_dev_status,
+        recursive,
+    )
+    if errors:
+        echo.error("\n".join(errors), err=False)
+        raise typer.Exit(1)
 
 
 @app.command()

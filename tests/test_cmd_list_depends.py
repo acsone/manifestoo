@@ -59,6 +59,16 @@ def test_loop():
         ],
         set(),
     )
+    assert list_depends_command(
+        addons_selection, addons_set, include_selected=True, recursive=True
+    ) == (
+        [
+            "a",
+            "b",
+            "c",
+        ],
+        set(),
+    )
 
 
 def test_missing():
@@ -89,6 +99,12 @@ def test_missing():
         [
             "b",
         ],
+        {"b", "c"},
+    )
+    assert list_depends_command(
+        mock_addons_selection("a,c"), addons_set, include_selected=True, recursive=True
+    ) == (
+        ["a", "b", "c"],
         {"b", "c"},
     )
 

@@ -22,7 +22,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `--select-core-ee-addons [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
 * `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
-* `--addons-path-python PYTHON`: The python executable to use. when importing `odoo.addons.__path__`. Defaults to the 'python' executable found in PATH.
+* `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the 'python' executable found in PATH.
 * `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
 * `--separator TEXT`: Separator charater to use (by default, print one item per line).
 * `-v, --verbose`
@@ -56,7 +56,8 @@ $ manifestoo check-dev-status [OPTIONS]
 
 **Options**:
 
-* `--recursive / --no-recursive`: [default: True]
+* `--recursive`: Recursively check dependent addons.
+* `--default-dev-status TEXT`
 * `--help`: Show this message and exit.
 
 ## `manifestoo check-licenses`
@@ -74,7 +75,7 @@ $ manifestoo check-licenses [OPTIONS]
 
 **Options**:
 
-* `--recursive / --no-recursive`: [default: True]
+* `--recursive`: Recursively check dependent addons.
 * `--help`: Show this message and exit.
 
 ## `manifestoo list`
@@ -125,7 +126,7 @@ $ manifestoo list-external-dependencies [OPTIONS] KIND
 
 **Options**:
 
-* `--recursive / --no-recursive`: Whether to print external dependencies of dependant addons. By default, print only external dependencies of addons selected with select/exclude.  [default: False]
+* `--recursive`: Recursively print external dependencies of dependent addons.
 * `--help`: Show this message and exit.
 
 ## `manifestoo tree`
