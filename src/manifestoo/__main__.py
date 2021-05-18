@@ -5,15 +5,14 @@ from typing import List, Optional
 import typer
 
 from . import echo
-from .addons_path import AddonsPath
+from .commands.list import list_command
+from .commands.list_depends import list_depends_command
+from .options import MainOptions
+from .utils import not_implemented, print_list
 
 __version__ = "0.1"
 
 app = typer.Typer()
-
-
-class MainOptions:
-    pass
 
 
 class OdooSeries(str, Enum):
@@ -43,7 +42,7 @@ def callback(
         file_okay=False,
         dir_okay=True,
         help=(
-            "Select all addons found in this directory. "
+            "Select all installable addons found in this directory. "
             "This option may be repeated. "
             "The directories selected with this options are "
             "automatically added to the addons search path."
@@ -140,32 +139,93 @@ def callback(
     """
     echo.verbosity += verbose
     echo.verbosity -= quiet
-    resolved_addons_path = AddonsPath.from_cli_options(
-        addons_path,
-        addons_path_from_import_odoo,
-        addons_path_python,
-        addons_path_from_odoo_cfg,
-    )
-    echo.info(f"using addons path: {resolved_addons_path}")
+    main_options = MainOptions()
+    main_options.separator = separator
+    # resolve addons_path
+    if select_addons_dirs:
+        main_options.addons_path.extend_from_addons_dirs(select_addons_dirs)
+    if addons_path:
+        main_options.addons_path.extend_from_addons_path(addons_path)
+    if addons_path_from_import_odoo:
+        main_options.addons_path.extend_from_import_odoo(addons_path_python)
+    if addons_path_from_odoo_cfg:
+        main_options.addons_path.extend_from_odoo_cfg(addons_path_from_odoo_cfg)
+    echo.info(str(main_options.addons_path), bold_intro="Addons path: ")
+    # populate addons_set
+    main_options.addons_set.add_from_addons_dirs(main_options.addons_path)
+    echo.info(str(main_options.addons_set), bold_intro="Addons set: ")
+    # addons selection
+    if select_addons_dirs:
+        main_options.addons_selection.add_addons_dirs(select_addons_dirs)
+    if select_include:
+        main_options.addons_selection.add_addon_names(select_include)
+    if select_exclude:
+        main_options.addons_selection.remove_addon_names(select_exclude)
+    if select_core_ce_addons:
+        not_implemented("--select-core-ce-addons")
+    if select_core_ee_addons:
+        not_implemented("--select-core-ee-addons")
+    echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
+    # pass main options to commands
+    ctx.obj = main_options
 
 
 @app.command()
-def list() -> None:
+def list(ctx: typer.Context) -> None:
     """Print the selected addons."""
-    raise NotImplementedError()
+    main_options: MainOptions = ctx.obj
+    result = list_command(main_options.addons_selection)
+    print_list(result, ctx.obj.separator)
 
 
 @app.command()
 def list_depends(
-    recursive: bool = False,
+    ctx: typer.Context,
+    recursive: bool = typer.Option(
+        False,
+        "--recursive",
+        help="Recursively print dependencies.",
+        show_default=False,
+    ),
     include_selected: bool = typer.Option(
         False,
-        help="Whether to print the selected addons along with their dependencies.",
+        "--include-selected",
+        help="Print the selected addons along with their dependencies.",
+        show_default=False,
     ),
-    as_pip_requirements: bool = False,
+    ignore_missing: bool = typer.Option(
+        False,
+        "--ignore-missing",
+        help=(
+            "Do not fail if dependencies are not found in addons path. "
+            "This only applies to top level (selected) addons "
+            "and recursive dependencies."
+        ),
+        show_default=False,
+    ),
+    as_pip_requirements: bool = typer.Option(
+        False,
+        "--as-pip-requirements",
+        show_default=False,
+    ),
 ) -> None:
     """Print the dependencies of selected addons."""
-    raise NotImplementedError()
+    main_options: MainOptions = ctx.obj
+    if as_pip_requirements:
+        not_implemented("--as-pip-requirement")
+    result, missing = list_depends_command(
+        main_options.addons_selection,
+        main_options.addons_set,
+        recursive,
+        include_selected,
+    )
+    if missing and not ignore_missing:
+        echo.error("not found in addons path: " + ",".join(sorted(missing)))
+        raise typer.Abort()
+    print_list(
+        result,
+        ctx.obj.separator,
+    )
 
 
 @app.command()
@@ -184,19 +244,19 @@ def list_external_dependencies(
     ),
 ) -> None:
     """Print the external dependencies of selected addons."""
-    raise NotImplementedError()
+    not_implemented("list-external-dependencies command")
 
 
 @app.command()
-def check_licences(
+def check_licenses(
     recursive: bool = True,
 ) -> None:
     """Check licenses.
 
     Check that selected addons only depend on addons with compatible
-    licences.
+    licenses.
     """
-    raise NotImplementedError()
+    not_implemented("check-license command")
 
 
 @app.command()
@@ -208,13 +268,13 @@ def check_dev_status(
     Check that selected addons only depend on addons that have an equal
     or higher development status.
     """
-    raise NotImplementedError()
+    not_implemented("check-dev-status command")
 
 
 @app.command()
 def tree() -> None:
     """Print the dependency tree of selected addons."""
-    raise NotImplementedError()
+    not_implemented("tree command")
 
 
 def main() -> None:

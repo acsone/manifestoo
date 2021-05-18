@@ -6,8 +6,10 @@ build-backend = "flit_core.buildapi"
 module = "manifestoo"
 author = "Stéphane Bidoul"
 author-email = "stephane.bidoul@acsone.eu"
-home-page = "https://odoo-community.org/"
-classifiers = [ "License :: OSI Approved :: MIT License",]
+home-page = "https://github.com/sbidoul/manifestoo/"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+]
 description-file = "README.md"
 requires = [
     "typer"

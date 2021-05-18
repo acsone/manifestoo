@@ -1,27 +1,26 @@
 from pathlib import Path
 from typing import Dict, Iterable
 
+from . import echo
 from .addon import Addon, AddonNotFound
 
 
 class AddonsSet(Dict[str, Addon]):
-    @classmethod
-    def from_addons_dir(cls, addons_dir: Path) -> "AddonsSet":
-        addons_set = AddonsSet()
+    def __str__(self) -> str:
+        return ",".join(sorted(self.keys()))
+
+    def add_from_addons_dir(self, addons_dir: Path) -> None:
+        if not addons_dir.is_dir():
+            echo.notice(f"ignoring {addons_dir}: not a directory")
+            return
         for addon_dir in addons_dir.iterdir():
-            if not addon_dir.is_dir():
-                continue
             try:
                 addon = Addon.from_addon_dir(addon_dir)
             except AddonNotFound:
                 continue
             else:
-                addons_set[addon.name] = addon
-        return addons_set
+                self[addon.name] = addon
 
-    @classmethod
-    def from_addons_dirs(cls, addons_dirs: Iterable[Path]) -> "AddonsSet":
-        addons_set = AddonsSet()
+    def add_from_addons_dirs(self, addons_dirs: Iterable[Path]) -> None:
         for addons_dir in addons_dirs:
-            addons_set.update(cls.from_addons_dir(addons_dir))
-        return addons_set
+            self.add_from_addons_dir(addons_dir)

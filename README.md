@@ -15,15 +15,15 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 **Options**:
 
-* `-d, --select-addons-dir DIRECTORY`: Select all addons found in this directory. This option may be repeated. The directories selected with this options are automatically added to the addons search path.
-* `--select addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
+* `-d, --select-addons-dir DIRECTORY`: Select all installable addons found in this directory. This option may be repeated. The directories selected with this options are automatically added to the addons search path.
+* `--select-include addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
+* `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with --select-addons-dir.
 * `--select-core-ce-addons [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`
 * `--select-core-ee-addons [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`
-* `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with --select-addons-dir.
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
-* `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
 * `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
-* `-p, --python PYTHON`: The python executable to use. when importing `odoo.addons.__path__`. Defaults to the 'python' executable found in PATH.
+* `--addons-path-python PYTHON`: The python executable to use. when importing `odoo.addons.__path__`. Defaults to the 'python' executable found in PATH.
+* `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
 * `--separator TEXT`: Separator charater to use (by default, print one item per line).
 * `-v, --verbose`
 * `-q, --quiet`
@@ -35,7 +35,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 * `check-dev-status`: Check development status.
-* `check-licences`: Check licenses.
+* `check-licenses`: Check licenses.
 * `list`: Print the selected addons.
 * `list-depends`: Print the dependencies of selected addons.
 * `list-external-dependencies`: Print the external dependencies of selected...
@@ -59,17 +59,17 @@ $ manifestoo check-dev-status [OPTIONS]
 * `--recursive / --no-recursive`: [default: True]
 * `--help`: Show this message and exit.
 
-## `manifestoo check-licences`
+## `manifestoo check-licenses`
 
 Check licenses.
 
 Check that selected addons only depend on addons with compatible
-licences.
+licenses.
 
 **Usage**:
 
 ```console
-$ manifestoo check-licences [OPTIONS]
+$ manifestoo check-licenses [OPTIONS]
 ```
 
 **Options**:
@@ -103,9 +103,10 @@ $ manifestoo list-depends [OPTIONS]
 
 **Options**:
 
-* `--recursive / --no-recursive`: [default: False]
-* `--include-selected / --no-include-selected`: Whether to print the selected addons along with their dependencies.  [default: False]
-* `--as-pip-requirements / --no-as-pip-requirements`: [default: False]
+* `--recursive`: Recursively print dependencies.
+* `--include-selected`: Print the selected addons along with their dependencies.
+* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and recursive dependencies.
+* `--as-pip-requirements`
 * `--help`: Show this message and exit.
 
 ## `manifestoo list-external-dependencies`
