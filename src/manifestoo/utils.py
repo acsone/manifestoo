@@ -4,6 +4,7 @@ from typing import Iterable, List, Optional
 import typer
 
 from . import echo
+from .odoo_series import OdooSeries
 
 
 def comma_split(s: Optional[str]) -> List[str]:
@@ -34,3 +35,11 @@ def notice_or_abort(msg: str, abort: bool) -> None:
         raise typer.Abort()
     else:
         echo.notice(msg)
+
+
+def ensure_odoo_series(odoo_series: Optional[OdooSeries]) -> None:
+    if not odoo_series:
+        echo.error(
+            "Odoo series could not be detected. Please provide one with --odoo-series."
+        )
+        raise typer.Abort()

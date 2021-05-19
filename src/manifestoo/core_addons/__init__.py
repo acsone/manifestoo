@@ -1,6 +1,6 @@
 """List of Odoo official addons."""
 
-from typing import Optional, Set
+from typing import Iterable, Set
 
 try:
     from importlib.resources import open_text
@@ -18,7 +18,7 @@ def _addons(suffix: str) -> Set[str]:
         return {a.strip() for a in f if not a.startswith("#")}
 
 
-core_addons = {
+_core_addons = {
     OdooSeries.v8_0: _addons("8c"),
     OdooSeries.v9_0: _addons("9c") | _addons("9e"),
     OdooSeries.v10_0: _addons("10c") | _addons("10e"),
@@ -30,4 +30,8 @@ core_addons = {
 
 
 def is_core_addon(addon_name: str, odoo_series: OdooSeries) -> bool:
-    return addon_name in core_addons[odoo_series]
+    return addon_name in _core_addons[odoo_series]
+
+
+def get_core_addons(odoo_series: OdooSeries) -> Iterable[str]:
+    return _core_addons[odoo_series]

@@ -3,13 +3,15 @@ from typing import List, Optional
 
 import typer
 
+from manifestoo.core_addons import get_core_addons
+
 from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.list import list_command
 from .commands.list_depends import list_depends_command
 from .odoo_series import OdooSeries, detect_from_addons_set
 from .options import MainOptions
-from .utils import not_implemented, print_list
+from .utils import ensure_odoo_series, not_implemented, print_list
 
 __version__ = "0.1"
 
@@ -56,11 +58,11 @@ def callback(
             "This option is useful in combination with --select-addons-dir."
         ),
     ),
-    select_core_ce_addons: Optional[OdooSeries] = typer.Option(
-        None,
-    ),
-    select_core_ee_addons: Optional[OdooSeries] = typer.Option(
-        None,
+    select_core_addons: bool = typer.Option(
+        False,
+        "--select-core-addons",
+        help="Select the Odoo core addons (CE and EE) for the given series.",
+        show_default=False,
     ),
     addons_path: Optional[str] = typer.Option(
         None,
@@ -150,6 +152,11 @@ def callback(
     # populate addons_set
     main_options.addons_set.add_from_addons_dirs(main_options.addons_path)
     echo.info(str(main_options.addons_set), bold_intro="Addons set: ")
+    # Odoo series
+    if odoo_series:
+        main_options.odoo_series = odoo_series
+    else:
+        main_options.odoo_series = detect_from_addons_set(main_options.addons_set)
     # addons selection
     if select_addons_dirs:
         main_options.addons_selection.add_addons_dirs(select_addons_dirs)
@@ -157,16 +164,12 @@ def callback(
         main_options.addons_selection.add_addon_names(select_include)
     if select_exclude:
         main_options.addons_selection.remove_addon_names(select_exclude)
-    if select_core_ce_addons:
-        not_implemented("--select-core-ce-addons")
-    if select_core_ee_addons:
-        not_implemented("--select-core-ee-addons")
+    if select_core_addons:
+        ensure_odoo_series(main_options.odoo_series)
+        assert main_options.odoo_series
+        main_options.addons_selection.update(get_core_addons(main_options.odoo_series))
     echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
-    # Odoo series
-    if odoo_series:
-        main_options.odoo_series = odoo_series
-    else:
-        main_options.odoo_series = detect_from_addons_set(main_options.addons_set)
+    echo.info(f"{main_options.odoo_series}", bold_intro="Odoo series: ")
     # pass main options to commands
     ctx.obj = main_options
 
@@ -280,11 +283,8 @@ def check_dev_status(
     or higher development status.
     """
     main_options: MainOptions = ctx.obj
-    if not main_options.odoo_series:
-        echo.error(
-            "Odoo series could not be detected. Please provide one with --odoo-series."
-        )
-        raise typer.Abort()
+    ensure_odoo_series(main_options.odoo_series)
+    assert main_options.odoo_series
     errors = check_dev_status_command(
         main_options.addons_selection,
         main_options.addons_set,
