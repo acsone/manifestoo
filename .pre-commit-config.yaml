@@ -27,7 +27,9 @@ repos:
       - id: mypy
         args: ["--strict"]
         exclude: '^(docs|tests)'
-        additional_dependencies: ["typer"]
+        additional_dependencies:
+          - "typer"
+          - "importlib_resources ; python_version<'3.9'"
   - repo: https://github.com/PyCQA/flake8
     rev: "3.9.2"
     hooks:

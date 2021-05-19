@@ -3,7 +3,9 @@ from typing import Iterable, Optional, Set
 from ..addon import Addon
 from ..addons_selection import AddonsSelection
 from ..addons_set import AddonsSet
+from ..core_addons import is_core_addon
 from ..dependency_iterator import dependency_iterator
+from ..odoo_series import OdooSeries
 
 CORE_DEV_STATUS = "core"
 CORE_DEV_STATUS_LEVEL = 100
@@ -18,10 +20,13 @@ DEV_STATUS_LEVELS = {
 
 
 def _get_dev_status(
-    addon: Addon, default_dev_status: Optional[str], errors: Set[str]
+    addon: Addon,
+    default_dev_status: Optional[str],
+    odoo_series: OdooSeries,
+    errors: Set[str],
 ) -> Optional[str]:
-    # if is_core_addon(addon.name):
-    #     return CORE_DEV_STATUS
+    if is_core_addon(addon.name, odoo_series):
+        return CORE_DEV_STATUS
     dev_status: Optional[str] = addon.manifest.get(
         "development_status", default_dev_status
     )
@@ -45,6 +50,7 @@ def check_dev_status_command(
     addons_set: AddonsSet,
     default_dev_status: Optional[str],
     recursive: bool,
+    odoo_series: OdooSeries,
 ) -> Iterable[str]:
     errors: Set[str] = set()
     for addon_name, addon in dependency_iterator(
@@ -53,7 +59,9 @@ def check_dev_status_command(
         if not addon:
             errors.add(f"{addon_name} not found")
             continue
-        addon_dev_status = _get_dev_status(addon, default_dev_status, errors)
+        addon_dev_status = _get_dev_status(
+            addon, default_dev_status, odoo_series, errors
+        )
         if not addon_dev_status:
             continue
         for depend_name in addon.manifest.get("depends", []):
@@ -61,7 +69,9 @@ def check_dev_status_command(
             if not depend:
                 errors.add(f"{depend_name} not found")
                 continue
-            depend_dev_status = _get_dev_status(depend, default_dev_status, errors)
+            depend_dev_status = _get_dev_status(
+                depend, default_dev_status, odoo_series, errors
+            )
             if not depend_dev_status:
                 continue
             addon_level = _get_dev_status_level(addon_dev_status)

@@ -12,7 +12,8 @@ classifiers = [
 ]
 description-file = "README.md"
 requires = [
-    "typer"
+    "typer",
+    "importlib_resources ; python_version<'3.9'"
 ]
 
 [tool.flit.scripts]

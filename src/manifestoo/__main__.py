@@ -1,4 +1,3 @@
-from enum import Enum
 from pathlib import Path
 from typing import List, Optional
 
@@ -8,22 +7,13 @@ from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.list import list_command
 from .commands.list_depends import list_depends_command
+from .odoo_series import OdooSeries, detect_from_addons_set
 from .options import MainOptions
 from .utils import not_implemented, print_list
 
 __version__ = "0.1"
 
 app = typer.Typer()
-
-
-class OdooSeries(str, Enum):
-    v8 = "8.0"
-    v9 = "9.0"
-    v10 = "10.0"
-    v11 = "11.0"
-    v12 = "12.0"
-    v13 = "13.0"
-    v14 = "14.0"
 
 
 def version_callback(value: bool) -> None:
@@ -110,6 +100,11 @@ def callback(
         show_default=False,
         help="Separator charater to use (by default, print one item per line).",
     ),
+    odoo_series: Optional[OdooSeries] = typer.Option(
+        None,
+        envvar=["ODOO_VERSION", "ODOO_SERIES"],
+        help="Odoo series to use, in case it is not autodetected from addons version.",
+    ),
     verbose: int = typer.Option(
         0,
         "--verbose",
@@ -167,6 +162,11 @@ def callback(
     if select_core_ee_addons:
         not_implemented("--select-core-ee-addons")
     echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
+    # Odoo series
+    if odoo_series:
+        main_options.odoo_series = odoo_series
+    else:
+        main_options.odoo_series = detect_from_addons_set(main_options.addons_set)
     # pass main options to commands
     ctx.obj = main_options
 
@@ -280,11 +280,17 @@ def check_dev_status(
     or higher development status.
     """
     main_options: MainOptions = ctx.obj
+    if not main_options.odoo_series:
+        echo.error(
+            "Odoo series could not be detected. Please provide one with --odoo-series."
+        )
+        raise typer.Abort()
     errors = check_dev_status_command(
         main_options.addons_selection,
         main_options.addons_set,
         default_dev_status,
         recursive,
+        main_options.odoo_series,
     )
     if errors:
         echo.error("\n".join(errors), err=False)
