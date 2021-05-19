@@ -17,11 +17,11 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 * `-d, --select-addons-dir DIRECTORY`: Select all installable addons found in this directory. This option may be repeated. The directories selected with this options are automatically added to the addons search path.
 * `--select-include addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
-* `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with --select-addons-dir.
+* `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with `--select-addons-dir`.
 * `--select-core-addons`: Select the Odoo core addons (CE and EE) for the given series.
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
 * `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
-* `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the 'python' executable found in PATH.
+* `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the `python` executable found in PATH.
 * `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
 * `--separator TEXT`: Separator charater to use (by default, print one item per line).
 * `--odoo-series [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`: Odoo series to use, in case it is not autodetected from addons version.  [env var: ODOO_VERSION, ODOO_SERIES]
@@ -122,7 +122,7 @@ $ manifestoo list-external-dependencies [OPTIONS] KIND
 
 **Arguments**:
 
-* `KIND`: Kind of external dependency, such as 'python' or 'deb'.  [required]
+* `KIND`: Kind of external dependency, such as `python` or `deb`.  [required]
 
 **Options**:
 

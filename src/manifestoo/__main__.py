@@ -55,7 +55,7 @@ def callback(
         metavar="addon1,addon2,...",
         help=(
             "Comma separated list of addons to exclude from selection. "
-            "This option is useful in combination with --select-addons-dir."
+            "This option is useful in combination with `--select-addons-dir`."
         ),
     ),
     select_core_addons: bool = typer.Option(
@@ -83,7 +83,7 @@ def callback(
         metavar="PYTHON",
         help=(
             "The python executable to use when importing `odoo.addons.__path__`. "
-            "Defaults to the 'python' executable found in PATH."
+            "Defaults to the `python` executable found in PATH."
         ),
     ),
     addons_path_from_odoo_cfg: Optional[Path] = typer.Option(
@@ -236,7 +236,7 @@ def list_depends(
 def list_external_dependencies(
     kind: str = typer.Argument(
         ...,
-        help="Kind of external dependency, such as 'python' or 'deb'.",
+        help="Kind of external dependency, such as `python` or `deb`.",
     ),
     recursive: bool = typer.Option(
         False,
