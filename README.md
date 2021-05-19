@@ -2,8 +2,9 @@
 
 Do things with Odoo addons lists.
 
-The main options of this command select addons on which the subcommands
-will act. The --addons-path options provide locations to search for addons.
+The `--select-*` options of this command select addons on which the
+subcommands will act. The `--addons-path` options provide locations to
+search for addons.
 
 Run `manifestoo <subcommand> --help` for more options.
 
@@ -34,8 +35,8 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
-* `check-dev-status`: Check development status.
-* `check-licenses`: Check licenses.
+* `check-dev-status`: Check development status compatibility.
+* `check-licenses`: Check license compatibility.
 * `list`: Print the selected addons.
 * `list-depends`: Print the dependencies of selected addons.
 * `list-external-dependencies`: Print the external dependencies of selected...
@@ -43,7 +44,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 ## `manifestoo check-dev-status`
 
-Check development status.
+Check development status compatibility.
 
 Check that selected addons only depend on addons that have an equal
 or higher development status.
@@ -62,7 +63,7 @@ $ manifestoo check-dev-status [OPTIONS]
 
 ## `manifestoo check-licenses`
 
-Check licenses.
+Check license compatibility.
 
 Check that selected addons only depend on addons with compatible
 licenses.
