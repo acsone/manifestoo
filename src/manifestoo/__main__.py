@@ -258,7 +258,7 @@ def check_licenses(
         show_default=False,
     ),
 ) -> None:
-    """Check licenses.
+    """Check license compatibility.
 
     Check that selected addons only depend on addons with compatible
     licenses.
@@ -277,7 +277,7 @@ def check_dev_status(
     ),
     default_dev_status: Optional[str] = None,
 ) -> None:
-    """Check development status.
+    """Check development status compatibility.
 
     Check that selected addons only depend on addons that have an equal
     or higher development status.
