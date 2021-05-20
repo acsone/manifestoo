@@ -4,6 +4,8 @@ import sys
 from functools import lru_cache
 from typing import Dict, Iterable, Set
 
+from manifestoo import addon
+
 if sys.version_info >= (3, 9):
     from importlib.resources import open_text
 else:
@@ -24,5 +26,19 @@ def get_core_addons(odoo_series: OdooSeries) -> Set[str]:
     return _get_core_addons(odoo_series, "c") | _get_core_addons(odoo_series, "e")
 
 
+def is_core_ce_addon(addon_name: str, odoo_series: OdooSeries) -> bool:
+    return addon_name in _get_core_addons(odoo_series, "c")
+
+
+def is_core_ee_addon(addon_name: str, odoo_series: OdooSeries) -> bool:
+    return addon_name in _get_core_addons(odoo_series, "e")
+
+
 def is_core_addon(addon_name: str, odoo_series: OdooSeries) -> bool:
-    return addon_name in get_core_addons(odoo_series)
+    return addon_name in _get_core_addons(
+        odoo_series,
+        "c",
+    ) or addon_name in _get_core_addons(
+        odoo_series,
+        "e",
+    )

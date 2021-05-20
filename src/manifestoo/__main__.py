@@ -7,6 +7,7 @@ from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.list import list_command
 from .commands.list_depends import list_depends_command
+from .commands.tree import tree_command
 from .core_addons import get_core_addons
 from .odoo_series import OdooSeries, detect_from_addons_set
 from .options import MainOptions
@@ -298,9 +299,20 @@ def check_dev_status(
 
 
 @app.command()
-def tree() -> None:
+def tree(
+    ctx: typer.Context,
+    fold_core_addons: bool = False,
+) -> None:
     """Print the dependency tree of selected addons."""
-    not_implemented("tree command")
+    main_options: MainOptions = ctx.obj
+    ensure_odoo_series(main_options.odoo_series)
+    assert main_options.odoo_series
+    tree_command(
+        main_options.addons_selection,
+        main_options.addons_set,
+        main_options.odoo_series,
+        fold_core_addons,
+    )
 
 
 def main() -> None:
