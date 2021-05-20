@@ -18,12 +18,10 @@ jobs:
   tests:
     name: "Python ${{ matrix.python-version }}"
     runs-on: "ubuntu-latest"
-
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.6", "3.7", "3.8", "3.9", "3.10.0-beta - 3.10", "pypy3"]
-
     steps:
       - uses: "actions/checkout@v2"
       - uses: "actions/setup-python@v2"
@@ -37,5 +35,6 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           python -m pip install --upgrade virtualenv tox tox-gh-actions
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python -m tox"
+        run: |
+          python -m tox
       - uses: codecov/codecov-action@v1
