@@ -1,12 +1,13 @@
 """List of Odoo official addons."""
 
+import sys
 from functools import lru_cache
 from typing import Dict, Iterable, Set
 
-try:
+if sys.version_info >= (3, 9):
     from importlib.resources import open_text
-except ImportError:
-    from importlib_resources import open_text  # python < 3.9
+else:
+    from importlib_resources import open_text
 
 from ..odoo_series import OdooSeries
 
