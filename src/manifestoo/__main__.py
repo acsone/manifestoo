@@ -44,6 +44,8 @@ def callback(
     ),
     select_include: Optional[str] = typer.Option(
         None,
+        "--select-include",
+        "--select",
         metavar="addon1,addon2,...",
         help=(
             "Comma separated list of addons to select. "
@@ -301,7 +303,12 @@ def check_dev_status(
 @app.command()
 def tree(
     ctx: typer.Context,
-    fold_core_addons: bool = False,
+    fold_core_addons: bool = typer.Option(
+        False,
+        "--fold-core-addons",
+        help="Do not expand dependencies of core Odoo addons.",
+        show_default=False,
+    ),
 ) -> None:
     """Print the dependency tree of selected addons."""
     main_options: MainOptions = ctx.obj

@@ -17,7 +17,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 **Options**:
 
 * `-d, --select-addons-dir DIRECTORY`: Select all installable addons found in this directory. This option may be repeated. The directories selected with this options are automatically added to the addons search path.
-* `--select-include addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
+* `--select-include, --select addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
 * `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with `--select-addons-dir`.
 * `--select-core-addons`: Select the Odoo core addons (CE and EE) for the given series.
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
@@ -142,4 +142,5 @@ $ manifestoo tree [OPTIONS]
 
 **Options**:
 
+* `--fold-core-addons`: Do not expand dependencies of core Odoo addons.
 * `--help`: Show this message and exit.

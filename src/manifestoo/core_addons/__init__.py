@@ -2,9 +2,7 @@
 
 import sys
 from functools import lru_cache
-from typing import Dict, Iterable, Set
-
-from manifestoo import addon
+from typing import Set
 
 if sys.version_info >= (3, 9):
     from importlib.resources import open_text
