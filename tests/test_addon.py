@@ -2,7 +2,7 @@ import pytest
 
 from manifestoo.addon import (
     Addon,
-    AddonNotInstallble,
+    AddonNotInstallable,
     InvalidManifest,
     NoManifestFound,
     NotADirectory,
@@ -26,8 +26,9 @@ def test_not_a_directory(tmp_path):
 
 def test_not_installable(tmp_path):
     (tmp_path / "__manifest__.py").write_text("{'installable': False}")
-    with pytest.raises(AddonNotInstallble):
+    with pytest.raises(AddonNotInstallable):
         Addon.from_addon_dir(tmp_path)
+    assert Addon.from_addon_dir(tmp_path, allow_not_installable=True)
 
 
 def test_invalid_manifest(tmp_path):

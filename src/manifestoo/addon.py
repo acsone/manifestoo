@@ -9,7 +9,7 @@ class AddonNotFound(Exception):
     pass
 
 
-class AddonNotInstallble(AddonNotFound):
+class AddonNotInstallable(AddonNotFound):
     pass
 
 
@@ -52,11 +52,13 @@ class Addon:
         self.name = self.path.name
 
     @classmethod
-    def from_addon_dir(cls, addon_dir: Path) -> "Addon":
+    def from_addon_dir(
+        cls, addon_dir: Path, allow_not_installable: bool = False
+    ) -> "Addon":
         if not addon_dir.is_dir():
             raise NotADirectory(f"{addon_dir} is not a directory")
         manifest_path = _get_manifest_path(addon_dir)
         manifest = _read_manifest(manifest_path)
-        if not manifest.get("installable", True):
-            raise AddonNotInstallble(f"{addon_dir} is not installable")
+        if not manifest.get("installable", True) and not allow_not_installable:
+            raise AddonNotInstallable(f"{addon_dir} is not installable")
         return cls(manifest, manifest_path)

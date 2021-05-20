@@ -3,12 +3,11 @@ from typing import List, Optional
 
 import typer
 
-from manifestoo.core_addons import get_core_addons
-
 from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.list import list_command
 from .commands.list_depends import list_depends_command
+from .core_addons import get_core_addons
 from .odoo_series import OdooSeries, detect_from_addons_set
 from .options import MainOptions
 from .utils import ensure_odoo_series, not_implemented, print_list
