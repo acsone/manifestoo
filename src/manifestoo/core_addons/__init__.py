@@ -20,6 +20,7 @@ def _get_core_addons(odoo_series: OdooSeries, ce: str) -> Set[str]:
         return {a.strip() for a in f if not a.startswith("#")}
 
 
+@lru_cache()
 def get_core_addons(odoo_series: OdooSeries) -> Set[str]:
     return _get_core_addons(odoo_series, "c") | _get_core_addons(odoo_series, "e")
 
@@ -33,10 +34,7 @@ def is_core_ee_addon(addon_name: str, odoo_series: OdooSeries) -> bool:
 
 
 def is_core_addon(addon_name: str, odoo_series: OdooSeries) -> bool:
-    return addon_name in _get_core_addons(
+    return is_core_ce_addon(addon_name, odoo_series) or is_core_ee_addon(
+        addon_name,
         odoo_series,
-        "c",
-    ) or addon_name in _get_core_addons(
-        odoo_series,
-        "e",
     )
