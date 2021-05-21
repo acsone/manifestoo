@@ -10,8 +10,10 @@ from .common import populate_addons_dir
 def test_integration(tmp_path):
     addons = {
         "a": {"version": "13.0.1.0.0", "depends": ["b", "c"]},
-        "b": {"depends": ["base"]},
+        "b": {"depends": ["base", "mail"]},
         "c": {"depends": ["account", "b"]},
+        "account": {"depends": ["base"]},
+        "base": {},
     }
     populate_addons_dir(tmp_path, addons)
     runner = CliRunner(mix_stderr=False)
@@ -26,9 +28,11 @@ def test_integration(tmp_path):
         """\
             a (13.0.1.0.0)
             ├── b (no version)
-            │   └── base (✘ not installed)
+            │   ├── base (13.0+c)
+            │   └── mail (✘ not installed)
             └── c (no version)
-                ├── account (✘ not installed)
+                ├── account (13.0+c)
+                │   └── base ⬆
                 └── b ⬆
         """
     )
