@@ -15,6 +15,11 @@ class OdooSeries(str, Enum):
     v14_0 = "14.0"
 
 
+class OdooEdition(str, Enum):
+    CE = "c"
+    EE = "e"
+
+
 def detect_from_addon_version(version: str) -> Optional[OdooSeries]:
     parts = version.split(".")
     if len(parts) < 5:

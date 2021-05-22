@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Iterator, List
 
 from manifestoo.addon import Addon, AddonNotFound
+from manifestoo.odoo_series import OdooEdition
 
 SERIES = [
     # branch,  enterprise
@@ -61,7 +62,11 @@ def main() -> None:
                     tmpdir,
                 ]
             )
-            _write_addons_list(Path(tmpdir) / "addons", branch + "-c", add_base=True)
+            _write_addons_list(
+                Path(tmpdir) / "addons",
+                f"{branch}-{OdooEdition.CE.value}",
+                add_base=True,
+            )
         if enterprise:
             with tempfile.TemporaryDirectory() as tmpdir:
                 check_call(
@@ -74,7 +79,11 @@ def main() -> None:
                         tmpdir,
                     ]
                 )
-                _write_addons_list(Path(tmpdir), branch + "-e", add_base=False)
+                _write_addons_list(
+                    Path(tmpdir),
+                    f"{branch}-{OdooEdition.EE.value}",
+                    add_base=False,
+                )
 
 
 main()
