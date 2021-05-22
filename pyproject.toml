@@ -6,29 +6,45 @@ build-backend = "flit_core.buildapi"
 module = "manifestoo"
 author = "Stéphane Bidoul"
 author-email = "stephane.bidoul@acsone.eu"
-home-page = "https://github.com/sbidoul/manifestoo/"
+home-page = "https://github.com/sbidoul/manifestoo"
 classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Odoo",
+    "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
 ]
 description-file = "README.md"
 requires = [
-    "typer",
+    "typer[all] ~=0.3.2",
     "importlib_resources ; python_version<'3.9'"
 ]
+requires-python = ">=3.6"
 
 [tool.flit.metadata.requires-extra]
-tests = [
+test = [
     "pytest",
     "coverage[toml]",
 ]
+
+[tool.flit.metadata.urls]
+Documentation = "https://manifestoo.readthedocs.io/en/latest/"
 
 [tool.flit.scripts]
 manifestoo = "manifestoo.main:app"
 moo = "manifestoo.main:app"
 
+[tool.flit.sdist]
+exclude = [".github/"]
+
+
 [tool.isort]
 profile = "black"
 multi_line_output = 3
+
 
 [tool.coverage.run]
 branch = true
