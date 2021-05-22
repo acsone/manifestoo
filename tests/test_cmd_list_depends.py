@@ -53,7 +53,6 @@ def test_loop():
     addons_selection = mock_addons_selection("a")
     assert list_depends_command(addons_selection, addons_set, recursive=True) == (
         [
-            "a",
             "b",
             "c",
         ],
@@ -106,6 +105,23 @@ def test_missing():
     ) == (
         ["a", "b", "c"],
         {"b", "c"},
+    )
+
+
+def test_include_selected_not_included():
+    """Dependencies that are part of the selection are not returned."""
+    addons_set = mock_addons_set(
+        {
+            "a": {"depends": ["b"]},
+            "b": {},
+        }
+    )
+    addons_selection = mock_addons_selection("a,b")
+    assert list_depends_command(
+        addons_selection, addons_set, include_selected=False
+    ) == (
+        [],
+        set(),
     )
 
 
