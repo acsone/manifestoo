@@ -36,8 +36,9 @@ def _check_dict(
 ) -> Dict[T, VT]:
     if not isinstance(value, dict):
         raise TypeError()
-    map(key_checker, value.keys())
-    map(value_checker, value.values())
+    for k, v in value.items():
+        key_checker(k)
+        value_checker(v)
     return value
 
 
@@ -49,13 +50,6 @@ def _check_list_of_str(value: Any) -> List[str]:
 def _check_dict_of_list_of_str(value: Any) -> Dict[str, List[str]]:
     # this could be a partial but mypy does not support it
     return _check_dict(value, key_checker=_check_str, value_checker=_check_list_of_str)
-
-
-def _check_dict_of_dict_of_list_of_str(value: Any) -> Dict[str, Dict[str, List[str]]]:
-    # this could be a partial but mypy does not support it
-    return _check_dict(
-        value, key_checker=_check_str, value_checker=_check_dict_of_list_of_str
-    )
 
 
 class InvalidManifest(Exception):
@@ -88,7 +82,7 @@ class Manifest:
             return checker(value)
         except TypeError:
             raise InvalidManifest(
-                f"{key!r} key has invalid type in {self.manifest_path}"
+                f"{value!r} has invalid type for {key!r} in {self.manifest_path}"
             )
 
     @property
@@ -108,9 +102,9 @@ class Manifest:
         return self._get("depends", _check_list_of_str, default=[])
 
     @property
-    def external_dependencies(self) -> Dict[str, Dict[str, List[str]]]:
+    def external_dependencies(self) -> Dict[str, List[str]]:
         return self._get(
-            "external_dependencies", _check_dict_of_dict_of_list_of_str, default={}
+            "external_dependencies", _check_dict_of_list_of_str, default={}
         )
 
     @property

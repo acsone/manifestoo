@@ -17,7 +17,12 @@ def populate_addons_dir(addons_dir: Path, addons: Dict[str, Dict[str, Any]]):
         manifest_path.write_text(repr(manifest))
 
 
-def mock_addons_set(addons: Dict[str, Manifest]) -> AddonsSet:
+def mock_manifest(manifest_dict: Dict[str, Any]) -> Manifest:
+    manifest_path = Path("/tmp/fake-addons-dir") / "fake-addon" / "__manifest__.py"
+    return Manifest(manifest_path, manifest_dict)
+
+
+def mock_addons_set(addons: Dict[str, Dict[str, Any]]) -> AddonsSet:
     addons_set = AddonsSet()
     for addon_name, manifest_dict in addons.items():
         manifest_path = Path("/tmp/fake-addons-dir") / addon_name / "__manifest__.py"
