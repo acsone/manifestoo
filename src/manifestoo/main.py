@@ -172,7 +172,10 @@ def callback(
         ensure_odoo_series(main_options.odoo_series)
         assert main_options.odoo_series
         main_options.addons_selection.update(get_core_addons(main_options.odoo_series))
-    echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
+    if main_options.addons_selection:
+        echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
+    else:
+        echo.notice("No addon selected, please use one of the --select options.")
     echo.info(f"{main_options.odoo_series}", bold_intro="Odoo series: ")
     # pass main options to commands
     ctx.obj = main_options
