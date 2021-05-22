@@ -30,7 +30,6 @@ def dependency_iterator(
             addon = addons_set.get(addon_name)
             yield addon_name, addon
             if recursive and addon:
-                depends = addon.manifest.get("depends", [])
-                yield from _iter(set(depends) - done)
+                yield from _iter(set(addon.manifest.depends) - done)
 
     yield from _iter(addons_selection)

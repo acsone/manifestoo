@@ -1,9 +1,10 @@
 from pathlib import Path
 from typing import Any, Dict
 
-from manifestoo.addon import Addon, Manifest
+from manifestoo.addon import Addon
 from manifestoo.addons_selection import AddonsSelection
 from manifestoo.addons_set import AddonsSet
+from manifestoo.manifest import Manifest
 
 
 def populate_addons_dir(addons_dir: Path, addons: Dict[str, Dict[str, Any]]):
@@ -18,10 +19,10 @@ def populate_addons_dir(addons_dir: Path, addons: Dict[str, Dict[str, Any]]):
 
 def mock_addons_set(addons: Dict[str, Manifest]) -> AddonsSet:
     addons_set = AddonsSet()
-    for addon_name, manifest in addons.items():
-        addons_set[addon_name] = Addon(
-            manifest, Path("/tmp/fake-addons-dir") / addon_name / "__manifest__.py"
-        )
+    for addon_name, manifest_dict in addons.items():
+        manifest_path = Path("/tmp/fake-addons-dir") / addon_name / "__manifest__.py"
+        manifest = Manifest(manifest_path, manifest_dict)
+        addons_set[addon_name] = Addon(manifest, manifest_path)
     return addons_set
 
 

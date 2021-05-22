@@ -19,5 +19,5 @@ def list_external_dependencies_command(
         if not addon:
             missing.add(addon_name)
         else:
-            result.update(addon.manifest.get("external_dependencies", {}).get(kind, []))
+            result.update(addon.manifest.external_dependencies.get(kind, []))
     return sorted(result), missing

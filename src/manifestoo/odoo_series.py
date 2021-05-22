@@ -28,7 +28,7 @@ def detect_from_addon_version(version: str) -> Optional[OdooSeries]:
 def detect_from_addons_set(addons_set: AddonsSet) -> Optional[OdooSeries]:
     detected: Optional[OdooSeries] = None
     for addon in addons_set.values():
-        addon_version: Optional[str] = addon.manifest.get("version")
+        addon_version = addon.manifest.version
         if not addon_version:
             continue
         addon_series = detect_from_addon_version(addon_version)

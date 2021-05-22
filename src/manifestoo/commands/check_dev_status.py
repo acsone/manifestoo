@@ -27,9 +27,7 @@ def _get_dev_status(
 ) -> Optional[str]:
     if is_core_addon(addon.name, odoo_series):
         return CORE_DEV_STATUS
-    dev_status: Optional[str] = addon.manifest.get(
-        "development_status", default_dev_status
-    )
+    dev_status = addon.manifest.development_status or default_dev_status
     if not dev_status:
         errors.add(f"{addon.name} has missing development_status")
         return None
@@ -64,7 +62,7 @@ def check_dev_status_command(
         )
         if not addon_dev_status:
             continue
-        for depend_name in addon.manifest.get("depends", []):
+        for depend_name in addon.manifest.depends:
             depend = addons_set.get(depend_name)
             if not depend:
                 errors.add(f"{depend_name} not found")

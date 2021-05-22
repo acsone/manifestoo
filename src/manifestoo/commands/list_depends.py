@@ -21,5 +21,5 @@ def list_depends_command(
         if not addon:
             missing.add(addon_name)
         else:
-            result.update(addon.manifest.get("depends", []))
+            result.update(addon.manifest.depends)
     return sorted(result), missing

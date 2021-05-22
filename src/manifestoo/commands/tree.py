@@ -63,7 +63,7 @@ class Node:
         elif is_core_ee_addon(self.addon_name, odoo_series):
             return f"{odoo_series}+e"
         else:
-            return self.addon.manifest.get("version") or "no version"
+            return self.addon.manifest.version or "no version"
 
 
 def tree_command(
@@ -84,7 +84,7 @@ def tree_command(
         if not addon:
             # not found
             return node
-        for depend in addon.manifest.get("depends", []):
+        for depend in addon.manifest.depends:
             node.children.append(add(depend))
         return node
 

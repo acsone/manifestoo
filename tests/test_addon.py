@@ -16,7 +16,7 @@ def test_basic(tmp_path):
     addon = Addon.from_addon_dir(addon_dir)
     assert addon.name == "theaddon"
     assert addon.path == addon_dir
-    assert addon.manifest == {"name": "the addon"}
+    assert addon.manifest.name == "the addon"
 
 
 def test_not_a_directory(tmp_path):

@@ -1,8 +1,7 @@
 import ast
 from pathlib import Path
-from typing import Any, Dict
 
-Manifest = Dict[str, Any]
+from .manifest import Manifest
 
 
 class AddonNotFound(Exception):
@@ -41,11 +40,12 @@ def _read_manifest(path: Path) -> Manifest:
     else:
         if not isinstance(manifest, dict):
             raise InvalidManifest(f"Manifest {path} is not a dictionary")
-        return manifest
+        return Manifest(path, manifest)
 
 
 class Addon:
     def __init__(self, manifest: Manifest, manifest_path: Path):
+        assert manifest._manifest_path == manifest_path
         self.manifest = manifest
         self.manifest_path = manifest_path
         self.path = manifest_path.parent
@@ -59,6 +59,6 @@ class Addon:
             raise NotADirectory(f"{addon_dir} is not a directory")
         manifest_path = _get_manifest_path(addon_dir)
         manifest = _read_manifest(manifest_path)
-        if not manifest.get("installable", True) and not allow_not_installable:
+        if not manifest.installable and not allow_not_installable:
             raise AddonNotInstallable(f"{addon_dir} is not installable")
         return cls(manifest, manifest_path)

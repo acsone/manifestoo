@@ -1,7 +1,5 @@
 from typing import Iterable, Optional, Set, Tuple
 
-from manifestoo.odoo_series import OdooSeries
-
 from .. import echo
 from ..addon import Addon
 from ..addons_selection import AddonsSelection
@@ -9,6 +7,7 @@ from ..addons_set import AddonsSet
 from ..core_addons import get_core_addon_license, is_core_addon
 from ..dependency_iterator import dependency_iterator
 from ..license import LicenseType, can_depend_on, get_license_type
+from ..odoo_series import OdooSeries
 
 
 def _get_license_type_or_proprietary(
@@ -18,7 +17,7 @@ def _get_license_type_or_proprietary(
     if is_core_addon(addon.name, odoo_series):
         addon_license = get_core_addon_license(addon.name, odoo_series)
     else:
-        addon_license = addon.manifest.get("license")
+        addon_license = addon.manifest.license
     if not addon_license:
         echo.warning(f"No license declared for {addon.name}, assuming Proprietary.")
         return addon_license, LicenseType.PROPRIETARY
@@ -48,7 +47,7 @@ def check_licenses_command(
         addon_license, addon_license_type = _get_license_type_or_proprietary(
             addon, odoo_series
         )
-        for depend_name in addon.manifest.get("depends", []):
+        for depend_name in addon.manifest.depends:
             depend = addons_set.get(depend_name)
             if not depend:
                 errors.add(f"{depend_name} not found")
