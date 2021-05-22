@@ -128,6 +128,7 @@ $ manifestoo list-external-dependencies [OPTIONS] KIND
 **Options**:
 
 * `--recursive`: Recursively print external dependencies of dependent addons.
+* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and recursive dependencies.
 * `--help`: Show this message and exit.
 
 ## `manifestoo tree`

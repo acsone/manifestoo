@@ -7,6 +7,7 @@ from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.list import list_command
 from .commands.list_depends import list_depends_command
+from .commands.list_external_dependencies import list_external_dependencies_command
 from .commands.tree import tree_command
 from .core_addons import get_core_addons
 from .odoo_series import OdooSeries, detect_from_addons_set
@@ -237,6 +238,7 @@ def list_depends(
 
 @app.command()
 def list_external_dependencies(
+    ctx: typer.Context,
     kind: str = typer.Argument(
         ...,
         help="Kind of external dependency, such as `python` or `deb`.",
@@ -247,9 +249,32 @@ def list_external_dependencies(
         help="Recursively print external dependencies of dependent addons.",
         show_default=False,
     ),
+    ignore_missing: bool = typer.Option(
+        False,
+        "--ignore-missing",
+        help=(
+            "Do not fail if dependencies are not found in addons path. "
+            "This only applies to top level (selected) addons "
+            "and recursive dependencies."
+        ),
+        show_default=False,
+    ),
 ) -> None:
     """Print the external dependencies of selected addons."""
-    not_implemented("list-external-dependencies command")
+    main_options: MainOptions = ctx.obj
+    result, missing = list_external_dependencies_command(
+        main_options.addons_selection,
+        main_options.addons_set,
+        kind,
+        recursive,
+    )
+    if missing and not ignore_missing:
+        echo.error("not found in addons path: " + ",".join(sorted(missing)))
+        raise typer.Abort()
+    print_list(
+        result,
+        ctx.obj.separator,
+    )
 
 
 @app.command()
