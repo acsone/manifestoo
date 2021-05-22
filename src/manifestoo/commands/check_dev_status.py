@@ -54,7 +54,7 @@ def check_dev_status_command(
 ) -> Iterable[str]:
     errors: Set[str] = set()
     for addon_name, addon in dependency_iterator(
-        addons_selection, addons_set, recursive=recursive
+        addons_selection, addons_set, recursive
     ):
         if not addon:
             errors.add(f"{addon_name} not found")

@@ -5,6 +5,7 @@ import typer
 
 from . import echo
 from .commands.check_dev_status import check_dev_status_command
+from .commands.check_licenses import check_licenses_command
 from .commands.list import list_command
 from .commands.list_depends import list_depends_command
 from .commands.list_external_dependencies import list_external_dependencies_command
@@ -279,6 +280,7 @@ def list_external_dependencies(
 
 @app.command()
 def check_licenses(
+    ctx: typer.Context,
     recursive: bool = typer.Option(
         False,
         "--recursive",
@@ -291,7 +293,18 @@ def check_licenses(
     Check that selected addons only depend on addons with compatible
     licenses.
     """
-    not_implemented("check-license command")
+    main_options: MainOptions = ctx.obj
+    ensure_odoo_series(main_options.odoo_series)
+    assert main_options.odoo_series
+    errors = check_licenses_command(
+        main_options.addons_selection,
+        main_options.addons_set,
+        recursive,
+        main_options.odoo_series,
+    )
+    if errors:
+        echo.error("\n".join(errors), err=False)
+        raise typer.Exit(1)
 
 
 @app.command()
@@ -348,8 +361,8 @@ def tree(
 
 
 def main() -> None:
-    app(obj=MainOptions())
+    app(obj=MainOptions())  # pragma: no cover
 
 
 if __name__ == "__main__":
-    main()
+    main()  # pragma: no cover
