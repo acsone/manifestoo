@@ -1,7 +1,7 @@
 from typer.testing import CliRunner
 
-from manifestoo.__main__ import app
 from manifestoo.commands.check_licenses import check_licenses_command
+from manifestoo.main import app
 from manifestoo.odoo_series import OdooSeries
 
 from .common import mock_addons_selection, mock_addons_set, populate_addons_dir

@@ -23,8 +23,8 @@ tests = [
 ]
 
 [tool.flit.scripts]
-manifestoo = "manifestoo.__main__:main"
-moo = "manifestoo.__main__:main"
+manifestoo = "manifestoo.main:app"
+moo = "manifestoo.main:app"
 
 [tool.isort]
 profile = "black"

@@ -2,7 +2,7 @@ import textwrap
 
 from typer.testing import CliRunner
 
-from manifestoo.__main__ import app
+from manifestoo.main import app
 
 from .common import populate_addons_dir
 

@@ -1,7 +1,7 @@
 from typer.testing import CliRunner
 
-from manifestoo.__main__ import app
 from manifestoo.commands.list import list_command
+from manifestoo.main import app
 
 from .common import mock_addons_selection, populate_addons_dir
 

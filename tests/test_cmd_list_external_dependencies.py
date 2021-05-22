@@ -1,9 +1,9 @@
 from typer.testing import CliRunner
 
-from manifestoo.__main__ import app
 from manifestoo.commands.list_external_dependencies import (
     list_external_dependencies_command,
 )
+from manifestoo.main import app
 
 from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
 

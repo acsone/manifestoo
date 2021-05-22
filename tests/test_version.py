@@ -1,6 +1,7 @@
 from typer.testing import CliRunner
 
-from manifestoo.__main__ import __version__, app
+from manifestoo.main import app
+from manifestoo.version import __version__
 
 runner = CliRunner()
 
