@@ -6,7 +6,7 @@ from ..addon import Addon
 from ..addons_selection import AddonsSelection
 from ..addons_set import AddonsSet
 from ..core_addons import is_core_addon, is_core_ce_addon, is_core_ee_addon
-from ..odoo_series import OdooSeries
+from ..odoo_series import OdooEdition, OdooSeries
 
 NodeKey = str
 
@@ -59,9 +59,9 @@ class Node:
         if not self.addon:
             return typer.style("✘ not installed", fg=typer.colors.RED)
         elif is_core_ce_addon(self.addon_name, odoo_series):
-            return f"{odoo_series}+c"
+            return f"{odoo_series}+{OdooEdition.CE}"
         elif is_core_ee_addon(self.addon_name, odoo_series):
-            return f"{odoo_series}+e"
+            return f"{odoo_series}+{OdooEdition.EE}"
         else:
             return self.addon.manifest.version or "no version"
 
