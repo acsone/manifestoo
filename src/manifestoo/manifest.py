@@ -1,9 +1,6 @@
+import ast
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, TypeVar
-
-import typer
-
-from . import echo
 
 T = TypeVar("T")
 VT = TypeVar("VT")
@@ -61,10 +58,25 @@ def _check_dict_of_dict_of_list_of_str(value: Any) -> Dict[str, Dict[str, List[s
     )
 
 
+class InvalidManifest(Exception):
+    pass
+
+
 class Manifest:
     def __init__(self, manifest_path: Path, manifest: Dict[Any, Any]) -> None:
         self._manifest_path = manifest_path
         self._manifest = manifest
+
+    @classmethod
+    def from_manifest_path(cls, manifest_path: Path) -> "Manifest":
+        try:
+            manifest = ast.literal_eval(manifest_path.read_text())
+        except SyntaxError as e:
+            raise InvalidManifest(f"Manifest {manifest_path} is invalid: {e}")
+        else:
+            if not isinstance(manifest, dict):
+                raise InvalidManifest(f"Manifest {manifest_path} is not a dictionary")
+            return Manifest(manifest_path, manifest)
 
     def _get(self, key: str, checker: Callable[[Any], T], default: T) -> T:
         """Get value with runtime type check."""
@@ -75,8 +87,9 @@ class Manifest:
         try:
             return checker(value)
         except TypeError:
-            echo.error(f"'{key}' key has invalid type in {self._manifest_path}")
-            raise typer.Abort()
+            raise InvalidManifest(
+                f"{key!r} key has invalid type in {self._manifest_path}"
+            )
 
     @property
     def name(self) -> Optional[str]:

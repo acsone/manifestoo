@@ -1,26 +1,25 @@
-import ast
 from pathlib import Path
 
-from .manifest import Manifest
+from .manifest import InvalidManifest, Manifest
 
 
 class AddonNotFound(Exception):
     pass
 
 
-class AddonNotInstallable(AddonNotFound):
+class AddonNotFoundNotInstallable(AddonNotFound):
     pass
 
 
-class NoManifestFound(AddonNotFound):
+class AddonNotFoundNoManifest(AddonNotFound):
     pass
 
 
-class NotADirectory(AddonNotFound):
+class AddonNotFoundNotADirectory(AddonNotFound):
     pass
 
 
-class InvalidManifest(AddonNotFound):
+class AddonNotFoundInvalidManifest(AddonNotFound):
     pass
 
 
@@ -29,18 +28,7 @@ def _get_manifest_path(addon_dir: Path) -> Path:
         manifest_path = addon_dir / manifest_name
         if manifest_path.is_file():
             return manifest_path
-    raise NoManifestFound(f"No manifest found in {addon_dir}")
-
-
-def _read_manifest(path: Path) -> Manifest:
-    try:
-        manifest = ast.literal_eval(path.read_text())
-    except SyntaxError as e:
-        raise InvalidManifest(f"Manifest {path} is invalid: {e}")
-    else:
-        if not isinstance(manifest, dict):
-            raise InvalidManifest(f"Manifest {path} is not a dictionary")
-        return Manifest(path, manifest)
+    raise AddonNotFoundNoManifest(f"No manifest found in {addon_dir}")
 
 
 class Addon:
@@ -56,9 +44,12 @@ class Addon:
         cls, addon_dir: Path, allow_not_installable: bool = False
     ) -> "Addon":
         if not addon_dir.is_dir():
-            raise NotADirectory(f"{addon_dir} is not a directory")
+            raise AddonNotFoundNotADirectory(f"{addon_dir} is not a directory")
         manifest_path = _get_manifest_path(addon_dir)
-        manifest = _read_manifest(manifest_path)
-        if not manifest.installable and not allow_not_installable:
-            raise AddonNotInstallable(f"{addon_dir} is not installable")
+        try:
+            manifest = Manifest.from_manifest_path(manifest_path)
+            if not manifest.installable and not allow_not_installable:
+                raise AddonNotFoundNotInstallable(f"{addon_dir} is not installable")
+        except InvalidManifest as e:
+            raise AddonNotFoundInvalidManifest from e
         return cls(manifest, manifest_path)
