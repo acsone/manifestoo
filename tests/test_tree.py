@@ -28,11 +28,9 @@ def test_integration(tmp_path):
         """\
             a (13.0.1.0.0)
             ├── b (no version)
-            │   ├── base (13.0+c)
             │   └── mail (✘ not installed)
             └── c (no version)
                 ├── account (13.0+c)
-                │   └── base ⬆
                 └── b ⬆
         """
     )

@@ -85,11 +85,15 @@ def tree_command(
             # not found
             return node
         for depend in addon.manifest.depends:
+            if depend == "base":
+                continue
             node.children.append(add(depend))
         return node
 
     root_nodes: List[Node] = []
     for addon_name in sorted(addons_selection):
+        if addon_name == "base":
+            continue
         root_nodes.append(add(addon_name))
     for root_node in root_nodes:
         root_node.print(odoo_series, fold_core_addons)
