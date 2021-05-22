@@ -43,16 +43,16 @@ def can_depend_on(work_license: LicenseType, dependency_license: LicenseType) ->
 
 
 _licenses: Dict[str, LicenseType] = {
-    "Other Proprietary": LicenseType.PROPRIETARY,
-    "OEEL-1": LicenseType.PROPRIETARY,
-    "AGPL-3": LicenseType.NETWORK_PROTECTIVE,
-    "GPL-3": LicenseType.STRONGLY_PROTECTIVE,
-    "GPL-3 or any later version": LicenseType.STRONGLY_PROTECTIVE,
-    "LGPL-3": LicenseType.WEAKLY_PROTECTIVE,
-    "LGPL-3 or any later version": LicenseType.WEAKLY_PROTECTIVE,
-    "MIT": LicenseType.PERMISSIVE,
+    "other proprietary": LicenseType.PROPRIETARY,
+    "oeel-1": LicenseType.PROPRIETARY,
+    "agpl-3": LicenseType.NETWORK_PROTECTIVE,
+    "gpl-3": LicenseType.STRONGLY_PROTECTIVE,
+    "gpl-3 or any later version": LicenseType.STRONGLY_PROTECTIVE,
+    "lgpl-3": LicenseType.WEAKLY_PROTECTIVE,
+    "lgpl-3 or any later version": LicenseType.WEAKLY_PROTECTIVE,
+    "mit": LicenseType.PERMISSIVE,
 }
 
 
 def get_license_type(license: str) -> Optional[LicenseType]:
-    return _licenses.get(license)
+    return _licenses.get(license.lower())
