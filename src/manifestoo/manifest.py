@@ -63,9 +63,9 @@ class InvalidManifest(Exception):
 
 
 class Manifest:
-    def __init__(self, manifest_path: Path, manifest: Dict[Any, Any]) -> None:
-        self._manifest_path = manifest_path
-        self._manifest = manifest
+    def __init__(self, manifest_path: Path, manifest_dict: Dict[Any, Any]) -> None:
+        self.manifest_path = manifest_path
+        self.manifest_dict = manifest_dict
 
     @classmethod
     def from_manifest_path(cls, manifest_path: Path) -> "Manifest":
@@ -81,14 +81,14 @@ class Manifest:
     def _get(self, key: str, checker: Callable[[Any], T], default: T) -> T:
         """Get value with runtime type check."""
         try:
-            value = self._manifest[key]
+            value = self.manifest_dict[key]
         except KeyError:
             return default
         try:
             return checker(value)
         except TypeError:
             raise InvalidManifest(
-                f"{key!r} key has invalid type in {self._manifest_path}"
+                f"{key!r} key has invalid type in {self.manifest_path}"
             )
 
     @property

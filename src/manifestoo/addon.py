@@ -32,11 +32,10 @@ def _get_manifest_path(addon_dir: Path) -> Path:
 
 
 class Addon:
-    def __init__(self, manifest: Manifest, manifest_path: Path):
-        assert manifest._manifest_path == manifest_path
+    def __init__(self, manifest: Manifest):
         self.manifest = manifest
-        self.manifest_path = manifest_path
-        self.path = manifest_path.parent
+        self.manifest_path = manifest.manifest_path
+        self.path = self.manifest_path.parent
         self.name = self.path.name
 
     @classmethod
@@ -48,8 +47,8 @@ class Addon:
         manifest_path = _get_manifest_path(addon_dir)
         try:
             manifest = Manifest.from_manifest_path(manifest_path)
-            if not manifest.installable and not allow_not_installable:
+            if not allow_not_installable and not manifest.installable:
                 raise AddonNotFoundNotInstallable(f"{addon_dir} is not installable")
         except InvalidManifest as e:
             raise AddonNotFoundInvalidManifest from e
-        return cls(manifest, manifest_path)
+        return cls(manifest)
