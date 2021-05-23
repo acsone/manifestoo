@@ -5,7 +5,7 @@ from enum import Enum
 from functools import lru_cache
 from typing import Set
 
-if sys.version_info >= (3, 9):
+if sys.version_info >= (3, 7):
     from importlib.resources import open_text
 else:
     from importlib_resources import open_text
