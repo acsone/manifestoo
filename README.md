@@ -1,147 +1,100 @@
-# `manifestoo`
+# Manifestoo
 
-Do things with Odoo addons lists.
+[![Github-CI][github-ci]][github-link]
+[![Coverage Status][codecov-badge]][codecov-link]
+[![PyPI][pypi-badge]][pypi-link]
 
-The `--select-*` options of this command select addons on which the
-subcommands will act. The `--addons-path` options provide locations to
-search for addons.
+A tool to reason about [Odoo](https://odoo.com) addons manifests.
 
-Run `manifestoo <subcommand> --help` for more options.
+## Installation
 
-**Usage**:
-
-```console
-$ manifestoo [OPTIONS] COMMAND [ARGS]...
-```
-
-**Options**:
-
-* `-d, --select-addons-dir DIRECTORY`: Select all installable addons found in this directory. This option may be repeated. The directories selected with this options are automatically added to the addons search path.
-* `--select-include, --select addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
-* `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with `--select-addons-dir`.
-* `--select-core-addons`: Select the Odoo core addons (CE and EE) for the given series.
-* `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
-* `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
-* `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the `python` executable found in PATH.
-* `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
-* `--separator TEXT`: Separator charater to use (by default, print one item per line).
-* `--odoo-series [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`: Odoo series to use, in case it is not autodetected from addons version.  [env var: ODOO_VERSION, ODOO_SERIES]
-* `-v, --verbose`
-* `-q, --quiet`
-* `--version`
-* `--install-completion`: Install completion for the current shell.
-* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
-* `--help`: Show this message and exit.
-
-**Commands**:
-
-* `check-dev-status`: Check development status compatibility.
-* `check-licenses`: Check license compatibility.
-* `list`: Print the selected addons.
-* `list-depends`: Print the dependencies of selected addons.
-* `list-external-dependencies`: Print the external dependencies of selected...
-* `tree`: Print the dependency tree of selected addons.
-
-## `manifestoo check-dev-status`
-
-Check development status compatibility.
-
-Check that selected addons only depend on addons that have an equal
-or higher development status.
-
-**Usage**:
+Using [pipx](https://pypi.org/project/pipx/) (recommended):
 
 ```console
-$ manifestoo check-dev-status [OPTIONS]
+pipx install manifestoo
 ```
 
-**Options**:
-
-* `--recursive`: Recursively check dependent addons.
-* `--default-dev-status TEXT`
-* `--help`: Show this message and exit.
-
-## `manifestoo check-licenses`
-
-Check license compatibility.
-
-Check that selected addons only depend on addons with compatible
-licenses.
-
-**Usage**:
+Using [pip](https://pypi.org/project/pip/):
 
 ```console
-$ manifestoo check-licenses [OPTIONS]
+pip install --user manifestoo
 ```
 
-**Options**:
+## Features
 
-* `--recursive`: Recursively check dependent addons.
-* `--help`: Show this message and exit.
+Manifestoo provides the following features:
 
-## `manifestoo list`
+* listing addons,
+* listing direct and transitive dependencies of selected addons,
+* listing the names of core Odoo CE and EE addons,
+* listing external dependencies,
+* displaying the dependency tree,
+* checking license compatibility,
+* checking development status compatibility.
 
-Print the selected addons.
+For a full list of commands an options, run `manifestoo --help`.
 
-**Usage**:
+The complete CLI documentation is available in [docs/cli.md](docs/cli.md).
+## Quick start
+
+Let's create a directory (`/tmp/myaddons`) containing addons `a`, `b` and `c`,
+where `a` depends on `b` and `c`, and `b` and `c` respectively depend on the
+`contacts` and `mail` core Odoo modules.
+
+Using `bash` you can do it like this:
 
 ```console
-$ manifestoo list [OPTIONS]
-```
+$ mkdir -p /tmp/myaddons/{a,b,c}
+$ echo '{"name": "A", "version": "14.0.1.0.0", "depends": ["b", "c"], "license": "GPL-3"}' > /tmp/myaddons/a/__manifest__.py
+$ echo '{"name": "B", "version": "14.0.1.0.0", "depends": ["crm"], "license": "Other Proprietary"}' > /tmp/myaddons/b/__manifest__.py
+$ echo '{"name": "C", "version": "14.0.1.0.0", "depends": ["mail"], "license": "LGPL-3"}' > /tmp/myaddons/c/__manifest__.py```
 
-**Options**:
-
-* `--help`: Show this message and exit.
-
-## `manifestoo list-depends`
-
-Print the dependencies of selected addons.
-
-**Usage**:
+The manifestoo `list` command is useful to install list all installable
+addons in a directory:
 
 ```console
-$ manifestoo list-depends [OPTIONS]
+$ manifestoo --select-addons-dir /tmp/myaddons list
+a
+b
+c
 ```
 
-**Options**:
-
-* `--recursive`: Recursively print dependencies.
-* `--include-selected`: Print the selected addons along with their dependencies.
-* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and recursive dependencies.
-* `--as-pip-requirements`
-* `--help`: Show this message and exit.
-
-## `manifestoo list-external-dependencies`
-
-Print the external dependencies of selected addons.
-
-**Usage**:
+The `list-depend` command shows the direct dependencies. It is handy to
+pre-install a test database before running tests.
 
 ```console
-$ manifestoo list-external-dependencies [OPTIONS] KIND
+$ manifestoo -d /tmp/myaddons --separator=, list-depends
+crm,mail
 ```
 
-**Arguments**:
-
-* `KIND`: Kind of external dependency, such as `python` or `deb`.  [required]
-
-**Options**:
-
-* `--recursive`: Recursively print external dependencies of dependent addons.
-* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and recursive dependencies.
-* `--help`: Show this message and exit.
-
-## `manifestoo tree`
-
-Print the dependency tree of selected addons.
-
-**Usage**:
+You can explore the dependency tree of module `a` like this:
 
 ```console
-$ manifestoo tree [OPTIONS]
+$ manifestoo --addons-path /tmp/myaddons --select a tree
+a (14.0.1.0.0)
+├── b (14.0.1.0.0)
+│   └── contacts (14.0+c)
+│       └── mail (14.0+c)
+│           ├── base_setup (14.0+c)
+│           │   └── web (14.0+c)
+│           ├── bus (14.0+c)
+│           │   └── web ⬆
+│           └── web_tour (14.0+c)
+│               └── web ⬆
+└── c (14.0.1.0.0)
+    └── mail ⬆
 ```
 
-**Options**:
+To check that licenses are compatibles:
 
-* `--fold-core-addons`: Do not expand dependencies of core Odoo addons.
-* `--help`: Show this message and exit.
+```console
+$ moo -d /tmp/myaddons check-licenses
+a (GPL-3) depends on b (Other Proprietary)
+```
+
+[github-ci]: https://github.com/sbidoul/manifestoo/actions/workflows/ci.yml/badge.svg
+[github-link]: https://github.com/sbidoul/manifestoo
+[codecov-badge]: https://codecov.io/gh/sbidoul/manifestoo/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/sbidoul/manifestoo
+[pypi-badge]: https://img.shields.io/pypi/v/manifestoo.svg
+[pypi-link]: https://pypi.org/project/manifestoo
