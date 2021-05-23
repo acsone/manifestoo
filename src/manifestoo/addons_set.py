@@ -16,7 +16,8 @@ class AddonsSet(Dict[str, Addon]):
         for addon_dir in addons_dir.iterdir():
             try:
                 addon = Addon.from_addon_dir(addon_dir)
-            except AddonNotFound:
+            except AddonNotFound as e:
+                echo.debug(f"ignoring {addon_dir}: {e}")
                 continue
             else:
                 self[addon.name] = addon

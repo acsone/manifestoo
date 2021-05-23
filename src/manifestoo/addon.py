@@ -50,5 +50,5 @@ class Addon:
             if not allow_not_installable and not manifest.installable:
                 raise AddonNotFoundNotInstallable(f"{addon_dir} is not installable")
         except InvalidManifest as e:
-            raise AddonNotFoundInvalidManifest from e
+            raise AddonNotFoundInvalidManifest(str(e)) from e
         return cls(manifest)
