@@ -192,10 +192,10 @@ def list(ctx: typer.Context) -> None:
 @app.command()
 def list_depends(
     ctx: typer.Context,
-    recursive: bool = typer.Option(
+    transitive: bool = typer.Option(
         False,
-        "--recursive",
-        help="Recursively print dependencies.",
+        "--transitive",
+        help="Print all transitive dependencies.",
         show_default=False,
     ),
     include_selected: bool = typer.Option(
@@ -210,7 +210,7 @@ def list_depends(
         help=(
             "Do not fail if dependencies are not found in addons path. "
             "This only applies to top level (selected) addons "
-            "and recursive dependencies."
+            "and transitive dependencies."
         ),
         show_default=False,
     ),
@@ -227,7 +227,7 @@ def list_depends(
     result, missing = list_depends_command(
         main_options.addons_selection,
         main_options.addons_set,
-        recursive,
+        transitive,
         include_selected,
     )
     if missing and not ignore_missing:
@@ -246,10 +246,10 @@ def list_external_dependencies(
         ...,
         help="Kind of external dependency, such as `python` or `deb`.",
     ),
-    recursive: bool = typer.Option(
+    transitive: bool = typer.Option(
         False,
-        "--recursive",
-        help="Recursively print external dependencies of dependent addons.",
+        "--transitive",
+        help="Print external dependencies of all transitive dependent addons.",
         show_default=False,
     ),
     ignore_missing: bool = typer.Option(
@@ -258,7 +258,7 @@ def list_external_dependencies(
         help=(
             "Do not fail if dependencies are not found in addons path. "
             "This only applies to top level (selected) addons "
-            "and recursive dependencies."
+            "and transitive dependencies."
         ),
         show_default=False,
     ),
@@ -269,7 +269,7 @@ def list_external_dependencies(
         main_options.addons_selection,
         main_options.addons_set,
         kind,
-        recursive,
+        transitive,
     )
     if missing and not ignore_missing:
         echo.error("not found in addons path: " + ",".join(sorted(missing)))
@@ -283,10 +283,10 @@ def list_external_dependencies(
 @app.command()
 def check_licenses(
     ctx: typer.Context,
-    recursive: bool = typer.Option(
+    transitive: bool = typer.Option(
         False,
-        "--recursive",
-        help="Recursively check dependent addons.",
+        "--transitive",
+        help="Also check transitive dependencies.",
         show_default=False,
     ),
 ) -> None:
@@ -301,7 +301,7 @@ def check_licenses(
     errors = check_licenses_command(
         main_options.addons_selection,
         main_options.addons_set,
-        recursive,
+        transitive,
         main_options.odoo_series,
     )
     if errors:
@@ -312,10 +312,10 @@ def check_licenses(
 @app.command()
 def check_dev_status(
     ctx: typer.Context,
-    recursive: bool = typer.Option(
+    transitive: bool = typer.Option(
         False,
-        "--recursive",
-        help="Recursively check dependent addons.",
+        "--transitive",
+        help="Also check transitive dependencies.",
         show_default=False,
     ),
     default_dev_status: Optional[str] = None,
@@ -332,7 +332,7 @@ def check_dev_status(
         main_options.addons_selection,
         main_options.addons_set,
         default_dev_status,
-        recursive,
+        transitive,
         main_options.odoo_series,
     )
     if errors:

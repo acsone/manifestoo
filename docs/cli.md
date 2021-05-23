@@ -57,7 +57,7 @@ $ manifestoo check-dev-status [OPTIONS]
 
 **Options**:
 
-* `--recursive`: Recursively check dependent addons.
+* `--transitive`: Also check transitive dependencies.
 * `--default-dev-status TEXT`
 * `--help`: Show this message and exit.
 
@@ -65,8 +65,7 @@ $ manifestoo check-dev-status [OPTIONS]
 
 Check license compatibility.
 
-Check that selected addons only depend on addons with compatible
-licenses.
+Check that selected addons only depend on addons with compatible licenses.
 
 **Usage**:
 
@@ -76,7 +75,7 @@ $ manifestoo check-licenses [OPTIONS]
 
 **Options**:
 
-* `--recursive`: Recursively check dependent addons.
+* `--transitive`: Also check transitive dependencies.
 * `--help`: Show this message and exit.
 
 ## `manifestoo list`
@@ -105,9 +104,9 @@ $ manifestoo list-depends [OPTIONS]
 
 **Options**:
 
-* `--recursive`: Recursively print dependencies.
+* `--transitive`: Print all transitive dependencies.
 * `--include-selected`: Print the selected addons along with their dependencies.
-* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and recursive dependencies.
+* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.
 * `--as-pip-requirements`
 * `--help`: Show this message and exit.
 
@@ -127,8 +126,8 @@ $ manifestoo list-external-dependencies [OPTIONS] KIND
 
 **Options**:
 
-* `--recursive`: Recursively print external dependencies of dependent addons.
-* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and recursive dependencies.
+* `--transitive`: Print external dependencies of all transitive dependent addons.
+* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.
 * `--help`: Show this message and exit.
 
 ## `manifestoo tree`

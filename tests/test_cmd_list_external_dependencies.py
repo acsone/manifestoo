@@ -16,14 +16,14 @@ def tests_basic():
         }
     )
     assert list_external_dependencies_command(
-        mock_addons_selection("a"), addons_set, "deb", recursive=False
+        mock_addons_selection("a"), addons_set, "deb", transitive=False
     ) == (
         [],
         set(),
     )
 
 
-def tests_recursive():
+def tests_transitive():
     addons_set = mock_addons_set(
         {
             "a": {"depends": ["b"]},
@@ -31,7 +31,7 @@ def tests_recursive():
         }
     )
     assert list_external_dependencies_command(
-        mock_addons_selection("a"), addons_set, "deb", recursive=True
+        mock_addons_selection("a"), addons_set, "deb", transitive=True
     ) == (
         ["imagemagick"],
         set(),
@@ -65,7 +65,7 @@ def test_integration(tmp_path):
             f"--select-addons-dir={tmp_path}",
             "list-external-dependencies",
             "deb",
-            "--recursive",
+            "--transitive",
         ],
         catch_exceptions=False,
     )

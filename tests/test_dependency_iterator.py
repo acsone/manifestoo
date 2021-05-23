@@ -13,12 +13,14 @@ def test_basic():
     assert sorted(
         addon_name
         for addon_name, _ in dependency_iterator(
-            ["a", "c"], addons_set, recursive=False
+            ["a", "c"], addons_set, transitive=False
         )
     ) == ["a", "c"]
     assert sorted(
         addon_name
-        for addon_name, _ in dependency_iterator(["a", "c"], addons_set, recursive=True)
+        for addon_name, _ in dependency_iterator(
+            ["a", "c"], addons_set, transitive=True
+        )
     ) == ["a", "b", "c"]
 
 
@@ -32,5 +34,7 @@ def test_loop():
     )
     assert sorted(
         addon_name
-        for addon_name, _ in dependency_iterator(["a", "c"], addons_set, recursive=True)
+        for addon_name, _ in dependency_iterator(
+            ["a", "c"], addons_set, transitive=True
+        )
     ) == ["a", "b", "c"]

@@ -14,13 +14,13 @@ def test_basic():
         }
     )
     addons_selection = mock_addons_selection("a")
-    assert list_depends_command(addons_selection, addons_set, recursive=False) == (
+    assert list_depends_command(addons_selection, addons_set, transitive=False) == (
         ["b"],
         set(),
     )
 
 
-def test_recursive():
+def test_transitive():
     addons_set = mock_addons_set(
         {
             "a": {"depends": ["b"]},
@@ -29,11 +29,11 @@ def test_recursive():
         }
     )
     addons_selection = mock_addons_selection("a")
-    assert list_depends_command(addons_selection, addons_set, recursive=False) == (
+    assert list_depends_command(addons_selection, addons_set, transitive=False) == (
         ["b"],
         set(),
     )
-    assert list_depends_command(addons_selection, addons_set, recursive=True) == (
+    assert list_depends_command(addons_selection, addons_set, transitive=True) == (
         [
             "b",
             "c",
@@ -51,7 +51,7 @@ def test_loop():
         }
     )
     addons_selection = mock_addons_selection("a")
-    assert list_depends_command(addons_selection, addons_set, recursive=True) == (
+    assert list_depends_command(addons_selection, addons_set, transitive=True) == (
         [
             "b",
             "c",
@@ -59,7 +59,7 @@ def test_loop():
         set(),
     )
     assert list_depends_command(
-        addons_selection, addons_set, include_selected=True, recursive=True
+        addons_selection, addons_set, include_selected=True, transitive=True
     ) == (
         [
             "a",
@@ -77,7 +77,7 @@ def test_missing():
         }
     )
     assert list_depends_command(
-        mock_addons_selection("a"), addons_set, recursive=False
+        mock_addons_selection("a"), addons_set, transitive=False
     ) == (
         [
             "b",
@@ -85,7 +85,7 @@ def test_missing():
         set(),
     )
     assert list_depends_command(
-        mock_addons_selection("a"), addons_set, recursive=True
+        mock_addons_selection("a"), addons_set, transitive=True
     ) == (
         [
             "b",
@@ -93,7 +93,7 @@ def test_missing():
         {"b"},
     )
     assert list_depends_command(
-        mock_addons_selection("a,c"), addons_set, recursive=True
+        mock_addons_selection("a,c"), addons_set, transitive=True
     ) == (
         [
             "b",
@@ -101,7 +101,7 @@ def test_missing():
         {"b", "c"},
     )
     assert list_depends_command(
-        mock_addons_selection("a,c"), addons_set, include_selected=True, recursive=True
+        mock_addons_selection("a,c"), addons_set, include_selected=True, transitive=True
     ) == (
         ["a", "b", "c"],
         {"b", "c"},

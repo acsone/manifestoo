@@ -17,7 +17,7 @@ def test_missing_license():
     errors = check_licenses_command(
         addons_selection,
         addons_set,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v12_0,
     )
     assert errors == []
@@ -34,7 +34,7 @@ def test_mit_depends_mit():
     errors = check_licenses_command(
         addons_selection,
         addons_set,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v12_0,
     )
     assert errors == []
@@ -51,7 +51,7 @@ def test_unknown_license_cant_depend_on_open_source():
     errors = check_licenses_command(
         addons_selection,
         addons_set,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v12_0,
     )
     assert errors == ["a (My License) depends on b (GPL-3)"]
@@ -68,7 +68,7 @@ def test_unknown_license_can_depend_on_proprietary():
     errors = check_licenses_command(
         addons_selection,
         addons_set,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v12_0,
     )
     assert errors == []
@@ -85,7 +85,7 @@ def test_v8_agpl():
     errors = check_licenses_command(
         addons_selection,
         addons_set,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v8_0,
     )
     assert errors == ["a (LGPL-3) depends on account (AGPL-3)"]
@@ -102,7 +102,7 @@ def test_v12_ce_lgpl():
     errors = check_licenses_command(
         addons_selection,
         addons_set,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v12_0,
     )
     assert errors == []
@@ -119,7 +119,7 @@ def test_v12_ee_proprietary():
     errors = check_licenses_command(
         addons_selection,
         addons_set,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v12_0,
     )
     assert errors == ["a (LGPL-3) depends on account_accountant (OEEL-1)"]
@@ -140,7 +140,7 @@ def test_integration(tmp_path):
             "--select-include=a",
             "--odoo-series=13.0",
             "check-licenses",
-            "--recursive",
+            "--transitive",
         ],
         catch_exceptions=False,
     )

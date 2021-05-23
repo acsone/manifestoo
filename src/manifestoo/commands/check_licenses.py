@@ -34,12 +34,12 @@ def _get_license_type_or_proprietary(
 def check_licenses_command(
     addons_selection: AddonsSelection,
     addons_set: AddonsSet,
-    recursive: bool,
+    transitive: bool,
     odoo_series: OdooSeries,
 ) -> Iterable[str]:
     errors: Set[str] = set()
     for addon_name, addon in dependency_iterator(
-        addons_selection, addons_set, recursive
+        addons_selection, addons_set, transitive
     ):
         if not addon:
             errors.add(f"{addon_name} not found")

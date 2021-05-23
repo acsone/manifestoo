@@ -21,7 +21,7 @@ def test_missing_dev_status():
         addons_selection,
         addons_set,
         default_dev_status=None,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v12_0,
     )
     assert errors == ["a has missing development_status"]
@@ -39,7 +39,7 @@ def test_missing_dev_status_depends():
         addons_selection,
         addons_set,
         default_dev_status=None,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v14_0,
     )
     assert errors == ["b has missing development_status"]
@@ -57,7 +57,7 @@ def test_invalid_dev_status():
         addons_selection,
         addons_set,
         default_dev_status=None,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v13_0,
     )
     assert sorted(errors) == [
@@ -78,7 +78,7 @@ def test_invalid_dev_status_depends():
         addons_selection,
         addons_set,
         default_dev_status=None,
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == ["b has invalid development_status 'bad'"]
@@ -91,7 +91,7 @@ def test_missing_selection():
         addons_selection,
         addons_set,
         default_dev_status="Beta",
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == ["a not found"]
@@ -108,7 +108,7 @@ def test_missing_depend():
         addons_selection,
         addons_set,
         default_dev_status="Beta",
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == ["b not found"]
@@ -126,7 +126,7 @@ def test_ok():
         addons_selection,
         addons_set,
         default_dev_status="Beta",
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == []
@@ -144,7 +144,7 @@ def test_basic():
         addons_selection,
         addons_set,
         default_dev_status="Beta",
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == ["a (Beta) depends on b (Alpha)"]
@@ -163,7 +163,7 @@ def test_double():
         sorted(addons_selection),
         addons_set,
         default_dev_status="Beta",
-        recursive=True,
+        transitive=True,
         odoo_series=OdooSeries.v13_0,
     )
     assert sorted(errors) == [
@@ -172,7 +172,7 @@ def test_double():
     ]
 
 
-def test_recursive():
+def test_transitive():
     addons_set = mock_addons_set(
         {
             "a": {"depends": ["b"]},
@@ -185,7 +185,7 @@ def test_recursive():
         addons_selection,
         addons_set,
         default_dev_status="Beta",
-        recursive=False,
+        transitive=False,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == []
@@ -193,7 +193,7 @@ def test_recursive():
         addons_selection,
         addons_set,
         default_dev_status="Beta",
-        recursive=True,
+        transitive=True,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == ["b (Beta) depends on c (Alpha)"]
@@ -211,7 +211,7 @@ def test_core_addon():
         addons_selection,
         addons_set,
         default_dev_status="Beta",
-        recursive=True,
+        transitive=True,
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == []

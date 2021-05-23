@@ -8,7 +8,7 @@ from .addons_set import AddonsSet
 def dependency_iterator(
     addons_selection: AddonsSelection,
     addons_set: AddonsSet,
-    recursive: bool,
+    transitive: bool,
 ) -> Iterator[Tuple[str, Optional[Addon]]]:
     """Iterate addons and their dependencies.
 
@@ -16,7 +16,7 @@ def dependency_iterator(
     - addon name
     - addon object (None if not found in addons_set)
 
-    If recursive is False, only yield addon_selection.
+    If transitive is False, only yield addon_selection.
 
     An addon is yielded at most once.
     """
@@ -29,7 +29,7 @@ def dependency_iterator(
         for addon_name in addon_names:
             addon = addons_set.get(addon_name)
             yield addon_name, addon
-            if recursive and addon:
+            if transitive and addon:
                 yield from _iter(set(addon.manifest.depends) - done)
 
     yield from _iter(addons_selection)

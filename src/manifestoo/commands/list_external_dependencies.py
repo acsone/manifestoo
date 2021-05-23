@@ -9,12 +9,12 @@ def list_external_dependencies_command(
     addons_selection: AddonsSelection,
     addons_set: AddonsSet,
     kind: str,
-    recursive: bool = False,
+    transitive: bool = False,
 ) -> Tuple[Iterable[str], Iterable[str]]:
     result: Set[str] = set()
     missing: Set[str] = set()
     for addon_name, addon in dependency_iterator(
-        addons_selection, addons_set, recursive
+        addons_selection, addons_set, transitive
     ):
         if not addon:
             missing.add(addon_name)
