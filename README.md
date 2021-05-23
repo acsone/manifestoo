@@ -34,7 +34,7 @@ Manifestoo provides the following features:
 
 For a full list of commands an options, run `manifestoo --help`.
 
-The complete CLI documentation is available in [docs/cli.md](docs/cli.md).
+The complete CLI documentation is available in [docs/cli.md]([docs/cli.md](https://github.com/sbidoul/manifestoo/blob/main/docs/cli.md)).
 ## Quick start
 
 Let's create a directory (`/tmp/myaddons`) containing addons `a`, `b` and `c`,
