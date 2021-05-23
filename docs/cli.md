@@ -1,6 +1,6 @@
 # `manifestoo`
 
-Do things with Odoo addons lists.
+Reason about Odoo addons manifests.
 
 The `--select-*` options of this command select addons on which the
 subcommands will act. The `--addons-path` options provide locations to
