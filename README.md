@@ -44,10 +44,10 @@ where `a` depends on `b` and `c`, and `b` and `c` respectively depend on the
 Using `bash` you can do it like this:
 
 ```console
-$ mkdir -p /tmp/myaddons/{a,b,c}
-$ echo '{"name": "A", "version": "14.0.1.0.0", "depends": ["b", "c"], "license": "GPL-3"}' > /tmp/myaddons/a/__manifest__.py
-$ echo '{"name": "B", "version": "14.0.1.0.0", "depends": ["crm"], "license": "Other Proprietary"}' > /tmp/myaddons/b/__manifest__.py
-$ echo '{"name": "C", "version": "14.0.1.0.0", "depends": ["mail"], "license": "LGPL-3"}' > /tmp/myaddons/c/__manifest__.py```
+mkdir -p /tmp/myaddons/{a,b,c}
+echo '{"name": "A", "version": "14.0.1.0.0", "depends": ["b", "c"], "license": "GPL-3"}' > /tmp/myaddons/a/__manifest__.py
+echo '{"name": "B", "version": "14.0.1.0.0", "depends": ["crm"], "license": "Other Proprietary"}' > /tmp/myaddons/b/__manifest__.py
+echo '{"name": "C", "version": "14.0.1.0.0", "depends": ["mail"], "license": "LGPL-3"}' > /tmp/myaddons/c/__manifest__.py
 ```
 
 The manifestoo `list` command is useful to list all installable addons in a
