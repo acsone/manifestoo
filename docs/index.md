@@ -13,6 +13,8 @@ installation
 getting-started
 CLI <cli>
 API <api>
+Changelog <changelog>
+GitHub Repository <https://github.com/sbidoul/manifestoo>
 ```
 
 ```{include} ../README.md

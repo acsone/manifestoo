@@ -34,6 +34,7 @@ doc = [
     "furo",
     "myst-parser",
     "typer-cli",  # to generate docs/cli.md
+    "towncrier",
 ]
 
 [tool.flit.metadata.urls]
@@ -64,3 +65,11 @@ show_missing = true
 exclude_lines = [
     "pragma: no cover",
 ]
+
+[tool.towncrier]
+package = "manifestoo"
+package_dir = "src"
+filename = "HISTORY.rst"
+directory = "news"
+issue_format = "[{issue}](https://github.com/sbidoul/manifestoo/issuers/{issue})"
+title_format = "{version} ({project_date})"
