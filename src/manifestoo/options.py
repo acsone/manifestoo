@@ -11,5 +11,5 @@ class MainOptions:
         self.addons_path = AddonsPath()
         self.addons_set = AddonsSet()
         self.addons_selection = AddonsSelection()
-        self.separator = "\n"
+        self.separator: Optional[str] = None  # deprecated
         self.odoo_series: Optional[OdooSeries] = None
