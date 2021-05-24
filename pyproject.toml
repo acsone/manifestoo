@@ -29,6 +29,12 @@ test = [
     "pytest",
     "coverage[toml]",
 ]
+doc = [
+    "sphinx",
+    "furo",
+    "myst-parser",
+    "typer-cli",  # to generate docs/cli.md
+]
 
 [tool.flit.metadata.urls]
 Documentation = "https://manifestoo.readthedocs.io/en/latest/"

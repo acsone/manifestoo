@@ -4,9 +4,15 @@
 [![Coverage Status][codecov-badge]][codecov-link]
 [![PyPI][pypi-badge]][pypi-link]
 
+<!--- shortdesc-begin -->
+
 A tool to reason about [Odoo](https://odoo.com) addons manifests.
 
+<!--- shortdesc-end -->
+
 ## Installation
+
+<!--- install-begin -->
 
 Using [pipx](https://pypi.org/project/pipx/) (recommended):
 
@@ -20,13 +26,17 @@ Using [pip](https://pypi.org/project/pip/):
 pip install --user manifestoo
 ```
 
+<!--- install-end -->
+
 ## Features
 
-Manifestoo provides the following features:
+<!--- features-begin -->
+
+Manifestoo is a command line tool that provides the following features:
 
 * listing addons,
 * listing direct and transitive dependencies of selected addons,
-* listing the names of core Odoo CE and EE addons,
+* listing core Odoo CE and EE addons,
 * listing external dependencies,
 * displaying the dependency tree,
 * checking license compatibility,
@@ -34,8 +44,13 @@ Manifestoo provides the following features:
 
 For a full list of commands an options, run `manifestoo --help`.
 
-The complete CLI documentation is available in [docs/cli.md]([docs/cli.md](https://github.com/sbidoul/manifestoo/blob/main/docs/cli.md)).
+For more information, read the documentation.
+
+<!--- features-end -->
+
 ## Quick start
+
+<!--- quickstart-begin -->
 
 Let's create a directory (`/tmp/myaddons`) containing addons `a`, `b` and `c`,
 where `a` depends on `b` and `c`, and `b` and `c` respectively depend on the
@@ -94,6 +109,8 @@ a (GPL-3) depends on b (Other Proprietary)
 ```
 
 And much more... See the documentation for more information.
+
+<!--- quickstart-end -->
 
 
 [github-ci]: https://github.com/sbidoul/manifestoo/actions/workflows/ci.yml/badge.svg
