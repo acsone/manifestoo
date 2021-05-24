@@ -64,7 +64,7 @@ The `list-depend` command shows the direct dependencies. It is handy to
 pre-install a database before running tests.
 
 ```console
-$ manifestoo -d /tmp/myaddons --separator=, list-depends
+$ manifestoo -d /tmp/myaddons list-depends --separator=,
 crm,mail
 ```
 

@@ -101,9 +101,8 @@ def callback(
         ),
     ),
     separator: str = typer.Option(
-        default="\n",
-        show_default=False,
-        help="Separator charater to use (by default, print one item per line).",
+        default=None,
+        hidden=True,  # deprecated
     ),
     odoo_series: Optional[OdooSeries] = typer.Option(
         None,
@@ -142,7 +141,12 @@ def callback(
     echo.verbosity += verbose
     echo.verbosity -= quiet
     main_options = MainOptions()
-    main_options.separator = separator
+    if separator:
+        echo.warning(
+            "--separator is deprecated as a global option. "
+            "Please use the same option of list, list-depends."
+        )
+        main_options.separator = separator
     # resolve addons_path
     if select_addons_dirs:
         main_options.addons_path.extend_from_addons_dirs(select_addons_dirs)
@@ -182,16 +186,26 @@ def callback(
 
 
 @app.command()
-def list(ctx: typer.Context) -> None:
+def list(
+    ctx: typer.Context,
+    separator: Optional[str] = typer.Option(
+        None,
+        help="Separator charater to use (by default, print one item per line).",
+    ),
+) -> None:
     """Print the selected addons."""
     main_options: MainOptions = ctx.obj
     result = list_command(main_options.addons_selection)
-    print_list(result, ctx.obj.separator)
+    print_list(result, separator or main_options.separator or "\n")
 
 
 @app.command()
 def list_depends(
     ctx: typer.Context,
+    separator: Optional[str] = typer.Option(
+        None,
+        help="Separator charater to use (by default, print one item per line).",
+    ),
     transitive: bool = typer.Option(
         False,
         "--transitive",
@@ -235,7 +249,7 @@ def list_depends(
         raise typer.Abort()
     print_list(
         result,
-        ctx.obj.separator,
+        separator or main_options.separator or "\n",
     )
 
 
@@ -245,6 +259,10 @@ def list_external_dependencies(
     kind: str = typer.Argument(
         ...,
         help="Kind of external dependency, such as `python` or `deb`.",
+    ),
+    separator: Optional[str] = typer.Option(
+        None,
+        help="Separator charater to use (by default, print one item per line).",
     ),
     transitive: bool = typer.Option(
         False,
@@ -276,7 +294,7 @@ def list_external_dependencies(
         raise typer.Abort()
     print_list(
         result,
-        ctx.obj.separator,
+        separator or main_options.separator or "\n",
     )
 
 
