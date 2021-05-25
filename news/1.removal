@@ -1,2 +1,0 @@
-Deprecate ``--separator`` as a global option. It belongs to commands that print
-lists.
