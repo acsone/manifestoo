@@ -38,7 +38,9 @@ doc = [
 ]
 
 [tool.flit.metadata.urls]
-Documentation = "https://manifestoo.readthedocs.io/en/latest/"
+Documentation = "https://manifestoo.readthedocs.io/en/stable/"
+Changelog = "https://manifestoo.readthedocs.io/en/stable/changelog.html"
+Source = "https://github.com/sbidoul/manifestoo"
 
 [tool.flit.scripts]
 manifestoo = "manifestoo.main:app"

@@ -44,7 +44,7 @@ Manifestoo is a command line tool that provides the following features:
 
 For a full list of commands an options, run `manifestoo --help`.
 
-For more information, read the documentation.
+For more information, read the [documentation](https://manifestoo.readthedocs.io/en/stable).
 
 <!--- features-end -->
 
