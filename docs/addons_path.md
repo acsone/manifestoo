@@ -53,4 +53,4 @@ This behaviour can be disabled with `--no-addons-path-from-import-odoo`.
 ## From a list of directories
 
 With the `--addons-path` option, you can add a comma-separated list of
-directories to the addons path.
+directories to the addons search path.
