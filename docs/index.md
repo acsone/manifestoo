@@ -11,6 +11,7 @@
 
 installation
 getting-started
+addons_path
 CLI <cli>
 API <api>
 Changelog <changelog>
