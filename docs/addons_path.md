@@ -36,7 +36,7 @@ addons search path.
 
 This option can also be set with the `ODOO_RC` environment variable.
 
-## From then `odoo.addons` namespace
+## From the `odoo.addons` namespace
 
 Internally, Odoo builds its addons path into the `odoo.addons.__path__`
 variable.
