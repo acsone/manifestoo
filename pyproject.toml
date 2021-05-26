@@ -35,6 +35,7 @@ doc = [
     "myst-parser",
     "typer-cli",  # to generate docs/cli.md
     "towncrier",
+    "sphinxcontrib-towncrier",
 ]
 
 [tool.flit.metadata.urls]
