@@ -13,6 +13,7 @@ DEV_STATUS_LEVELS = {
     "alpha": 1,
     "beta": 2,
     "production/stable": 3,
+    "stable/production": 3,
     "production": 3,
     "stable": 3,
     "mature": 4,
