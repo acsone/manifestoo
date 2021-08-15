@@ -56,8 +56,11 @@ class InvalidManifest(Exception):
     pass
 
 
+ManifestDict = Dict[Any, Any]
+
+
 class Manifest:
-    def __init__(self, manifest_path: Path, manifest_dict: Dict[Any, Any]) -> None:
+    def __init__(self, manifest_path: Path, manifest_dict: ManifestDict) -> None:
         self.manifest_path = manifest_path
         self.manifest_dict = manifest_dict
 

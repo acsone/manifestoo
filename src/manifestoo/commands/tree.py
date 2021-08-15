@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional, Set, cast
 
 import typer
 
@@ -57,7 +57,8 @@ class Node:
 
     def sversion(self, odoo_series: OdooSeries) -> Optional[str]:
         if not self.addon:
-            return typer.style("✘ not installed", fg=typer.colors.RED)
+            # typer.style (from click, actually) miss a type annotation
+            return cast(str, typer.style("✘ not installed", fg=typer.colors.RED))
         elif is_core_ce_addon(self.addon_name, odoo_series):
             return f"{odoo_series}+{OdooEdition.CE}"
         elif is_core_ee_addon(self.addon_name, odoo_series):

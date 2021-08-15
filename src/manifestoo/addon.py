@@ -1,6 +1,21 @@
+import sys
 from pathlib import Path
 
-from .manifest import InvalidManifest, Manifest
+from .manifest import InvalidManifest, Manifest, ManifestDict
+
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+
+    class AddonDict(TypedDict):
+        manifest: ManifestDict
+        manifest_path: str
+        path: str
+
+
+else:
+    from typing import Any, Dict
+
+    AddonDict = Dict[str, Any]
 
 
 class AddonNotFound(Exception):
@@ -52,3 +67,11 @@ class Addon:
         except InvalidManifest as e:
             raise AddonNotFoundInvalidManifest(str(e)) from e
         return cls(manifest)
+
+    def as_dict(self) -> AddonDict:
+        """Convert to a dictionary suitable for json output."""
+        return dict(
+            manifest=self.manifest.manifest_dict,
+            manifest_path=str(self.manifest_path),
+            path=str(self.path),
+        )

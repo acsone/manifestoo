@@ -1,7 +1,13 @@
 import pytest
 import typer
 
-from manifestoo.utils import comma_split, not_implemented, notice_or_abort, print_list
+from manifestoo.utils import (
+    comma_split,
+    not_implemented,
+    notice_or_abort,
+    print_json,
+    print_list,
+)
 
 
 @pytest.mark.parametrize(
@@ -22,6 +28,11 @@ def test_comma_split(s, expected):
 def test_print_list(capsys):
     print_list(["b", "a"], ",")
     assert capsys.readouterr().out == "b,a\n"
+
+
+def test_print_json(capsys):
+    print_json(["b", "a"])
+    assert capsys.readouterr().out == '["b", "a"]\n'
 
 
 def test_print_empty_list(capsys):
