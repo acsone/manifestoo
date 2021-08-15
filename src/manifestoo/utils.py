@@ -1,9 +1,12 @@
+import json
 import sys
-from typing import Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional
 
 import typer
 
 from . import echo
+from .addon import AddonDict
+from .addons_set import AddonsSet
 from .odoo_series import OdooSeries
 
 
@@ -27,6 +30,21 @@ def print_list(lst: Iterable[str], separator: str) -> None:
         return
     sys.stdout.write(separator.join(lst))
     sys.stdout.write("\n")
+
+
+def print_json(obj: Any) -> None:
+    json.dump(obj, sys.stdout)
+    sys.stdout.write("\n")
+
+
+def print_addons_as_json(names: Iterable[str], addons_set: AddonsSet) -> None:
+    d: Dict[str, Optional[AddonDict]] = {}
+    for name in names:
+        if name in addons_set:
+            d[name] = addons_set[name].as_dict()
+        else:
+            d[name] = None
+    print_json(d)
 
 
 def notice_or_abort(msg: str, abort: bool) -> None:

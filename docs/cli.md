@@ -90,7 +90,9 @@ $ manifestoo list [OPTIONS]
 
 **Options**:
 
-* `--separator TEXT`: Separator charater to use (by default, print one item per line).
+* `--format [names|json]`: Output format [default: names]
+* `--separator TEXT`: Separator character to use for the 'names' format (by
+  default, print one item per line).
 * `--help`: Show this message and exit.
 
 ## `manifestoo list-depends`
@@ -105,7 +107,9 @@ $ manifestoo list-depends [OPTIONS]
 
 **Options**:
 
-* `--separator TEXT`: Separator charater to use (by default, print one item per line).
+* `--format [names|json]`: Output format [default: names]
+* `--separator TEXT`: Separator character to use for the 'names' format (by
+  default, print one item per line).
 * `--transitive`: Print all transitive dependencies.
 * `--include-selected`: Print the selected addons along with their dependencies.
 * `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.

@@ -1,3 +1,5 @@
+import json
+
 from typer.testing import CliRunner
 
 from manifestoo.commands.list_depends import list_depends_command
@@ -159,3 +161,28 @@ def test_integration(tmp_path):
     assert not result.exception
     assert result.exit_code == 0, result.stderr
     assert result.stdout == "b\n"
+
+
+def test_integration_json(tmp_path):
+    addons = {
+        "a": {"depends": ["b"]},
+        "b": {"name": "B"},
+    }
+    populate_addons_dir(tmp_path, addons)
+    runner = CliRunner(mix_stderr=False)
+    result = runner.invoke(
+        app,
+        [
+            f"--addons-path={tmp_path}",
+            "--select-include",
+            "a",
+            "list-depends",
+            "--format=json",
+        ],
+        catch_exceptions=False,
+    )
+    assert not result.exception
+    assert result.exit_code == 0, result.stderr
+    json_output = json.loads(result.stdout)
+    assert len(json_output) == 1
+    assert json_output["b"]["manifest"] == addons["b"]

@@ -1,3 +1,4 @@
+from enum import Enum
 from pathlib import Path
 from typing import List, Optional
 
@@ -13,7 +14,7 @@ from .commands.tree import tree_command
 from .core_addons import get_core_addons
 from .odoo_series import OdooSeries, detect_from_addons_set
 from .options import MainOptions
-from .utils import ensure_odoo_series, not_implemented, print_list
+from .utils import ensure_odoo_series, not_implemented, print_addons_as_json, print_list
 from .version import __version__
 
 app = typer.Typer()
@@ -185,26 +186,48 @@ def callback(
     ctx.obj = main_options
 
 
+class Format(str, Enum):
+    names = "names"
+    json = "json"
+
+
 @app.command()
 def list(
     ctx: typer.Context,
+    format: Format = typer.Option(
+        Format.names,
+        help="Output format",
+    ),
     separator: Optional[str] = typer.Option(
         None,
-        help="Separator charater to use (by default, print one item per line).",
+        help=(
+            "Separator character to use for the 'names' format "
+            "(by default, print one item per line)."
+        ),
     ),
 ) -> None:
     """Print the selected addons."""
     main_options: MainOptions = ctx.obj
-    result = list_command(main_options.addons_selection)
-    print_list(result, separator or main_options.separator or "\n")
+    names = list_command(main_options.addons_selection)
+    if format == Format.names:
+        print_list(names, separator or main_options.separator or "\n")
+    else:
+        print_addons_as_json(names, main_options.addons_set)
 
 
 @app.command()
 def list_depends(
     ctx: typer.Context,
+    format: Format = typer.Option(
+        Format.names,
+        help="Output format",
+    ),
     separator: Optional[str] = typer.Option(
         None,
-        help="Separator charater to use (by default, print one item per line).",
+        help=(
+            "Separator character to use for the 'names' format "
+            "(by default, print one item per line)."
+        ),
     ),
     transitive: bool = typer.Option(
         False,
@@ -238,7 +261,7 @@ def list_depends(
     main_options: MainOptions = ctx.obj
     if as_pip_requirements:
         not_implemented("--as-pip-requirement")
-    result, missing = list_depends_command(
+    names, missing = list_depends_command(
         main_options.addons_selection,
         main_options.addons_set,
         transitive,
@@ -247,10 +270,13 @@ def list_depends(
     if missing and not ignore_missing:
         echo.error("not found in addons path: " + ",".join(sorted(missing)))
         raise typer.Abort()
-    print_list(
-        result,
-        separator or main_options.separator or "\n",
-    )
+    if format == Format.names:
+        print_list(
+            names,
+            separator or main_options.separator or "\n",
+        )
+    else:
+        print_addons_as_json(names, main_options.addons_set)
 
 
 @app.command()
