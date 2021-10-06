@@ -1,3 +1,18 @@
+0.3 (2021-10-06)
+================
+
+Features
+--------
+
+- Add support for Odoo 15, and update Odoo base addons lists. (`#15 <https://github.com/sbidoul/manifestoo/issues/15>`_)
+
+
+Improved Documentation
+----------------------
+
+- Document addons selection and search path options. (`#3 <https://github.com/sbidoul/manifestoo/issues/3>`_)
+
+
 0.2 (2021-05-25)
 ================
 
