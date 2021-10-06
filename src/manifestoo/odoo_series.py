@@ -13,6 +13,7 @@ class OdooSeries(str, Enum):
     v12_0 = "12.0"
     v13_0 = "13.0"
     v14_0 = "14.0"
+    v15_0 = "15.0"
 
 
 class OdooEdition(str, Enum):

@@ -55,9 +55,9 @@ class Node:
 
         _print([], self)
 
-    def sversion(self, odoo_series: OdooSeries) -> Optional[str]:
+    def sversion(self, odoo_series: OdooSeries) -> str:
         if not self.addon:
-            return typer.style("✘ not installed", fg=typer.colors.RED)
+            return typer.style("✘ not installed", fg=typer.colors.RED)  # type: ignore
         elif is_core_ce_addon(self.addon_name, odoo_series):
             return f"{odoo_series}+{OdooEdition.CE}"
         elif is_core_ee_addon(self.addon_name, odoo_series):
