@@ -45,6 +45,7 @@ def can_depend_on(work_license: LicenseType, dependency_license: LicenseType) ->
 _licenses: Dict[str, LicenseType] = {
     "other proprietary": LicenseType.PROPRIETARY,
     "oeel-1": LicenseType.PROPRIETARY,
+    "opl-1": LicenseType.PROPRIETARY,
     "agpl-3": LicenseType.NETWORK_PROTECTIVE,
     "gpl-3": LicenseType.STRONGLY_PROTECTIVE,
     "gpl-3 or any later version": LicenseType.STRONGLY_PROTECTIVE,
