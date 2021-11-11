@@ -1,0 +1,1 @@
+Fix core Odoo addons path discovery for Odoo < 13.0.
