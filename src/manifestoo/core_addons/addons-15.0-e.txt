@@ -1,4 +1,4 @@
-# generated on Wed Oct  6 14:44:23 2021
+# generated on Thu Nov 11 15:58:53 2021
 account_3way_match
 account_accountant
 account_accountant_batch_payment
@@ -134,10 +134,13 @@ l10n_be_hr_contract_salary
 l10n_be_hr_contract_salary_group_insurance
 l10n_be_hr_payroll
 l10n_be_hr_payroll_account
+l10n_be_hr_payroll_canteen
 l10n_be_hr_payroll_fleet
 l10n_be_hr_payroll_holiday_pay_recovery
 l10n_be_intrastat
 l10n_be_reports
+l10n_be_reports_base_address_extended
+l10n_be_reports_sms
 l10n_be_us_consolidation_demo
 l10n_ca_check_printing
 l10n_ch_reports
@@ -178,6 +181,8 @@ l10n_nl_reports
 l10n_no_reports
 l10n_no_saft
 l10n_pe_edi
+l10n_sa_hr_payroll
+l10n_sa_hr_payroll_account
 l10n_se_reports
 l10n_sg_reports
 l10n_uk_reports
