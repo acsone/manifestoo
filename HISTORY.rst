@@ -1,3 +1,17 @@
+0.3.1 (2021-11-11)
+==================
+
+Bugfixes
+--------
+
+- Fix core Odoo addons path discovery for Odoo < 13.0. (`#18 <https://github.com/sbidoul/manifestoo/issues/18>`_)
+
+Features
+--------
+
+- Update base addons list
+
+
 0.3 (2021-10-06)
 ================
 
