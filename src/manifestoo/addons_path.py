@@ -18,8 +18,13 @@ except ImportError:
 
 odoo.modules.initialize_sys_path()
 
+if odoo.release.version_info >= (13, ):
+    path = odoo.addons.__path__
+else:
+    path = odoo.modules.module.ad_paths
+
 with open(sys.argv[1], "wb") as f:
-    f.write(repr(odoo.addons.__path__).encode("utf-8"))
+    f.write(repr(path).encode("utf-8"))
 """
 
 
