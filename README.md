@@ -75,7 +75,7 @@ b
 c
 ```
 
-The `list-depend` command shows the direct dependencies. It is handy to
+The `list-depends` command shows the direct dependencies. It is handy to
 pre-install a database before running tests.
 
 ```console
