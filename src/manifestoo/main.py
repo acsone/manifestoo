@@ -14,6 +14,7 @@ from .commands.list_codepends import list_codepends_command
 from .commands.list_depends import list_depends_command
 from .commands.list_external_dependencies import list_external_dependencies_command
 from .commands.tree import tree_command
+from .git import get_branch_modified_addons
 from .options import MainOptions
 from .utils import ensure_odoo_series, not_implemented, print_list
 from .version import core_version, version
@@ -46,6 +47,15 @@ def callback(
             "automatically added to the addons search path."
         ),
         show_default=False,
+    ),
+    select_git_modified: str = typer.Option(
+        None,
+        "--select-git-modified",
+        "-g",
+        help=(
+            "Select all addons modified on current branch,"
+            " relative to the given branch."
+        ),
     ),
     select_include: Optional[str] = typer.Option(
         None,
@@ -183,6 +193,11 @@ def callback(
     # addons selection
     if select_addons_dirs:
         main_options.addons_selection.add_addons_dirs(select_addons_dirs)
+    if select_git_modified:
+        modified_addons = get_branch_modified_addons(
+            select_git_modified, main_options.addons_path
+        )
+        main_options.addons_selection.add_addon_names(",".join(modified_addons))
     if select_include:
         main_options.addons_selection.add_addon_names(select_include)
     if select_exclude:
