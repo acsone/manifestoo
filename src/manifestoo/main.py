@@ -7,6 +7,7 @@ from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.check_licenses import check_licenses_command
 from .commands.list import list_command
+from .commands.list_codepends import list_codepends_command
 from .commands.list_depends import list_depends_command
 from .commands.list_external_dependencies import list_external_dependencies_command
 from .commands.tree import tree_command
@@ -251,6 +252,36 @@ def list_depends(
         result,
         separator or main_options.separator or "\n",
     )
+
+
+@app.command()
+def list_codepends(
+    ctx: typer.Context,
+    separator: Optional[str] = typer.Option(
+        None,
+        help="Separator character to use (by default, print one item per line).",
+    ),
+    transitive: bool = typer.Option(
+        True,
+        "--transitive",
+        help="Print all transitive co-dependencies.",
+    ),
+    include_selected: bool = typer.Option(
+        True,
+        "--include-selected",
+        help="Print the selected addons along with their co-dependencies"
+        "(the set of addons that depends on the set of selected addons).",
+    ),
+) -> None:
+    """Print the co-dependencies of selected addons."""
+    main_options: MainOptions = ctx.obj
+    result = list_codepends_command(
+        main_options.addons_selection,
+        main_options.addons_set,
+        transitive,
+        include_selected,
+    )
+    print_list(result, separator or main_options.separator or "\n")
 
 
 @app.command()
