@@ -190,7 +190,7 @@ def list(
     ctx: typer.Context,
     separator: Optional[str] = typer.Option(
         None,
-        help="Separator charater to use (by default, print one item per line).",
+        help="Separator character to use (by default, print one item per line).",
     ),
 ) -> None:
     """Print the selected addons."""
@@ -204,7 +204,7 @@ def list_depends(
     ctx: typer.Context,
     separator: Optional[str] = typer.Option(
         None,
-        help="Separator charater to use (by default, print one item per line).",
+        help="Separator character to use (by default, print one item per line).",
     ),
     transitive: bool = typer.Option(
         False,
@@ -262,7 +262,7 @@ def list_external_dependencies(
     ),
     separator: Optional[str] = typer.Option(
         None,
-        help="Separator charater to use (by default, print one item per line).",
+        help="Separator character to use (by default, print one item per line).",
     ),
     transitive: bool = typer.Option(
         False,
