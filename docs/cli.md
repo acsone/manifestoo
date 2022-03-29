@@ -39,6 +39,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `list`: Print the selected addons.
 * `list-depends`: Print the dependencies of selected addons.
 * `list-external-dependencies`: Print the external dependencies of selected...
+* `list-missing`: Print the missing dependencies of selected addons.
 * `tree`: Print the dependency tree of selected addons.
 
 ## `manifestoo check-dev-status`
@@ -132,6 +133,16 @@ $ manifestoo list-external-dependencies [OPTIONS] KIND
 * `--transitive`: Print external dependencies of all transitive dependent addons.
 * `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.
 * `--help`: Show this message and exit.
+
+**Usage**:
+
+```console
+$ manifestoo list-missing [OPTIONS]
+```
+
+**Options**:
+
+* `--separator TEXT`: Separator charater to use (by default, print one item per line).
 
 ## `manifestoo tree`
 

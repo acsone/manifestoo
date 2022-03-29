@@ -38,6 +38,7 @@ Manifestoo is a command line tool that provides the following features:
 * listing direct and transitive dependencies of selected addons,
 * listing core Odoo CE and EE addons,
 * listing external dependencies,
+* listing missing dependencies,
 * displaying the dependency tree,
 * checking license compatibility,
 * checking development status compatibility.

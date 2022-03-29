@@ -299,6 +299,28 @@ def list_external_dependencies(
 
 
 @app.command()
+def list_missing(
+    ctx: typer.Context,
+    separator: Optional[str] = typer.Option(
+        None,
+        help="Separator character to use (by default, print one item per line).",
+    ),
+) -> None:
+    """Print the missing dependencies of selected addons."""
+    main_options: MainOptions = ctx.obj
+    result, missing = list_depends_command(
+        main_options.addons_selection,
+        main_options.addons_set,
+        transitive=True,
+        include_selected=True,
+    )
+    print_list(
+        sorted(missing),
+        separator or main_options.separator or "\n",
+    )
+
+
+@app.command()
 def check_licenses(
     ctx: typer.Context,
     transitive: bool = typer.Option(
