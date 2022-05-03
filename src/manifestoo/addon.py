@@ -11,6 +11,10 @@ class AddonNotFoundNotInstallable(AddonNotFound):
     pass
 
 
+class AddonNotFoundNoInit(AddonNotFound):
+    pass
+
+
 class AddonNotFoundNoManifest(AddonNotFound):
     pass
 
@@ -51,4 +55,6 @@ class Addon:
                 raise AddonNotFoundNotInstallable(f"{addon_dir} is not installable")
         except InvalidManifest as e:
             raise AddonNotFoundInvalidManifest(str(e)) from e
+        if not addon_dir.joinpath("__init__.py").is_file():
+            raise AddonNotFoundNoInit(f"{addon_dir} is missing an __init__.py")
         return cls(manifest)

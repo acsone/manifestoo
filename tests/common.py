@@ -13,6 +13,7 @@ def populate_addons_dir(addons_dir: Path, addons: Dict[str, Dict[str, Any]]):
     for addon_name, manifest in addons.items():
         addon_path = addons_dir / addon_name
         addon_path.mkdir()
+        (addon_path / "__init__.py").touch()
         manifest_path = addon_path / "__manifest__.py"
         manifest_path.write_text(repr(manifest))
 
