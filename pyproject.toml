@@ -19,7 +19,7 @@ classifiers = [
 ]
 description-file = "README.md"
 requires = [
-    "typer[all] ~=0.3.2",
+    "typer[all]",
     "importlib_resources ; python_version<'3.7'"
 ]
 requires-python = ">=3.6"
