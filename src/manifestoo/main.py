@@ -269,11 +269,14 @@ def list_codepends(
     include_selected: bool = typer.Option(
         True,
         "--include-selected",
-        help="Print the selected addons along with their co-dependencies"
-        "(the set of addons that depends on the set of selected addons).",
+        help="Print the selected addons along with their co-dependencies.",
     ),
 ) -> None:
-    """Print the co-dependencies of selected addons."""
+    """Print the co-dependencies of selected addons.
+
+    Co-dependencies is the set of addons that depend on the selected
+    addons.
+    """
     main_options: MainOptions = ctx.obj
     result = list_codepends_command(
         main_options.addons_selection,
