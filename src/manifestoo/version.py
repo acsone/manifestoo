@@ -1,6 +1,8 @@
-try:
+import sys
+
+if sys.version_info >= (3, 8):
     import importlib.metadata as importlib_metadata
-except ImportError:
+else:
     import importlib_metadata
 
 version = importlib_metadata.version("manifestoo")
