@@ -36,6 +36,7 @@ Manifestoo is a command line tool that provides the following features:
 
 * listing addons,
 * listing direct and transitive dependencies of selected addons,
+* listing direct and transitive co-dependencies of selected addons,
 * listing core Odoo CE and EE addons,
 * listing external dependencies,
 * listing missing dependencies,
@@ -82,6 +83,14 @@ pre-install a database before running tests.
 ```console
 $ manifestoo -d /tmp/myaddons list-depends --separator=,
 crm,mail
+```
+
+The `list-codepends` command shows the transitive co-dependencies.
+It is handy to know which modules are impacted by changes in selected modules.
+
+```console
+$ manifestoo --addons-path /tmp/myaddons --select a list-codepends --separator=,
+b,c
 ```
 
 You can explore the dependency tree of module `a` like this:
