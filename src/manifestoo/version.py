@@ -1,1 +1,6 @@
-__version__ = "0.4.0"
+try:
+    import importlib.metadata as importlib_metadata
+except ImportError:
+    import importlib_metadata
+
+version = importlib_metadata.version("manifestoo")

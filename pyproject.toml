@@ -2,10 +2,13 @@
 requires = ["flit_core >=3.4,<4"]
 build-backend = "flit_core.buildapi"
 
-[tool.flit.metadata]
-module = "manifestoo"
-author = "Stéphane Bidoul"
-author-email = "stephane.bidoul@acsone.eu"
+[project]
+name = "manifestoo"
+version = "0.4.1"
+description = "A tool to reason about Odoo addons manifests"
+authors = [
+  {name = "Stéphane Bidoul", email = "stephane.bidoul@acsone.eu"}
+]
 home-page = "https://github.com/sbidoul/manifestoo"
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -17,14 +20,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
 ]
-description-file = "README.md"
-requires = [
+readme = "README.md"
+dependencies = [
     "typer[all] ~=0.3.2",
-    "importlib_resources ; python_version<'3.7'"
+    "importlib_resources ; python_version<'3.7'",
+    "importlib_metadata ; python_version<'3.8'",
 ]
 requires-python = ">=3.6"
 
-[tool.flit.metadata.requires-extra]
+[project.optional-dependencies]
 test = [
     "pytest",
     "coverage[toml]",
@@ -38,12 +42,12 @@ doc = [
     "sphinxcontrib-towncrier",
 ]
 
-[tool.flit.metadata.urls]
+[project.urls]
 Documentation = "https://manifestoo.readthedocs.io/en/stable/"
 Changelog = "https://manifestoo.readthedocs.io/en/stable/changelog.html"
 Source = "https://github.com/sbidoul/manifestoo"
 
-[tool.flit.scripts]
+[project.scripts]
 manifestoo = "manifestoo.main:app"
 moo = "manifestoo.main:app"
 
@@ -68,6 +72,7 @@ show_missing = true
 exclude_lines = [
     "pragma: no cover",
 ]
+
 
 [tool.towncrier]
 package = "manifestoo"

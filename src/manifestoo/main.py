@@ -15,14 +15,14 @@ from .core_addons import get_core_addons
 from .odoo_series import OdooSeries, detect_from_addons_set
 from .options import MainOptions
 from .utils import ensure_odoo_series, not_implemented, print_list
-from .version import __version__
+from .version import version
 
 app = typer.Typer()
 
 
 def version_callback(value: bool) -> None:
     if value:
-        typer.echo(f"manifestoo version {__version__}")
+        typer.echo(f"manifestoo version {version}")
         raise typer.Exit()
 
 
