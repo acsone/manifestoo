@@ -9,7 +9,6 @@ description = "A tool to reason about Odoo addons manifests"
 authors = [
   {name = "Stéphane Bidoul", email = "stephane.bidoul@acsone.eu"}
 ]
-home-page = "https://github.com/sbidoul/manifestoo"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Framework :: Odoo",
@@ -43,6 +42,7 @@ doc = [
 ]
 
 [project.urls]
+Homepage = "https://github.com/sbidoul/manifestoo"
 Documentation = "https://manifestoo.readthedocs.io/en/stable/"
 Changelog = "https://manifestoo.readthedocs.io/en/stable/changelog.html"
 Source = "https://github.com/sbidoul/manifestoo"
