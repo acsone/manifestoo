@@ -1,4 +1,4 @@
-# generated on Thu Nov 11 15:58:28 2021
+# generated on Thu May 12 18:12:34 2022
 account
 account_check_printing
 account_debit_note
@@ -25,6 +25,7 @@ auth_password_policy_signup
 auth_signup
 auth_totp
 auth_totp_mail
+auth_totp_mail_enforce
 auth_totp_portal
 barcodes
 barcodes_gs1_nomenclature
@@ -62,6 +63,8 @@ event_crm_sale
 event_sale
 event_sms
 fetchmail
+fetchmail_gmail
+fetchmail_outlook
 fleet
 gamification
 gamification_sale_crm
@@ -69,6 +72,7 @@ gift_card
 google_account
 google_calendar
 google_drive
+google_gmail
 google_recaptcha
 google_spreadsheet
 hr
@@ -131,14 +135,18 @@ l10n_dk
 l10n_do
 l10n_dz
 l10n_ec
+l10n_eg
 l10n_es
 l10n_es_edi_sii
 l10n_et
 l10n_eu_oss
 l10n_fi
+l10n_fi_sale
 l10n_fr
 l10n_fr_fec
 l10n_fr_pos_cert
+l10n_gcc_invoice
+l10n_gcc_pos
 l10n_generic_coa
 l10n_gr
 l10n_gt
@@ -151,6 +159,7 @@ l10n_id_efaktur
 l10n_ie
 l10n_il
 l10n_in
+l10n_in_edi
 l10n_in_pos
 l10n_in_purchase
 l10n_in_purchase_stock
@@ -177,10 +186,13 @@ l10n_no_edi
 l10n_nz
 l10n_pa
 l10n_pe
+l10n_pk
 l10n_pl
 l10n_pt
 l10n_ro
 l10n_sa
+l10n_sa_invoice
+l10n_sa_pos
 l10n_se
 l10n_sg
 l10n_si
@@ -188,6 +200,7 @@ l10n_sk
 l10n_syscohada
 l10n_th
 l10n_tr
+l10n_tw
 l10n_ua
 l10n_uk
 l10n_us
@@ -217,6 +230,7 @@ mass_mailing_sms
 membership
 microsoft_account
 microsoft_calendar
+microsoft_outlook
 mrp
 mrp_account
 mrp_landed_costs

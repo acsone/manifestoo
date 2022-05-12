@@ -10,10 +10,11 @@ from manifestoo.odoo_series import OdooEdition
 
 SERIES = [
     # branch,  enterprise
+    ("master", True),
     ("15.0", True),
     ("14.0", True),
     ("13.0", True),
-    # ("12.0", True),
+    ("12.0", True),
     # ("11.0", True),
     # ('10.0', True),
     # ('9.0', True),
