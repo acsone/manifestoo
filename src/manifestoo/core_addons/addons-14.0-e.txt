@@ -1,9 +1,12 @@
-# generated on Thu Nov 11 16:00:16 2021
+# generated on Thu May 12 18:13:35 2022
 account_3way_match
 account_accountant
 account_accountant_check_printing
 account_asset
 account_auto_transfer
+account_avatax
+account_avatax_sale
+account_avatax_sale_subscription
 account_bank_statement_import
 account_bank_statement_import_camt
 account_bank_statement_import_csv
@@ -17,6 +20,7 @@ account_disallowed_expenses_fleet
 account_followup
 account_inter_company_rules
 account_intrastat
+account_intrastat_expiry
 account_invoice_extract
 account_invoice_extract_purchase
 account_online_sync
@@ -27,6 +31,7 @@ account_predictive_bills
 account_reports
 account_reports_cash_basis
 account_reports_tax
+account_reports_tax_reminder
 account_saft
 account_sepa
 account_sepa_direct_debit
@@ -138,6 +143,7 @@ l10n_be_hr_payroll_proration
 l10n_be_hr_payroll_variable_revenue
 l10n_be_intrastat
 l10n_be_reports
+l10n_be_reports_post_wizard
 l10n_be_sale_intrastat
 l10n_be_us_consolidation_demo
 l10n_ca_check_printing
@@ -164,6 +170,7 @@ l10n_in_reports
 l10n_it_reports
 l10n_lt_reports
 l10n_lu_reports
+l10n_lu_reports_annual_vat
 l10n_lu_reports_electronic
 l10n_lu_reports_electronic_xml_2_0
 l10n_lu_saft
@@ -171,6 +178,8 @@ l10n_mn_reports
 l10n_mx_edi
 l10n_mx_edi_extended
 l10n_mx_edi_landing
+l10n_mx_edi_stock
+l10n_mx_edi_stock_extended
 l10n_mx_reports
 l10n_mx_reports_closing
 l10n_mx_xml_polizas
@@ -204,7 +213,6 @@ planning
 pos_account_reports
 pos_blackbox_be
 pos_enterprise
-pos_hr_l10n_be
 pos_hr_mobile
 pos_iot
 pos_l10n_se
@@ -303,6 +311,7 @@ website_helpdesk_form
 website_helpdesk_forum
 website_helpdesk_livechat
 website_helpdesk_slides
+website_sale_account_avatax
 website_sale_account_taxcloud
 website_sale_dashboard
 website_sale_taxcloud_delivery

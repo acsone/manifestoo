@@ -1,4 +1,4 @@
-# generated on Thu Nov 11 16:02:21 2021
+# generated on Thu May 12 18:14:32 2022
 account
 account_analytic_default
 account_bank_statement_import
@@ -48,12 +48,15 @@ document
 event
 event_sale
 fetchmail
+fetchmail_gmail
+fetchmail_outlook
 fleet
 gamification
 gamification_sale_crm
 google_account
 google_calendar
 google_drive
+google_gmail
 google_spreadsheet
 hr
 hr_attendance
@@ -170,6 +173,7 @@ mass_mailing_event
 mass_mailing_event_track
 mass_mailing_sale
 membership
+microsoft_outlook
 mrp
 mrp_bom_cost
 mrp_byproduct

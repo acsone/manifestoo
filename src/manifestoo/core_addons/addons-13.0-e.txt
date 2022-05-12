@@ -1,4 +1,4 @@
-# generated on Thu Nov 11 16:01:31 2021
+# generated on Thu May 12 18:14:13 2022
 account_3way_match
 account_accountant
 account_asset
@@ -12,6 +12,7 @@ account_budget
 account_consolidation
 account_followup
 account_intrastat
+account_intrastat_expiry
 account_invoice_extract
 account_invoice_extract_purchase
 account_online_sync
@@ -119,12 +120,14 @@ l10n_in_reports
 l10n_it_reports
 l10n_lt_reports
 l10n_lu_reports
+l10n_lu_reports_annual_vat
 l10n_lu_reports_electronic
 l10n_lu_reports_electronic_xml_2_0
 l10n_lu_saft
 l10n_mn_reports
 l10n_mx_edi
 l10n_mx_edi_landing
+l10n_mx_edi_stock
 l10n_mx_reports
 l10n_mx_reports_closing
 l10n_nl_intrastat

@@ -1,4 +1,4 @@
-# generated on Thu Nov 11 16:01:08 2021
+# generated on Thu May 12 18:13:57 2022
 account
 account_analytic_default
 account_analytic_default_hr_expense
@@ -49,12 +49,15 @@ event
 event_sale
 event_sms
 fetchmail
+fetchmail_gmail
+fetchmail_outlook
 fleet
 gamification
 gamification_sale_crm
 google_account
 google_calendar
 google_drive
+google_gmail
 google_spreadsheet
 hr
 hr_attendance
@@ -104,7 +107,6 @@ l10n_cn_city
 l10n_cn_small_business
 l10n_cn_standard
 l10n_co
-l10n_co_pos
 l10n_cr
 l10n_de
 l10n_de_skr03
@@ -117,6 +119,7 @@ l10n_es
 l10n_et
 l10n_eu_service
 l10n_fi
+l10n_fi_sale
 l10n_fr
 l10n_fr_fec
 l10n_fr_pos_cert
@@ -188,6 +191,7 @@ mass_mailing_sale
 mass_mailing_slides
 mass_mailing_sms
 membership
+microsoft_outlook
 mrp
 mrp_account
 mrp_subcontracting
