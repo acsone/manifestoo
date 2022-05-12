@@ -24,7 +24,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
 * `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the `python` executable found in PATH.
 * `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
-* `--odoo-series [8.0|9.0|10.0|11.0|12.0|13.0|14.0]`: Odoo series to use, in case it is not autodetected from addons version.  [env var: ODOO_VERSION, ODOO_SERIES]
+* `--odoo-series [8.0|9.0|10.0|11.0|12.0|13.0|14.0|15.0|16.0]`: Odoo series to use, in case it is not autodetected from addons version.  [env var: ODOO_VERSION, ODOO_SERIES]
 * `-v, --verbose`
 * `-q, --quiet`
 * `--version`
@@ -37,9 +37,10 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `check-dev-status`: Check development status compatibility.
 * `check-licenses`: Check license compatibility.
 * `list`: Print the selected addons.
+* `list-codepends`: Print the co-dependencies of selected addons.
 * `list-depends`: Print the dependencies of selected addons.
 * `list-external-dependencies`: Print the external dependencies of selected...
-* `list-missing`: Print the missing dependencies of selected addons.
+* `list-missing`: Print the missing dependencies of selected...
 * `tree`: Print the dependency tree of selected addons.
 
 ## `manifestoo check-dev-status`
@@ -91,7 +92,27 @@ $ manifestoo list [OPTIONS]
 
 **Options**:
 
-* `--separator TEXT`: Separator charater to use (by default, print one item per line).
+* `--separator TEXT`: Separator character to use (by default, print one item per line).
+* `--help`: Show this message and exit.
+
+## `manifestoo list-codepends`
+
+Print the co-dependencies of selected addons.
+
+Co-dependencies is the set of addons that depend on the selected
+addons.
+
+**Usage**:
+
+```console
+$ manifestoo list-codepends [OPTIONS]
+```
+
+**Options**:
+
+* `--separator TEXT`: Separator character to use (by default, print one item per line).
+* `--transitive`: Print all transitive co-dependencies.  [default: True]
+* `--include-selected`: Print the selected addons along with their co-dependencies.  [default: True]
 * `--help`: Show this message and exit.
 
 ## `manifestoo list-depends`
@@ -106,7 +127,7 @@ $ manifestoo list-depends [OPTIONS]
 
 **Options**:
 
-* `--separator TEXT`: Separator charater to use (by default, print one item per line).
+* `--separator TEXT`: Separator character to use (by default, print one item per line).
 * `--transitive`: Print all transitive dependencies.
 * `--include-selected`: Print the selected addons along with their dependencies.
 * `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.
@@ -129,10 +150,14 @@ $ manifestoo list-external-dependencies [OPTIONS] KIND
 
 **Options**:
 
-* `--separator TEXT`: Separator charater to use (by default, print one item per line).
+* `--separator TEXT`: Separator character to use (by default, print one item per line).
 * `--transitive`: Print external dependencies of all transitive dependent addons.
 * `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.
 * `--help`: Show this message and exit.
+
+## `manifestoo list-missing`
+
+Print the missing dependencies of selected addons.
 
 **Usage**:
 
@@ -142,7 +167,8 @@ $ manifestoo list-missing [OPTIONS]
 
 **Options**:
 
-* `--separator TEXT`: Separator charater to use (by default, print one item per line).
+* `--separator TEXT`: Separator character to use (by default, print one item per line).
+* `--help`: Show this message and exit.
 
 ## `manifestoo tree`
 
