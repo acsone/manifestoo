@@ -1,11 +1,17 @@
+0.4.1 (2022-05-12)
+==================
+
+- Packaging tweaks, no feature change.
+- Add development workflow documentation page.
+
 0.4.0 (2022-05-12)
 ==================
 
 Features
 --------
 
-- Add ``list-codepends`` to print the set of addons that depend on the select addons. (`#7 <https://github.com/sbidoul/manifestoo/issues/7>`_)
-- Add ``list-missing`` command (`#22 <https://github.com/sbidoul/manifestoo/issues/22>`_)
+- Add ``list-codepends`` to print the set of addons that depend on the selected addons. (`#7 <https://github.com/sbidoul/manifestoo/issues/7>`_)
+- Add ``list-missing`` command to print the missing dependencies of the selected addons. (`#22 <https://github.com/sbidoul/manifestoo/issues/22>`_)
 - As in Odoo, the existence of an ``__init__.py`` file is now asserted to determine valid addons path. (`#25 <https://github.com/sbidoul/manifestoo/issues/25>`_)
 - Update Odoo core addon lists. (`#26 <https://github.com/sbidoul/manifestoo/issues/26>`_)
 
