@@ -111,8 +111,8 @@ $ manifestoo list-codepends [OPTIONS]
 **Options**:
 
 * `--separator TEXT`: Separator character to use (by default, print one item per line).
-* `--transitive`: Print all transitive co-dependencies.  [default: True]
-* `--include-selected`: Print the selected addons along with their co-dependencies.  [default: True]
+* `--transitive / --no-transitive`: Print all transitive co-dependencies.  [default: True]
+* `--include-selected / --no-include-selected`: Print the selected addons along with their co-dependencies.  [default: True]
 * `--help`: Show this message and exit.
 
 ## `manifestoo list-depends`

@@ -263,12 +263,10 @@ def list_codepends(
     ),
     transitive: bool = typer.Option(
         True,
-        "--transitive",
         help="Print all transitive co-dependencies.",
     ),
     include_selected: bool = typer.Option(
         True,
-        "--include-selected",
         help="Print the selected addons along with their co-dependencies.",
     ),
 ) -> None:
