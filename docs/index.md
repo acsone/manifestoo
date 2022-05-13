@@ -15,6 +15,7 @@ addons_selection
 addons_path
 CLI <cli>
 API <api>
+Development <develop>
 Changelog <changelog>
 GitHub Repository <https://github.com/sbidoul/manifestoo>
 ```
