@@ -4,18 +4,11 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import re
-from pathlib import Path
-
 
 def find_version():
-    version_file = Path(__file__).parent.parent / "src" / "manifestoo" / "version.py"
-    version_match = re.search(
-        r"^__version__ = ['\"]([^'\"]*)['\"]", version_file.read_text(), re.M
-    )
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError("Unable to find version string.")
+    from manifestoo.version import version
+
+    return version
 
 
 # -- Path setup --------------------------------------------------------------
