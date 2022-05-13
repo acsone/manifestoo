@@ -1,3 +1,13 @@
+0.4.2 (2022-05-13)
+==================
+
+Bugfixes
+--------
+
+- Add ``--no-transitive`` and ``--no-include-selected`` options to the ``list-codepends``
+  so the default values can be switched off. (`#28 <https://github.com/sbidoul/manifestoo/issues/28>`_)
+
+
 0.4.1 (2022-05-12)
 ==================
 

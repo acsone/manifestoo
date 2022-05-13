@@ -18,7 +18,7 @@ You can also run all tests using `tox`.
 ## Creating a release
 
 - Update the version in `pyproject.toml`.
-- Run `towncrier` to update `HISTORY.rst`.
+- Run `towncrier build --version {version}` to update `HISTORY.rst`.
 - Run `tox docs` to update `docs/cli.md` and verify that the documentation builds
   correctly.
 - git commit and push.

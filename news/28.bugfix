@@ -1,2 +1,0 @@
-Add ``--no-transitive`` and ``--no-include-selected`` options to the ``list-codepends``
-so the default values can be switched off.
