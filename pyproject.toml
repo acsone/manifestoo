@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "manifestoo"
-version = "0.4.2"
+version = "0.4.3.dev"
 description = "A tool to reason about Odoo addons manifests"
 authors = [
   {name = "Stéphane Bidoul", email = "stephane.bidoul@acsone.eu"}
