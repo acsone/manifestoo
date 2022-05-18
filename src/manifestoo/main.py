@@ -16,14 +16,16 @@ from .commands.list_external_dependencies import list_external_dependencies_comm
 from .commands.tree import tree_command
 from .options import MainOptions
 from .utils import ensure_odoo_series, not_implemented, print_list
-from .version import version
+from .version import core_version, version
 
 app = typer.Typer()
 
 
 def version_callback(value: bool) -> None:
     if value:
-        typer.echo(f"manifestoo version {version}")
+        typer.echo(
+            f"manifestoo version {version}, manifestoo-core version {core_version}"
+        )
         raise typer.Exit()
 
 
