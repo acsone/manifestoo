@@ -1,7 +1,6 @@
 """List of Odoo official addons."""
 
 import sys
-from enum import Enum
 from functools import lru_cache
 from typing import Set
 
