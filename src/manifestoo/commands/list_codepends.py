@@ -1,7 +1,8 @@
 from typing import Iterable, Set
 
+from manifestoo_core.addons_set import AddonsSet
+
 from ..addons_selection import AddonsSelection
-from ..addons_set import AddonsSet
 
 
 def list_codepends_command(

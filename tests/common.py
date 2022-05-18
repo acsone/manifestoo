@@ -1,10 +1,10 @@
 from pathlib import Path
 from typing import Any, Dict
 
-from manifestoo.addon import Addon
 from manifestoo.addons_selection import AddonsSelection
-from manifestoo.addons_set import AddonsSet
-from manifestoo.manifest import Manifest
+from manifestoo_core.addon import Addon
+from manifestoo_core.addons_set import AddonsSet
+from manifestoo_core.manifest import Manifest
 
 
 def populate_addons_dir(addons_dir: Path, addons: Dict[str, Dict[str, Any]]):

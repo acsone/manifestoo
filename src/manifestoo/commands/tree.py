@@ -2,11 +2,16 @@ from typing import Dict, List, Optional, Set
 
 import typer
 
-from ..addon import Addon
+from manifestoo_core.addon import Addon
+from manifestoo_core.addons_set import AddonsSet
+from manifestoo_core.core_addons import (
+    is_core_addon,
+    is_core_ce_addon,
+    is_core_ee_addon,
+)
+from manifestoo_core.odoo_series import OdooEdition, OdooSeries
+
 from ..addons_selection import AddonsSelection
-from ..addons_set import AddonsSet
-from ..core_addons import is_core_addon, is_core_ce_addon, is_core_ee_addon
-from ..odoo_series import OdooEdition, OdooSeries
 
 NodeKey = str
 

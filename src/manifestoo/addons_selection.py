@@ -1,7 +1,8 @@
 from pathlib import Path
 from typing import List, Set
 
-from .addons_set import AddonsSet
+from manifestoo_core.addons_set import AddonsSet
+
 from .utils import comma_split
 
 

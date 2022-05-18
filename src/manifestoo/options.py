@@ -1,9 +1,10 @@
 from typing import Optional
 
+from manifestoo_core.addons_set import AddonsSet
+from manifestoo_core.odoo_series import OdooSeries
+
 from .addons_path import AddonsPath
 from .addons_selection import AddonsSelection
-from .addons_set import AddonsSet
-from .odoo_series import OdooSeries
 
 
 class MainOptions:

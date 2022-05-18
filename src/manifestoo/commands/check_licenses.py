@@ -1,13 +1,14 @@
 from typing import Iterable, Optional, Set, Tuple
 
+from manifestoo_core.addon import Addon
+from manifestoo_core.addons_set import AddonsSet
+from manifestoo_core.core_addons import get_core_addon_license, is_core_addon
+from manifestoo_core.odoo_series import OdooSeries
+
 from .. import echo
-from ..addon import Addon
 from ..addons_selection import AddonsSelection
-from ..addons_set import AddonsSet
-from ..core_addons import get_core_addon_license, is_core_addon
 from ..dependency_iterator import dependency_iterator
 from ..license import LicenseType, can_depend_on, get_license_type
-from ..odoo_series import OdooSeries
 
 
 def _get_license_type_or_proprietary(

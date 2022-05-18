@@ -3,6 +3,9 @@ from typing import List, Optional
 
 import typer
 
+from manifestoo_core.core_addons import get_core_addons
+from manifestoo_core.odoo_series import OdooSeries, detect_from_addons_set
+
 from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.check_licenses import check_licenses_command
@@ -11,8 +14,6 @@ from .commands.list_codepends import list_codepends_command
 from .commands.list_depends import list_depends_command
 from .commands.list_external_dependencies import list_external_dependencies_command
 from .commands.tree import tree_command
-from .core_addons import get_core_addons
-from .odoo_series import OdooSeries, detect_from_addons_set
 from .options import MainOptions
 from .utils import ensure_odoo_series, not_implemented, print_list
 from .version import version
@@ -165,7 +166,18 @@ def callback(
     if odoo_series:
         main_options.odoo_series = odoo_series
     else:
-        main_options.odoo_series = detect_from_addons_set(main_options.addons_set)
+        detected_odoo_series = detect_from_addons_set(main_options.addons_set)
+        if len(detected_odoo_series) == 0:
+            echo.notice("No Odoo series detected in addons set")
+            main_options.odoo_series = None
+        elif len(detected_odoo_series) > 1:
+            echo.notice(
+                f"Different Odoo series detected in addons set: "
+                f"{', '.join(detected_odoo_series)}"
+            )
+            main_options.odoo_series = None
+        else:
+            main_options.odoo_series = detected_odoo_series.pop()
     # addons selection
     if select_addons_dirs:
         main_options.addons_selection.add_addons_dirs(select_addons_dirs)
