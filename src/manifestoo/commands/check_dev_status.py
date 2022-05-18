@@ -1,11 +1,12 @@
 from typing import Iterable, Optional, Set
 
-from ..addon import Addon
+from manifestoo_core.addon import Addon
+from manifestoo_core.addons_set import AddonsSet
+from manifestoo_core.core_addons import is_core_addon
+from manifestoo_core.odoo_series import OdooSeries
+
 from ..addons_selection import AddonsSelection
-from ..addons_set import AddonsSet
-from ..core_addons import is_core_addon
 from ..dependency_iterator import dependency_iterator
-from ..odoo_series import OdooSeries
 
 CORE_DEV_STATUS = "core"
 CORE_DEV_STATUS_LEVEL = 100

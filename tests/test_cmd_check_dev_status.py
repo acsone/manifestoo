@@ -5,7 +5,7 @@ from manifestoo.commands.check_dev_status import (
     check_dev_status_command,
 )
 from manifestoo.main import app
-from manifestoo.odoo_series import OdooSeries
+from manifestoo_core.odoo_series import OdooSeries
 
 from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
 

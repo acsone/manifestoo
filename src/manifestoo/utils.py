@@ -3,8 +3,9 @@ from typing import Iterable, List, Optional
 
 import typer
 
+from manifestoo_core.odoo_series import OdooSeries
+
 from . import echo
-from .odoo_series import OdooSeries
 
 
 def comma_split(s: Optional[str]) -> List[str]:

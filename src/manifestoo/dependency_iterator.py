@@ -1,8 +1,9 @@
 from typing import Iterable, Iterator, Optional, Set, Tuple
 
-from .addon import Addon
+from manifestoo_core.addon import Addon
+from manifestoo_core.addons_set import AddonsSet
+
 from .addons_selection import AddonsSelection
-from .addons_set import AddonsSet
 
 
 def dependency_iterator(
