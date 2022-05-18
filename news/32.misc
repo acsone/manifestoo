@@ -1,0 +1,2 @@
+Part of `manifestoo` has been extracted to `manifestoo-core`, which will evolve into
+a lightweight library to reason about Odoo addons manifests.
