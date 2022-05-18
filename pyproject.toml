@@ -23,7 +23,6 @@ readme = "README.md"
 dependencies = [
     "manifestoo_core",
     "typer[all] >= 0.3.2",
-    "importlib_resources ; python_version<'3.7'",
     "importlib_metadata ; python_version<'3.8'",
 ]
 requires-python = ">=3.6"
