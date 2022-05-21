@@ -18,7 +18,7 @@ You can also run all tests using `tox`.
 ## Creating a release
 
 - Run `towncrier build --version {version}` to update `HISTORY.rst`.
-- Run `tox docs` to update `docs/cli.md` and verify that the documentation builds
+- Run `tox -e docs` to update `docs/cli.md` and verify that the documentation builds
   correctly.
 - Commit and push.
 - Make sure the tests pass on GitHub.

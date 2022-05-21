@@ -1,11 +1,7 @@
 # Programmatic API
 
-The programmating API is accessible via `import manifestoo`. All the rest is
-private and subject to change without notice.
+This project does not expose a programmatic API. Only the command line interface is
+stable and documented.
 
-But... Stéphane, nothing is exposed there ?
-
-Yes, for now there is no public programmatic API, only the CLI is documented
-and has stability guarantees. If you wish to use the programmatic API, do not
-hesitate to reach out via a GitHub issue, so we can work out what a good API
-would look like and document it.
+A public programmatic API is being developped in `manifestoo_core
+<https://pypi.org/project/manifestsoo-core>` on which this project relies.
