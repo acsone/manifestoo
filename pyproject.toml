@@ -20,7 +20,7 @@ classifiers = [
 ]
 readme = "README.md"
 dependencies = [
-    "manifestoo_core",
+    "manifestoo_core >= 0.8",
     "typer[all] >= 0.3.2",
     "importlib_metadata ; python_version<'3.8'",
 ]
