@@ -13,6 +13,7 @@ CORE_DEV_STATUS_LEVEL = 100
 DEV_STATUS_LEVELS = {
     "alpha": 1,
     "beta": 2,
+    "stable/production": 3,
     "production/stable": 3,
     "production": 3,
     "stable": 3,
