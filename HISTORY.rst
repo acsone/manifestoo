@@ -1,3 +1,14 @@
+0.5 (2022-09-24)
+================
+
+Misc
+----
+
+- Relax the typer dependency version constraint. (`#30 <https://github.com/sbidoul/manifestoo/issues/30>`_)
+- Part of `manifestoo` has been extracted to `manifestoo-core`, which will evolve into
+  a lightweight library to reason about Odoo addons manifests. (`#32 <https://github.com/sbidoul/manifestoo/issues/32>`_)
+
+
 0.4.2 (2022-05-13)
 ==================
 
