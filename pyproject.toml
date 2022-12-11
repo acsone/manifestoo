@@ -25,7 +25,7 @@ dependencies = [
     "typer[all] >= 0.3.2",
     "importlib_metadata ; python_version<'3.8'",
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.7"
 dynamic = ["version"]
 
 [project.optional-dependencies]
