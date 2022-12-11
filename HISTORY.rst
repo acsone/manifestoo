@@ -1,3 +1,18 @@
+0.6 (2022-12-11)
+================
+
+Features
+--------
+
+- Add `-i/--interactive` option to the tree command, to display an interactive tree. (`#161 <https://github.com/sbidoul/manifestoo/issues/161>`_)
+
+
+Deprecations and Removals
+-------------------------
+
+- Drop Python 3.6 support. (`#161 <https://github.com/sbidoul/manifestoo/issues/161>`_)
+
+
 0.5 (2022-09-24)
 ================
 
