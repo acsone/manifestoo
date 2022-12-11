@@ -21,7 +21,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with `--select-addons-dir`.
 * `--select-core-addons`: Select the Odoo core addons (CE and EE) for the given series.
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
-* `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: True]
+* `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: addons-path-from-import-odoo]
 * `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the `python` executable found in PATH.
 * `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
 * `--odoo-series [8.0|9.0|10.0|11.0|12.0|13.0|14.0|15.0|16.0]`: Odoo series to use, in case it is not autodetected from addons version.  [env var: ODOO_VERSION, ODOO_SERIES]
@@ -39,7 +39,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `list`: Print the selected addons.
 * `list-codepends`: Print the co-dependencies of selected addons.
 * `list-depends`: Print the dependencies of selected addons.
-* `list-external-dependencies`: Print the external dependencies of selected...
+* `list-external-dependencies`: Print the external dependencies of...
 * `list-missing`: Print the missing dependencies of selected...
 * `tree`: Print the dependency tree of selected addons.
 
@@ -111,8 +111,8 @@ $ manifestoo list-codepends [OPTIONS]
 **Options**:
 
 * `--separator TEXT`: Separator character to use (by default, print one item per line).
-* `--transitive / --no-transitive`: Print all transitive co-dependencies.  [default: True]
-* `--include-selected / --no-include-selected`: Print the selected addons along with their co-dependencies.  [default: True]
+* `--transitive / --no-transitive`: Print all transitive co-dependencies.  [default: transitive]
+* `--include-selected / --no-include-selected`: Print the selected addons along with their co-dependencies.  [default: include-selected]
 * `--help`: Show this message and exit.
 
 ## `manifestoo list-depends`
@@ -183,4 +183,5 @@ $ manifestoo tree [OPTIONS]
 **Options**:
 
 * `--fold-core-addons`: Do not expand dependencies of core Odoo addons.
+* `-i, --interactive`: Display an interactive tree.
 * `--help`: Show this message and exit.
