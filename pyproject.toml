@@ -21,13 +21,17 @@ classifiers = [
 readme = "README.md"
 dependencies = [
     "manifestoo_core >= 0.8",
+    "textual >= 0.6",
     "typer[all] >= 0.3.2",
     "importlib_metadata ; python_version<'3.8'",
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.7"
 dynamic = ["version"]
 
 [project.optional-dependencies]
+dev = [
+    "textual[dev]",
+]
 test = [
     "pytest",
     "coverage[toml]",
@@ -63,7 +67,6 @@ exclude = [
 profile = "black"
 multi_line_output = 3
 known_first_party = "manifestoo_core"
-
 
 [tool.coverage.run]
 branch = true

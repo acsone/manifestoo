@@ -9,6 +9,7 @@ from manifestoo_core.odoo_series import OdooSeries, detect_from_addons_set
 from . import echo
 from .commands.check_dev_status import check_dev_status_command
 from .commands.check_licenses import check_licenses_command
+from .commands.interactive_tree import interactive_tree_command
 from .commands.list import list_command
 from .commands.list_codepends import list_codepends_command
 from .commands.list_depends import list_depends_command
@@ -435,14 +436,29 @@ def tree(
         help="Do not expand dependencies of core Odoo addons.",
         show_default=False,
     ),
+    interactive: bool = typer.Option(
+        False,
+        "--interactive",
+        "-i",
+        help="Display an interactive tree.",
+        show_default=False,
+    ),
 ) -> None:
     """Print the dependency tree of selected addons."""
     main_options: MainOptions = ctx.obj
     ensure_odoo_series(main_options.odoo_series)
     assert main_options.odoo_series
-    tree_command(
-        main_options.addons_selection,
-        main_options.addons_set,
-        main_options.odoo_series,
-        fold_core_addons,
-    )
+    if interactive:
+        interactive_tree_command(
+            main_options.addons_selection,
+            main_options.addons_set,
+            main_options.odoo_series,
+            fold_core_addons,
+        )
+    else:
+        tree_command(
+            main_options.addons_selection,
+            main_options.addons_set,
+            main_options.odoo_series,
+            fold_core_addons,
+        )
