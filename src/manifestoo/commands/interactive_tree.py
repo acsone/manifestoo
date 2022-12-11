@@ -14,8 +14,6 @@ from manifestoo_core.odoo_series import OdooEdition, OdooSeries
 
 from ..addons_selection import AddonsSelection
 
-NodeKey = str
-
 
 class Context:
     def __init__(
