@@ -1,3 +1,5 @@
+from textwrap import dedent
+
 from typer.testing import CliRunner
 
 from manifestoo.commands.check_dev_status import (
@@ -215,6 +217,36 @@ def test_core_addon():
         odoo_series=OdooSeries.v13_0,
     )
     assert errors == []
+
+
+def test_exclude_core(tmp_path):
+    addons = {"a": {}, "b": {}, "c": {"installable": False}, "web": {}}
+    populate_addons_dir(tmp_path, addons)
+    conf = tmp_path / "odoo.conf"
+    conf.write_text(
+        dedent(
+            f"""\
+            [options]
+            addons_path = {tmp_path}
+            """
+        )
+    )
+    runner = CliRunner(mix_stderr=False)
+    result = runner.invoke(
+        app,
+        [
+            "--select-addons-dir",
+            tmp_path,
+            "--exclude-core-addons",
+            "--odoo-series=16.0",
+            "list",
+        ],
+        catch_exceptions=False,
+        env={"ODOO_RC": str(conf)},
+    )
+    assert not result.exception
+    assert result.exit_code == 0, result.stderr
+    assert result.stdout == "a\nb\n"
 
 
 def test_integration(tmp_path):

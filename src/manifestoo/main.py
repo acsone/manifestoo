@@ -72,6 +72,12 @@ def callback(
         help="Select the Odoo core addons (CE and EE) for the given series.",
         show_default=False,
     ),
+    exclude_core_addons: bool = typer.Option(
+        False,
+        "--exclude-core-addons",
+        help="Exclude the Odoo core addons (CE and EE) for the given series.",
+        show_default=False,
+    ),
     addons_path: Optional[str] = typer.Option(
         None,
         help="Expand addons path with this comma separated list of directories.",
@@ -188,10 +194,14 @@ def callback(
         main_options.addons_selection.add_addon_names(select_include)
     if select_exclude:
         main_options.addons_selection.remove_addon_names(select_exclude)
-    if select_core_addons:
+    if select_core_addons or exclude_core_addons:
         ensure_odoo_series(main_options.odoo_series)
         assert main_options.odoo_series
-        main_options.addons_selection.update(get_core_addons(main_options.odoo_series))
+        core_addons = get_core_addons(main_options.odoo_series)
+        if select_core_addons:
+            main_options.addons_selection.update(core_addons)
+        else:
+            main_options.addons_selection.difference_update(core_addons)
     if main_options.addons_selection:
         echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
     else:
