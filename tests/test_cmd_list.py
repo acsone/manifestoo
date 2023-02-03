@@ -1,3 +1,5 @@
+from textwrap import dedent
+
 from typer.testing import CliRunner
 
 from manifestoo.commands.list import list_command
@@ -22,6 +24,30 @@ def test_integration(tmp_path):
         app,
         [f"--select-addons-dir={tmp_path}", "list"],
         catch_exceptions=False,
+    )
+    assert not result.exception
+    assert result.exit_code == 0, result.stderr
+    assert result.stdout == "a\nb\n"
+
+
+def test_found(tmp_path):
+    addons = {"a": {}, "b": {}, "c": {"installable": False}}
+    populate_addons_dir(tmp_path, addons)
+    conf = tmp_path / "odoo.conf"
+    conf.write_text(
+        dedent(
+            f"""\
+            [options]
+            addons_path = {tmp_path}
+            """
+        )
+    )
+    runner = CliRunner(mix_stderr=False)
+    result = runner.invoke(
+        app,
+        ["--select-found", "list"],
+        catch_exceptions=False,
+        env={"ODOO_RC": str(conf)},
     )
     assert not result.exception
     assert result.exit_code == 0, result.stderr
