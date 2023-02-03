@@ -46,9 +46,9 @@ class Node:
         if not self.addon:
             return "✘ not installed"
         elif is_core_ce_addon(self.addon_name, self.context.odoo_series):
-            return f"{self.context.odoo_series}+{OdooEdition.CE}"
+            return f"{self.context.odoo_series.value}+{OdooEdition.CE.value}"
         elif is_core_ee_addon(self.addon_name, self.context.odoo_series):
-            return f"{self.context.odoo_series}+{OdooEdition.EE}"
+            return f"{self.context.odoo_series.value}+{OdooEdition.EE.value}"
         else:
             return self.addon.manifest.version or "no version"
 
