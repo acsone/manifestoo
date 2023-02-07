@@ -54,4 +54,6 @@ The list of core Odoo addons is static and part of the manifestoo release.
 With `--select-exclude`, you can provide a comma separated list of addons to
 exclude from the selection.
 
+Add `--exclude-core-addons` and only non-core addons will be selected.
+
 This can be useful in combination with `--select-addon-dir`.
