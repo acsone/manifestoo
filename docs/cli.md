@@ -16,10 +16,12 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 **Options**:
 
+* `--select-found`: Select all installable addons found in addons path(s).
 * `-d, --select-addons-dir DIRECTORY`: Select all installable addons found in this directory. This option may be repeated. The directories selected with this options are automatically added to the addons search path.
 * `--select-include, --select addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
 * `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with `--select-addons-dir`.
 * `--select-core-addons`: Select the Odoo core addons (CE and EE) for the given series.
+* `--exclude-core-addons`: Exclude the Odoo core addons (CE and EE) for the given series.
 * `--addons-path TEXT`: Expand addons path with this comma separated list of directories.
 * `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: addons-path-from-import-odoo]
 * `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the `python` executable found in PATH.

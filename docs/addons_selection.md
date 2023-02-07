@@ -51,8 +51,8 @@ The list of core Odoo addons is static and part of the manifestoo release.
 
 ## Selectiong found addons
 
-You can use `--select-found` to include all addons that are found in the current
-Odoo installation.
+You can use `--select-found` to include all addons that are found in the
+[addons search path](addons_path).
 
 ## Excluding addons
 
