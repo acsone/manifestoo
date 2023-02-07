@@ -1,3 +1,13 @@
+0.7 (2023-02-07)
+================
+
+Features
+--------
+
+- Add ``--select-found`` flag to select all addons available to the detected Odoo isntallation. (`#17 <https://github.com/sbidoul/manifestoo/issues/17>`_)
+- Add ``--exclude-core-addons`` option. (`#53 <https://github.com/sbidoul/manifestoo/issues/53>`_)
+
+
 0.6 (2022-12-11)
 ================
 
