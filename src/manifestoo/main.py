@@ -33,6 +33,11 @@ def version_callback(value: bool) -> None:
 @app.callback()
 def callback(
     ctx: typer.Context,
+    select_found: bool = typer.Option(
+        False,
+        "--select-found",
+        help="Select all installable addons found in addons path(s).",
+    ),
     select_addons_dirs: Optional[List[Path]] = typer.Option(
         None,
         "--select-addons-dir",
@@ -188,6 +193,8 @@ def callback(
         else:
             main_options.odoo_series = detected_odoo_series.pop()
     # addons selection
+    if select_found:
+        main_options.addons_selection.add_addons_dirs(main_options.addons_path)
     if select_addons_dirs:
         main_options.addons_selection.add_addons_dirs(select_addons_dirs)
     if select_include:
