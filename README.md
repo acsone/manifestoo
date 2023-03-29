@@ -123,9 +123,9 @@ And much more... See the documentation for more information.
 <!--- quickstart-end -->
 
 
-[github-ci]: https://github.com/sbidoul/manifestoo/actions/workflows/ci.yml/badge.svg
-[github-link]: https://github.com/sbidoul/manifestoo
-[codecov-badge]: https://codecov.io/gh/sbidoul/manifestoo/branch/master/graph/badge.svg
-[codecov-link]: https://codecov.io/gh/sbidoul/manifestoo
+[github-ci]: https://github.com/acsone/manifestoo/actions/workflows/ci.yml/badge.svg
+[github-link]: https://github.com/acsone/manifestoo
+[codecov-badge]: https://codecov.io/gh/acsone/manifestoo/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/acsone/manifestoo
 [pypi-badge]: https://img.shields.io/pypi/v/manifestoo.svg
 [pypi-link]: https://pypi.org/project/manifestoo

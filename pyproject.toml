@@ -45,10 +45,10 @@ doc = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/sbidoul/manifestoo"
+Homepage = "https://github.com/acsone/manifestoo"
 Documentation = "https://manifestoo.readthedocs.io/en/stable/"
 Changelog = "https://manifestoo.readthedocs.io/en/stable/changelog.html"
-Source = "https://github.com/sbidoul/manifestoo"
+Source = "https://github.com/acsone/manifestoo"
 
 [project.scripts]
 manifestoo = "manifestoo.main:app"
@@ -87,5 +87,5 @@ package = "manifestoo"
 package_dir = "src"
 filename = "HISTORY.rst"
 directory = "news"
-issue_format = "`#{issue} <https://github.com/sbidoul/manifestoo/issues/{issue}>`_"
+issue_format = "`#{issue} <https://github.com/acsone/manifestoo/issues/{issue}>`_"
 title_format = "{version} ({project_date})"
