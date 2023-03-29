@@ -17,7 +17,7 @@ CLI <cli>
 API <api>
 Development <develop>
 Changelog <changelog>
-GitHub Repository <https://github.com/sbidoul/manifestoo>
+GitHub Repository <https://github.com/acsone/manifestoo>
 ```
 
 ```{include} ../README.md
