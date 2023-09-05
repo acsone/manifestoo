@@ -149,8 +149,8 @@ def callback(
     """Reason about Odoo addons manifests.
 
     The `--select-*` options of this command select addons on which the
-    subcommands will act. The `--addons-path` options provide locations to
-    search for addons.
+    subcommands will act. The `--addons-path` options provide locations
+    to search for addons.
 
     Run `manifestoo <subcommand> --help` for more options.
     """
