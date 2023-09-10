@@ -63,10 +63,29 @@ exclude = [
 ]
 
 
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-known_first_party = "manifestoo_core"
+[tool.ruff]
+fix = true
+select = [
+    "B",
+    "E",
+    "F",
+    "I",
+    "UP",
+    "W",
+]
+target-version = "py37"
+ignore = [
+]
+exclude = [
+    "docs/conf.py",
+]
+
+[tool.ruff.isort]
+known-first-party = ["manifestoo", "manifestoo_core"]
+
+[tool.ruff.per-file-ignores]
+"src/manifestoo/main.py" = ["B008"]
+
 
 [tool.coverage.run]
 branch = true
