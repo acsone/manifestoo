@@ -2,18 +2,9 @@ default_language_version:
   python: python3
 repos:
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.9.0
     hooks:
       - id: black
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v2.0.2
-    hooks:
-      - id: autoflake
-        args:
-          - --in-place
-          - --ignore-init-module-imports
-          - --remove-all-unused-imports
-          - --remove-duplicate-keys
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
@@ -21,22 +12,8 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/PyCQA/flake8
-    rev: "6.0.0"
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.287
     hooks:
-      - id: flake8
-        additional_dependencies: ["flake8-bugbear==22.12.6"]
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-  - repo: https://github.com/PyCQA/docformatter
-    rev: v1.5.1
-    hooks:
-      - id: docformatter
-        args: ["--in-place", "--wrap-summaries=88"]
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
-    hooks:
-      - id: pyupgrade
-        args: ["--py37-plus"]
+      - id: ruff
+        args: [--exit-non-zero-on-fix]

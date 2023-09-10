@@ -14,19 +14,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-python@v4"
         with:
           python-version: "${{ matrix.python-version }}"
+          allow-prereleases: true
       - name: "Install dependencies"
         run: |
           set -xe
           python -VV
           python -m site
-          python -m pip install --upgrade pip setuptools wheel
-          python -m pip install --upgrade virtualenv tox tox-gh-actions
+          python -m pip install --upgrade pip wheel
+          python -m pip install --upgrade tox tox-gh-actions
       - name: "Run tox targets for ${{ matrix.python-version }}"
         run: |
           python -m tox
