@@ -18,6 +18,8 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 * `--select-found`: Select all installable addons found in addons path(s).
 * `-d, --select-addons-dir DIRECTORY`: Select all installable addons found in this directory. This option may be repeated. The directories selected with this options are automatically added to the addons search path.
+* `-g, --select-git-modified TEXT`: Select all addons modified on current branch, relative to the given branch.
+* `-n, --select-git-new TEXT`: Select all new addons modified on current branch, relative to the given branch.
 * `--select-include, --select addon1,addon2,...`: Comma separated list of addons to select. These addons will be searched in the addons path.
 * `--select-exclude addon1,addon2,...`: Comma separated list of addons to exclude from selection. This option is useful in combination with `--select-addons-dir`.
 * `--select-core-addons`: Select the Odoo core addons (CE and EE) for the given series.
