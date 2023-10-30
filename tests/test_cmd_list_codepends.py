@@ -1,5 +1,9 @@
+import sys
+
+import pytest
 from typer.testing import CliRunner
 
+from manifestoo.addon_sorter import AddonSorterTopological
 from manifestoo.commands.list_codepends import list_codepends_command
 from manifestoo.main import app
 
@@ -16,7 +20,7 @@ def test_basic():
     addons_selection = mock_addons_selection("b")
     assert list_codepends_command(
         addons_selection, addons_set, transitive=False, include_selected=False
-    ) == {"a"}
+    ) == ["a"]
 
 
 def test_transitive():
@@ -30,10 +34,36 @@ def test_transitive():
     addons_selection = mock_addons_selection("c")
     assert list_codepends_command(
         addons_selection, addons_set, transitive=False, include_selected=False
-    ) == {"b"}
+    ) == ["b"]
     assert list_codepends_command(
         addons_selection, addons_set, transitive=True, include_selected=False
-    ) == {"b", "a"}
+    ) == ["a", "b"]
+
+
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="Requires python3.9 or higher")
+def test_transitive_topological():
+    addons_set = mock_addons_set(
+        {
+            "a": {"depends": ["b"]},
+            "b": {"depends": ["c"]},
+            "c": {},
+        }
+    )
+    addons_selection = mock_addons_selection("c")
+    assert list_codepends_command(
+        addons_selection,
+        addons_set,
+        transitive=False,
+        include_selected=False,
+        addon_sorter=AddonSorterTopological(),
+    ) == ["b"]
+    assert list_codepends_command(
+        addons_selection,
+        addons_set,
+        transitive=True,
+        include_selected=False,
+        addon_sorter=AddonSorterTopological(),
+    ) == ["b", "a"]
 
 
 def test_loop():
@@ -47,13 +77,13 @@ def test_loop():
     addons_selection = mock_addons_selection("a")
     assert list_codepends_command(
         addons_selection, addons_set, transitive=False, include_selected=False
-    ) == {"c"}
+    ) == ["c"]
     assert list_codepends_command(
         addons_selection, addons_set, transitive=True, include_selected=False
-    ) == {"b", "c"}
+    ) == ["b", "c"]
     assert list_codepends_command(
         addons_selection, addons_set, transitive=True, include_selected=True
-    ) == {"a", "b", "c"}
+    ) == ["a", "b", "c"]
 
 
 def test_include_selected_not_included():
@@ -67,7 +97,7 @@ def test_include_selected_not_included():
     addons_selection = mock_addons_selection("a,b")
     assert (
         list_codepends_command(addons_selection, addons_set, include_selected=False)
-        == set()
+        == []
     )
 
 
@@ -81,10 +111,33 @@ def test_include_selected():
     addons_selection = mock_addons_selection("b")
     assert list_codepends_command(
         addons_selection, addons_set, include_selected=False
-    ) == {"a"}
+    ) == ["a"]
     assert list_codepends_command(
         addons_selection, addons_set, include_selected=True
-    ) == {"a", "b"}
+    ) == ["a", "b"]
+
+
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="Requires python3.9 or higher")
+def test_include_selected_topological():
+    addons_set = mock_addons_set(
+        {
+            "a": {"depends": ["b"]},
+            "b": {},
+        }
+    )
+    addons_selection = mock_addons_selection("b")
+    assert list_codepends_command(
+        addons_selection,
+        addons_set,
+        include_selected=False,
+        addon_sorter=AddonSorterTopological(),
+    ) == ["a"]
+    assert list_codepends_command(
+        addons_selection,
+        addons_set,
+        include_selected=True,
+        addon_sorter=AddonSorterTopological(),
+    ) == ["b", "a"]
 
 
 def test_integration(tmp_path):

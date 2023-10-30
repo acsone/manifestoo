@@ -7,6 +7,7 @@ from manifestoo_core.core_addons import get_core_addons
 from manifestoo_core.odoo_series import OdooSeries, detect_from_addons_set
 
 from . import echo
+from .addon_sorter import AddonSorter
 from .commands.check_dev_status import check_dev_status_command
 from .commands.check_licenses import check_licenses_command
 from .commands.interactive_tree import interactive_tree_command
@@ -225,10 +226,22 @@ def list(
         None,
         help="Separator character to use (by default, print one item per line).",
     ),
+    sorting: str = typer.Option(
+        "alphabetical",
+        "--sort",
+        help=(
+            "Choice between 'alphabetical' and 'topological'. "
+            "Topological sorting is useful when seeking a migration order."
+        ),
+        show_default=True,
+    ),
 ) -> None:
     """Print the selected addons."""
     main_options: MainOptions = ctx.obj
-    result = list_command(main_options.addons_selection)
+    addon_sorter = AddonSorter.from_name(sorting)
+    result = list_command(
+        main_options.addons_selection, main_options.addons_set, addon_sorter
+    )
     print_list(result, separator or main_options.separator or "\n")
 
 
@@ -266,16 +279,27 @@ def list_depends(
         "--as-pip-requirements",
         show_default=False,
     ),
+    sorting: str = typer.Option(
+        "alphabetical",
+        "--sort",
+        help=(
+            "Choice between 'alphabetical' and 'topological'. "
+            "Topological sorting is useful when seeking a migration order."
+        ),
+        show_default=True,
+    ),
 ) -> None:
     """Print the dependencies of selected addons."""
     main_options: MainOptions = ctx.obj
     if as_pip_requirements:
         not_implemented("--as-pip-requirement")
+    addon_sorter = AddonSorter.from_name(sorting)
     result, missing = list_depends_command(
         main_options.addons_selection,
         main_options.addons_set,
         transitive,
         include_selected,
+        addon_sorter,
     )
     if missing and not ignore_missing:
         echo.error("not found in addons path: " + ",".join(sorted(missing)))
@@ -301,6 +325,15 @@ def list_codepends(
         True,
         help="Print the selected addons along with their co-dependencies.",
     ),
+    sorting: str = typer.Option(
+        "alphabetical",
+        "--sort",
+        help=(
+            "Choice between 'alphabetical' and 'topological'. "
+            "Topological sorting is useful when seeking a migration order."
+        ),
+        show_default=True,
+    ),
 ) -> None:
     """Print the co-dependencies of selected addons.
 
@@ -308,11 +341,13 @@ def list_codepends(
     addons.
     """
     main_options: MainOptions = ctx.obj
+    addon_sorter = AddonSorter.from_name(sorting)
     result = list_codepends_command(
         main_options.addons_selection,
         main_options.addons_set,
         transitive,
         include_selected,
+        addon_sorter,
     )
     print_list(result, separator or main_options.separator or "\n")
 

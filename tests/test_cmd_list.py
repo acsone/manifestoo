@@ -5,12 +5,18 @@ from typer.testing import CliRunner
 from manifestoo.commands.list import list_command
 from manifestoo.main import app
 
-from .common import mock_addons_selection, populate_addons_dir
+from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
 
 
 def test_basic():
     addons_selection = mock_addons_selection("b,a")
-    assert list_command(addons_selection) == ["a", "b"]
+    addons_set = mock_addons_set(
+        {
+            "a": {},
+            "b": {},
+        }
+    )
+    assert list_command(addons_selection, addons_set) == ["a", "b"]
 
 
 def test_integration(tmp_path):
