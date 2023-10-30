@@ -49,7 +49,7 @@ manifestoo --select-core-addons --odoo-series=13.0 list
 The list of core Odoo addons is static and part of the manifestoo release.
 ```
 
-## Selectiong found addons
+## Selecting found addons
 
 You can use `--select-found` to include all addons that are found in the
 [addons search path](addons_path).
