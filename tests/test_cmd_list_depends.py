@@ -1,6 +1,11 @@
+import sys
+
+import pytest
 from typer.testing import CliRunner
 
+from manifestoo.addon_sorter import AddonSorterTopological
 from manifestoo.commands.list_depends import list_depends_command
+from manifestoo.exceptions import CycleErrorExit
 from manifestoo.main import app
 
 from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
@@ -70,6 +75,26 @@ def test_loop():
     )
 
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="Requires python3.9 or higher")
+def test_loop_topological():
+    addons_set = mock_addons_set(
+        {
+            "a": {"depends": ["b"]},
+            "b": {"depends": ["c"]},
+            "c": {"depends": ["a"]},
+        }
+    )
+    addons_selection = mock_addons_selection("a")
+    with pytest.raises(CycleErrorExit):
+        list_depends_command(
+            addons_selection,
+            addons_set,
+            include_selected=True,
+            transitive=True,
+            addon_sorter=AddonSorterTopological(),
+        )
+
+
 def test_missing():
     addons_set = mock_addons_set(
         {
@@ -104,6 +129,25 @@ def test_missing():
         mock_addons_selection("a,c"), addons_set, include_selected=True, transitive=True
     ) == (
         ["a", "b", "c"],
+        {"b", "c"},
+    )
+
+
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="Requires python3.9 or higher")
+def test_missing_topological():
+    addons_set = mock_addons_set(
+        {
+            "a": {"depends": ["b"]},
+        }
+    )
+    assert list_depends_command(
+        mock_addons_selection("a,c"),
+        addons_set,
+        include_selected=True,
+        transitive=True,
+        addon_sorter=AddonSorterTopological(),
+    ) == (
+        ["b", "a"],
         {"b", "c"},
     )
 
