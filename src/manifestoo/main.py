@@ -84,6 +84,15 @@ def callback(
         help="Exclude the Odoo core addons (CE and EE) for the given series.",
         show_default=False,
     ),
+    filter_categories: Optional[str] = typer.Option(
+        None,
+        metavar="addon1,addon2,...",
+        help=(
+            "Comma separated list of addons categories to use as addons filter. "
+            "Filter out addons from the selected addons that don't belong to one "
+            "of these categories."
+        ),
+    ),
     addons_path: Optional[str] = typer.Option(
         None,
         help="Expand addons path with this comma separated list of directories.",
@@ -210,6 +219,10 @@ def callback(
             main_options.addons_selection.update(core_addons)
         else:
             main_options.addons_selection.difference_update(core_addons)
+    if filter_categories:
+        main_options.addons_selection.filter_categories(
+            filter_categories, main_options.addons_set
+        )
     if main_options.addons_selection:
         echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
     else:
