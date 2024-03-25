@@ -5,6 +5,7 @@ on typer-cli which is not compatible with the latest typer release.
 
 Copyright (c) 2020 Sebastián Ramírez (MIT License).
 """
+
 from pathlib import Path
 from typing import cast
 
