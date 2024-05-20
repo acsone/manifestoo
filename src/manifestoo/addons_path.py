@@ -54,11 +54,17 @@ class AddonsPath(List[Path]):
             output = tempfile.NamedTemporaryFile(delete=False)
             try:
                 output.close()
+                stderrpipe = subprocess.DEVNULL
+                stdoutpipe = subprocess.DEVNULL
+                if echo.verbosity > 0:
+                    stderrpipe = None
+                if echo.verbosity > 1:
+                    stdoutpipe = None
                 try:
                     r = subprocess.call(
                         [python, script.name, output.name],
-                        stderr=subprocess.DEVNULL,
-                        stdout=subprocess.DEVNULL,
+                        stderr=stderrpipe,
+                        stdout=stdoutpipe,
                         env=os.environ,
                     )
                 except FileNotFoundError:
