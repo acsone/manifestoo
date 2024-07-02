@@ -27,7 +27,7 @@ class Node:
         return addon_name
 
     def print(self, odoo_series: OdooSeries, fold_core_addons: bool) -> None:
-        seen: Set["Node"] = set()
+        seen: Set[Node] = set()
 
         def _print(indent: List[str], node: Node) -> None:
             # inspired by https://stackoverflow.com/a/59109706
