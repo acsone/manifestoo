@@ -24,7 +24,7 @@ else:
     path = odoo.modules.module.ad_paths
 
 with open(sys.argv[1], "wb") as f:
-    f.write(repr(path).encode("utf-8"))
+    f.write(repr(list(path)).encode("utf-8"))
 """
 
 

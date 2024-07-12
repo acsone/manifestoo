@@ -1,0 +1,1 @@
+Don't crash if ``odoo.addons.__path__`` is a `_NamespacePath`.
