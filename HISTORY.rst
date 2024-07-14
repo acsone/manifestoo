@@ -1,3 +1,18 @@
+1.0 (2024-07-13)
+================
+
+Features
+--------
+
+- Add ``--sort`` option on list, list-depends and list-codepends. (`#62 <https://github.com/acsone/manifestoo/issues/62>`_)
+
+
+Bugfixes
+--------
+
+- Don't crash if ``odoo.addons.__path__`` is a `_NamespacePath`. (`#68 <https://github.com/acsone/manifestoo/issues/68>`_)
+
+
 0.7 (2023-02-07)
 ================
 
