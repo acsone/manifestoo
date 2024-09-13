@@ -25,3 +25,11 @@ class AddonsSelection(Set[str]):
                 self.remove(addon_name)
             except KeyError:
                 pass
+
+    def filter_categories(self, addons_categories: str, addons_set: AddonsSet) -> None:
+        categories_list = [category for category in comma_split(addons_categories)]
+        addons_list = list(self)
+        for addon_name in addons_list:
+            addon = addons_set.get(addon_name)
+            if addon and addon.manifest.category not in categories_list:
+                self.remove(addon_name)
