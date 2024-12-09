@@ -495,12 +495,22 @@ def tree(
         help="Display an interactive tree.",
         show_default=False,
     ),
+    inverse: bool = typer.Option(
+        False,
+        "--inverse",
+        help="Display the tree in inverse mode. Not available in interactive mode.",
+        show_default=False,
+    ),
 ) -> None:
     """Print the dependency tree of selected addons."""
     main_options: MainOptions = ctx.obj
     ensure_odoo_series(main_options.odoo_series)
     assert main_options.odoo_series
     if interactive:
+        if inverse:
+            raise typer.BadParameter(
+                "The --inverse option is not available in interactive mode."
+            )
         interactive_tree_command(
             main_options.addons_selection,
             main_options.addons_set,
@@ -513,4 +523,5 @@ def tree(
             main_options.addons_set,
             main_options.odoo_series,
             fold_core_addons,
+            inverse,
         )
