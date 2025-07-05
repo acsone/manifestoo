@@ -1,8 +1,6 @@
-from typer.testing import CliRunner
-
 from manifestoo.main import app
 
-from .common import populate_addons_dir
+from .common import CliRunner, populate_addons_dir
 
 
 def test_list_missing(tmp_path):
@@ -12,7 +10,7 @@ def test_list_missing(tmp_path):
         "e": {"depends": ["a", "b"]},
     }
     populate_addons_dir(tmp_path, addons)
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         [f"--select-addons-dir={tmp_path}", "list-missing"],

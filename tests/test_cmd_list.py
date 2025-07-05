@@ -1,11 +1,14 @@
 from textwrap import dedent
 
-from typer.testing import CliRunner
-
 from manifestoo.commands.list import list_command
 from manifestoo.main import app
 
-from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
+from .common import (
+    CliRunner,
+    mock_addons_selection,
+    mock_addons_set,
+    populate_addons_dir,
+)
 
 
 def test_basic():
@@ -25,7 +28,7 @@ def test_integration(tmp_path):
         "b": {},
     }
     populate_addons_dir(tmp_path, addons)
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         [f"--select-addons-dir={tmp_path}", "list"],
@@ -48,7 +51,7 @@ def test_found(tmp_path):
             """
         )
     )
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         ["--select-found", "list"],

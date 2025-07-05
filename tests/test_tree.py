@@ -1,10 +1,8 @@
 import textwrap
 
-from typer.testing import CliRunner
-
 from manifestoo.main import app
 
-from .common import populate_addons_dir
+from .common import CliRunner, populate_addons_dir
 
 
 def test_integration(tmp_path):
@@ -16,7 +14,7 @@ def test_integration(tmp_path):
         "base": {},
     }
     populate_addons_dir(tmp_path, addons)
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         ["--select=a", f"--addons-path={tmp_path}", "tree"],

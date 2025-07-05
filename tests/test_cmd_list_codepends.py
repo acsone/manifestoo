@@ -1,13 +1,17 @@
 import sys
 
 import pytest
-from typer.testing import CliRunner
 
 from manifestoo.addon_sorter import AddonSorterTopological
 from manifestoo.commands.list_codepends import list_codepends_command
 from manifestoo.main import app
 
-from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
+from .common import (
+    CliRunner,
+    mock_addons_selection,
+    mock_addons_set,
+    populate_addons_dir,
+)
 
 
 def test_basic():
@@ -146,7 +150,7 @@ def test_integration(tmp_path):
         "b": {},
     }
     populate_addons_dir(tmp_path, addons)
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         [f"--addons-path={tmp_path}", "--select-include", "a", "list-codepends"],

@@ -1,11 +1,14 @@
-from typer.testing import CliRunner
-
 from manifestoo.commands.list_external_dependencies import (
     list_external_dependencies_command,
 )
 from manifestoo.main import app
 
-from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
+from .common import (
+    CliRunner,
+    mock_addons_selection,
+    mock_addons_set,
+    populate_addons_dir,
+)
 
 
 def tests_basic():
@@ -58,7 +61,7 @@ def test_integration(tmp_path):
         "b": {"external_dependencies": {"deb": ["imagemagick"]}},
     }
     populate_addons_dir(tmp_path, addons)
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         [

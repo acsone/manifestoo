@@ -1,10 +1,19 @@
+import sys
 from pathlib import Path
 from typing import Any, Dict
+
+from packaging.version import Version
+from typer.testing import CliRunner as TyperCliRunner
 
 from manifestoo.addons_selection import AddonsSelection
 from manifestoo_core.addon import Addon
 from manifestoo_core.addons_set import AddonsSet
 from manifestoo_core.manifest import Manifest
+
+if sys.version_info < (3, 8):
+    from importlib_metadata import version  # type: ignore[import]
+else:
+    from importlib.metadata import version
 
 
 def populate_addons_dir(addons_dir: Path, addons: Dict[str, Dict[str, Any]]):
@@ -31,3 +40,11 @@ def mock_addons_selection(addon_names: str) -> AddonsSelection:
     addons_selection = AddonsSelection()
     addons_selection.add_addon_names(addon_names)
     return addons_selection
+
+
+def CliRunner():
+    if Version(version("click")) < Version("8.2"):
+        # Remove this with dropping Python 3.9 support because click 8.2 is
+        # python 3.10+ only
+        return TyperCliRunner(mix_stderr=False)  # Avoid mixing stderr with stdout
+    return TyperCliRunner()
