@@ -25,8 +25,7 @@ def _get_license_type_or_proprietary(
     addon_license_type = get_license_type(addon_license)
     if not addon_license_type:
         echo.warning(
-            f"Unknown license {addon_license} for {addon.name}, "
-            "assuming Proprietary."
+            f"Unknown license {addon_license} for {addon.name}, assuming Proprietary."
         )
         return addon_license, LicenseType.PROPRIETARY
     return addon_license, addon_license_type
