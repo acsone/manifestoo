@@ -1,7 +1,5 @@
 from textwrap import dedent
 
-from typer.testing import CliRunner
-
 from manifestoo.commands.check_dev_status import (
     CORE_DEV_STATUS,
     check_dev_status_command,
@@ -9,7 +7,12 @@ from manifestoo.commands.check_dev_status import (
 from manifestoo.main import app
 from manifestoo_core.odoo_series import OdooSeries
 
-from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
+from .common import (
+    CliRunner,
+    mock_addons_selection,
+    mock_addons_set,
+    populate_addons_dir,
+)
 
 
 def test_missing_dev_status():
@@ -231,7 +234,7 @@ def test_exclude_core(tmp_path):
             """
         )
     )
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         [
@@ -255,7 +258,7 @@ def test_integration(tmp_path):
         "b": {},
     }
     populate_addons_dir(tmp_path, addons)
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         [

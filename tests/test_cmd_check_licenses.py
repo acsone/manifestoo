@@ -1,10 +1,13 @@
-from typer.testing import CliRunner
-
 from manifestoo.commands.check_licenses import check_licenses_command
 from manifestoo.main import app
 from manifestoo_core.odoo_series import OdooSeries
 
-from .common import mock_addons_selection, mock_addons_set, populate_addons_dir
+from .common import (
+    CliRunner,
+    mock_addons_selection,
+    mock_addons_set,
+    populate_addons_dir,
+)
 
 
 def test_missing_license():
@@ -132,7 +135,7 @@ def test_integration(tmp_path):
         "d": {"license": "LGPL-3"},
     }
     populate_addons_dir(tmp_path, addons)
-    runner = CliRunner(mix_stderr=False)
+    runner = CliRunner()
     result = runner.invoke(
         app,
         [
