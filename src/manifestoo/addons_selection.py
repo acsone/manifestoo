@@ -19,6 +19,23 @@ class AddonsSelection(Set[str]):
         for addon_name in comma_split(addon_names):
             self.add(addon_name)
 
+    def remove_addon_authors(
+        self, excluded_authors: Set[str], addons_set: AddonsSet
+    ) -> None:
+        excluded_addons = set()
+        for addon_name in self:
+            addon = addons_set.get(addon_name)
+            if addon is None:
+                continue
+            for author in comma_split(addon.manifest.author or ""):
+                if author in excluded_authors:
+                    excluded_addons.add(addon_name)
+                    break
+            else:
+                if not addon.manifest.author and "" in excluded_authors:
+                    excluded_addons.add(addon_name)
+        self.difference_update(excluded_addons)
+
     def remove_addon_names(self, addon_names: str) -> None:
         for addon_name in comma_split(addon_names):
             try:
