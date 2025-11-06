@@ -27,7 +27,7 @@ class AddonsSelection(Set[str]):
             addon = addons_set.get(addon_name)
             if addon is None:
                 continue
-            for author in comma_split(addon.manifest.author or ""):
+            for author in comma_split(addon.manifest.author):
                 if author in excluded_authors:
                     excluded_addons.add(addon_name)
                     break
