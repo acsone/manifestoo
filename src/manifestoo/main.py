@@ -72,6 +72,14 @@ def callback(
             "This option is useful in combination with `--select-addons-dir`."
         ),
     ),
+    exclude_author: Optional[List[str]] = typer.Option(
+        None,
+        metavar="TEXT",
+        help=(
+            "Exclude addons from a certain author. This option may be repeated. "
+            "Pass an empty string as a value to exclude addons without author."
+        ),
+    ),
     select_core_addons: bool = typer.Option(
         False,
         "--select-core-addons",
@@ -210,6 +218,10 @@ def callback(
             main_options.addons_selection.update(core_addons)
         else:
             main_options.addons_selection.difference_update(core_addons)
+    if exclude_author:
+        main_options.addons_selection.remove_addon_authors(
+            set(exclude_author), main_options.addons_set
+        )
     if main_options.addons_selection:
         echo.info(str(main_options.addons_selection), bold_intro="Addons selection: ")
     else:
