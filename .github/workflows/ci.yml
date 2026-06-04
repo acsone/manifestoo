@@ -32,7 +32,7 @@ jobs:
           - python-version: "3.14"
             machine: ubuntu-24.04
     steps:
-      - uses: "actions/checkout@v6"
+      - uses: "actions/checkout@v6.0.2"
       - uses: "actions/setup-python@v6"
         with:
           python-version: "${{ matrix.python-version }}"
@@ -47,4 +47,4 @@ jobs:
       - name: "Run tox targets for ${{ matrix.python-version }}"
         run: |
           python -m tox
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
