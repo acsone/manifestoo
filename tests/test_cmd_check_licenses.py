@@ -111,6 +111,41 @@ def test_v12_ce_lgpl():
     assert errors == []
 
 
+def test_v16_ee_lgpl():
+    addons_set = mock_addons_set(
+        {
+            "a": {"depends": ["timer"], "license": "LGPL-3"},
+            "timer": {},
+        }
+    )
+    addons_selection = mock_addons_selection("a")
+    errors = check_licenses_command(
+        addons_selection,
+        addons_set,
+        transitive=False,
+        odoo_series=OdooSeries.v16_0,
+    )
+    assert errors == []
+
+
+def test_v16_agpl_ee_transitive():
+    addons_set = mock_addons_set(
+        {
+            "a": {"depends": ["b"], "license": "AGPL-3"},
+            "b": {"depends": ["timer"], "license": "LGPL-3"},
+            "timer": {},
+        }
+    )
+    addons_selection = mock_addons_selection("a")
+    errors = check_licenses_command(
+        addons_selection,
+        addons_set,
+        transitive=True,
+        odoo_series=OdooSeries.v16_0,
+    )
+    assert errors == ["a (AGPL-3) depends on timer (OEEL-1)"]
+
+
 def test_v12_ee_proprietary():
     addons_set = mock_addons_set(
         {

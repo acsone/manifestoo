@@ -114,7 +114,7 @@ a (14.0.1.0.0)
 To check that licenses are compatibles, use the `check-licenses` command:
 
 ```console
-$ moo -d /tmp/myaddons check-licenses
+$ manifestoo -d /tmp/myaddons check-licenses --transitive
 a (GPL-3) depends on b (Other Proprietary)
 ```
 

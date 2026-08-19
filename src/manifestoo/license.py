@@ -21,6 +21,7 @@ def can_depend_on(work_license: LicenseType, dependency_license: LicenseType) ->
         return dependency_license in (LicenseType.PERMISSIVE,)
     elif work_license == LicenseType.WEAKLY_PROTECTIVE:
         return dependency_license in (
+            LicenseType.PROPRIETARY,
             LicenseType.WEAKLY_PROTECTIVE,
             LicenseType.PERMISSIVE,
         )
