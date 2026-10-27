@@ -4,25 +4,22 @@ from typing import Dict, Optional
 
 class LicenseType(Enum):
     PROPRIETARY = 1
-    PERMISSIVE = 2  # MIT, Apache
+    PERMISSIVE = 2  # MIT
     WEAKLY_PROTECTIVE = 3  # LGPL
     STRONGLY_PROTECTIVE = 4  # GPL
     NETWORK_PROTECTIVE = 5  # AGPL
 
 
 def can_depend_on(work_license: LicenseType, dependency_license: LicenseType) -> bool:
-    if work_license == LicenseType.PROPRIETARY:
+    if work_license in (
+        LicenseType.PROPRIETARY,
+        LicenseType.PERMISSIVE,
+        LicenseType.WEAKLY_PROTECTIVE,
+    ):
         return dependency_license in (
             LicenseType.PROPRIETARY,
             LicenseType.PERMISSIVE,
             LicenseType.WEAKLY_PROTECTIVE,
-        )
-    elif work_license == LicenseType.PERMISSIVE:
-        return dependency_license in (LicenseType.PERMISSIVE,)
-    elif work_license == LicenseType.WEAKLY_PROTECTIVE:
-        return dependency_license in (
-            LicenseType.WEAKLY_PROTECTIVE,
-            LicenseType.PERMISSIVE,
         )
     elif work_license == LicenseType.STRONGLY_PROTECTIVE:
         return dependency_license in (
