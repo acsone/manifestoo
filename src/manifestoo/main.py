@@ -72,14 +72,6 @@ def callback(
             "This option is useful in combination with `--select-addons-dir`."
         ),
     ),
-    exclude_author: Optional[List[str]] = typer.Option(
-        None,
-        metavar="TEXT",
-        help=(
-            "Exclude addons from a certain author. This option may be repeated. "
-            "Pass an empty string as a value to exclude addons without author."
-        ),
-    ),
     select_core_addons: bool = typer.Option(
         False,
         "--select-core-addons",
@@ -91,6 +83,14 @@ def callback(
         "--exclude-core-addons",
         help="Exclude the Odoo core addons (CE and EE) for the given series.",
         show_default=False,
+    ),
+    exclude_author: Optional[List[str]] = typer.Option(
+        None,
+        metavar="TEXT",
+        help=(
+            "Exclude addons from a certain author. This option may be repeated. "
+            "Pass an empty string as a value to exclude addons without author."
+        ),
     ),
     addons_path: Optional[str] = typer.Option(
         None,
