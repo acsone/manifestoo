@@ -1,3 +1,13 @@
+1.2 (2026-10-27)
+================
+
+Features
+--------
+
+- Add a ``--exclude-author`` option to exclude addons authored by a given author.
+  The option may be repeated, and an empty string excludes addons without author. (`#85 <https://github.com/acsone/manifestoo/issues/85>`_)
+
+
 1.1 (2025-09-23)
 ================
 
