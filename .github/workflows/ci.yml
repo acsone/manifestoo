@@ -31,6 +31,8 @@ jobs:
             machine: ubuntu-24.04
           - python-version: "3.14"
             machine: ubuntu-24.04
+          - python-version: "3.15"
+            machine: ubuntu-26.04
     steps:
       - uses: "actions/checkout@v6"
       - uses: "actions/setup-python@v6"
