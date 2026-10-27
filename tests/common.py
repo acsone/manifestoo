@@ -11,9 +11,12 @@ from manifestoo_core.addons_set import AddonsSet
 from manifestoo_core.manifest import Manifest
 
 if sys.version_info < (3, 8):
-    from importlib_metadata import version  # type: ignore[import]
+    from importlib_metadata import (
+        PackageNotFoundError,  # type: ignore[import]
+        version,  # type: ignore[import]
+    )
 else:
-    from importlib.metadata import version
+    from importlib.metadata import PackageNotFoundError, version
 
 
 def populate_addons_dir(addons_dir: Path, addons: Dict[str, Dict[str, Any]]):
@@ -43,7 +46,13 @@ def mock_addons_selection(addon_names: str) -> AddonsSelection:
 
 
 def CliRunner():
-    if Version(version("click")) < Version("8.2"):
+    try:
+        click_version = Version(version("click"))
+    except PackageNotFoundError:
+        # typer >= 0.19 does not depend on click anymore (it vendors it),
+        # and its CliRunner always separates stderr from stdout.
+        return TyperCliRunner()
+    if click_version < Version("8.2"):
         # Remove this with dropping Python 3.9 support because click 8.2 is
         # python 3.10+ only
         return TyperCliRunner(mix_stderr=False)  # Avoid mixing stderr with stdout
