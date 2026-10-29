@@ -47,17 +47,26 @@ def check_licenses_command(
         addon_license, addon_license_type = _get_license_type_or_proprietary(
             addon, odoo_series
         )
-        for depend_name in addon.manifest.depends:
-            depend = addons_set.get(depend_name)
-            if not depend:
-                errors.add(f"{depend_name} not found")
-                continue
+        dependencies = set()
+        current_level = addon.manifest.depends
+        while current_level:
+            next_level = []
+            for depend_name in current_level:
+                depend = addons_set.get(depend_name)
+                if not depend:
+                    errors.add(f"{depend_name} not found")
+                    continue
+                if depend not in dependencies:
+                    dependencies.add(depend)
+                    next_level.extend(depend.manifest.depends)
+            current_level = next_level
+        for depend in dependencies:
             depend_license, depend_license_type = _get_license_type_or_proprietary(
                 depend, odoo_series
             )
             if not can_depend_on(addon_license_type, depend_license_type):
                 errors.add(
                     f"{addon_name} ({addon_license}) depends on "
-                    f"{depend_name} ({depend_license})"
+                    f"{depend.name} ({depend_license})"
                 )
     return sorted(errors)
