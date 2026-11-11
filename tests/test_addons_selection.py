@@ -48,3 +48,19 @@ def test_select_exclude_authors(tmp_path):
         ["Odoo S.A.", "Odoo Community Association", ""], addons_set
     )
     assert str(addons_selection) == "addon4,addon5"
+
+
+def test_select_exclude_blank_authors(tmp_path):
+    addons = {
+        "addon1": {"author": "   "},
+        "addon2": {"author": "Author 1"},
+    }
+    populate_addons_dir(tmp_path, addons)
+    addons_set = AddonsSet()
+    addons_set.add_from_addons_dirs([tmp_path])
+    addons_selection = AddonsSelection()
+    addons_selection.update(addons_set.keys())
+    # A whitespace-only author means "no author" and must be excluded
+    # together with addons that have no author at all.
+    addons_selection.remove_addon_authors([""], addons_set)
+    assert str(addons_selection) == "addon2"
