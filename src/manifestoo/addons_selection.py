@@ -27,12 +27,13 @@ class AddonsSelection(Set[str]):
             addon = addons_set.get(addon_name)
             if addon is None:
                 continue
-            for author in comma_split(addon.manifest.author):
+            authors = comma_split(addon.manifest.author)
+            for author in authors:
                 if author in excluded_authors:
                     excluded_addons.add(addon_name)
                     break
             else:
-                if not addon.manifest.author and "" in excluded_authors:
+                if not authors and "" in excluded_authors:
                     excluded_addons.add(addon_name)
         self.difference_update(excluded_addons)
 
