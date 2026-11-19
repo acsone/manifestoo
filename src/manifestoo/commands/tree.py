@@ -20,13 +20,19 @@ class Node:
     def __init__(self, addon_name: str, addon: Optional[Addon]):
         self.addon_name = addon_name
         self.addon = addon
-        self.children = []  # type: List[Node]
+        self.children = set()  # type: Set[Node]
+        self.parents = set()  # type: Set[Node]
+
+    def __hash__(self):
+        return hash(self.addon_name)
 
     @staticmethod
     def key(addon_name: str) -> NodeKey:
         return addon_name
 
-    def print(self, odoo_series: OdooSeries, fold_core_addons: bool) -> None:
+    def print(
+        self, odoo_series: OdooSeries, fold_core_addons: bool, inverse: bool
+    ) -> None:
         seen: Set[Node] = set()
 
         def _print(indent: List[str], node: Node) -> None:
@@ -41,22 +47,25 @@ class Node:
                 return
             typer.secho(f" ({node.sversion(odoo_series)})", dim=True)
             seen.add(node)
-            if not node.children:
+            sub_nodes = sorted(
+                # In inverse mode, we iterate over the parents instead of the children
+                node.parents if inverse else node.children,
+                key=lambda n: n.addon_name,
+            )
+            if not sub_nodes:
                 return
             if fold_core_addons and is_core_addon(node.addon_name, odoo_series):
                 return
-            pointers = [TEE] * (len(node.children) - 1) + [LAST]
-            for pointer, child in zip(
-                pointers, sorted(node.children, key=lambda n: n.addon_name)
-            ):
+            pointers = [TEE] * (len(sub_nodes) - 1) + [LAST]
+            for pointer, sub_node in zip(pointers, sub_nodes):
                 if indent:
                     if indent[-1] == TEE:
-                        _print(indent[:-1] + [BRANCH, pointer], child)
+                        _print(indent[:-1] + [BRANCH, pointer], sub_node)
                     else:
                         assert indent[-1] == LAST
-                        _print(indent[:-1] + [SPACE, pointer], child)
+                        _print(indent[:-1] + [SPACE, pointer], sub_node)
                 else:
-                    _print([pointer], child)
+                    _print([pointer], sub_node)
 
         _print([], self)
 
@@ -76,6 +85,7 @@ def tree_command(
     addons_set: AddonsSet,
     odoo_series: OdooSeries,
     fold_core_addons: bool,
+    inverse: bool,
 ) -> None:
     nodes: Dict[NodeKey, Node] = {}
 
@@ -92,7 +102,9 @@ def tree_command(
         for depend in addon.manifest.depends:
             if depend == "base":
                 continue
-            node.children.append(add(depend))
+            child = add(depend)
+            node.children.add(child)
+            child.parents.add(node)
         return node
 
     root_nodes: List[Node] = []
@@ -100,5 +112,9 @@ def tree_command(
         if addon_name == "base":
             continue
         root_nodes.append(add(addon_name))
+    if inverse:
+        # In inverse mode, leaf nodes become root nodes
+        root_nodes = [node for node in nodes.values() if not node.children]
+    root_nodes = sorted(root_nodes, key=lambda n: n.addon_name)
     for root_node in root_nodes:
-        root_node.print(odoo_series, fold_core_addons)
+        root_node.print(odoo_series, fold_core_addons, inverse)
